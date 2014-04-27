@@ -7,6 +7,7 @@
 
 #ifndef CHROMOSOM_H_
 #define CHROMOSOM_H_
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -40,19 +41,30 @@ public:
 	 * Funkcja pobiera wartosc fitness chromosomu.
 	 * \return wartosc zmiennej fitness.
 	 */
-	int getFitness();
+	int getFitness() const;
 
 	/**
-	 * Funkcja ustawia zmienna statyczna jobCount.
-	 * \return wskaznik do genotypu chromosoma (const).
+	 * Funkcja pobiera referencje do genotypu chromosomu.
+	 * \return referencja do genotypu chromosoma (const).
 	 */
-	const vector<int>* getGenotype();
+	const vector<int>& getGenotype();
+
+	/**
+	 * Funkcja ustawia genotypu chromosomu.
+	 * \param referencja do genotypu chromosomu.
+	 */
+	void setGenotype(vector<int>& genotype);
+
+	/**
+	 * Funkcja generuje randomowy genotyp dla chromosomu.
+	 */
+	void generateRandomGenotype();
 
 	/**
 	 * Funkcja oblicza przystosowanie chromosomu (fitness) na podstawie genotypu.
 	 * \return wartosc zmiennej fitness.
 	 */
-	int countFitness();
+	int countFitness() const;
 
 };
 

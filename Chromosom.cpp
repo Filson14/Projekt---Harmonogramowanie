@@ -8,18 +8,37 @@
 #include "Chromosom.h"
 
 Chromosom::Chromosom() {
-	// TODO Auto-generated constructor stub
-
+	// TODO Auto-generated destructor stub
 }
 
 Chromosom::~Chromosom() {
 	// TODO Auto-generated destructor stub
 }
 
-int main(int argc, const char* argv[] )
-{
-	cout << "Hello.";
-
-
+void Chromosom::setJobCount(int jobCount) {
+	// TODO Cialo funkcji
 }
 
+void Chromosom::setMachineCount(int machineCount) {
+	// TODO Cialo funkcji
+}
+
+int Chromosom::getFitness() const {
+	// TODO Cialo funkcji
+}
+
+const vector<int>& Chromosom::getGenotype() {
+	// TODO Cialo funkcji
+}
+
+void Chromosom::setGenotype(vector<int>& genotype) {
+	// TODO Cialo funkcji
+}
+
+void Chromosom::generateRandomGenotype() {
+	// TODO Cialo funkcji
+}
+
+int Chromosom::countFitness() const {
+	// TODO Cialo funkcji
+}
