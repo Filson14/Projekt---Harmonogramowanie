@@ -1,0 +1,24 @@
+Problem Job-Shop:
+Dane jest N operacji oraz M maszyn. 
+Kazda operacja sklada sie z kilku pod operacji na roznych maszynach.
+Wazna jest kolejnosc wykonywania operacji. Kolejnosc musi byc zachowana (dwa podzadania jednego zadania nie moga byc wykonywane rownolegle)
+Naszym celem jest taki rozlozenie zadan na maszyny aby zminimalizowac calkowity czas wykonywania wszystkich zadan.
+
+Dane testowe: 
+http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt
+
+Algorytmy Genetyczne:
+Przestrzen rozwiazan tego problemu jest bardzo duza, przeszukanie calej przestrzeni jest niemozliwe (bardz bardzo czasochlonne).
+Wykorzystujemy heurystyki, czyli algorytmy ktore 'inteligentnie' przeszukuja przestrzen rozwiazan i w skonczonym czasie daja rozwiazanie suboptymalne (nie ma gwarancji optymalnosci rozwiazania).
+
+W projekcie musimy wykorzystac algorytmy genetyczne. 
+Algorytmy genetyczne sa ciekawym rozwiazaniem poniewaz przeszukuja przestrzen rozwiazan w wielu punktach jednoczesnie.
+
+Pojecia zwiazane z AG:
+CHROMOSOM - Chromosom jest pojedynczym rozwiazaniem problemu. Rozwiazanie ma charakterystyczna postac poniewaz najlepiej zeby bylo wektorem.
+POPULACJA - zbior chromosomow (rozwiazan), jak duza populacja tyle punktow przestrzeni badamy na raz.
+Cala zabawa polega na tworzeniu nowych POPULACJI wykorzystujac najlepiej zapowiadajace sie rozwiazania z aktualnej POPLUACJI.
+Wybieramy dwa CHROMOSOMY (nazywane rodzicami), krzyzujemy je (mieszamy w rozny sposob dwa wektory) i powstaje dwojka DZIECI.
+Sa rozne sposoby wyboru, krzyzowania i modyfikowania rozwiazan.
+
+Reszta jutro po SysOp.
