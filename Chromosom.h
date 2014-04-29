@@ -10,12 +10,14 @@
 
 #include <iostream>
 #include <vector>
+#include "Database.h"
 using namespace std;
 
 class Chromosom {
 private:
 	static int jobCount;	//!< Liczba zadan do wykonania.
 	static int machineCount;	//!< Liczba dostepnych maszyn.
+    static Database jobDatabase; //!< baza danych
 	int fitness;	//!< Ocena chromosomu (jakosc rozwiazania).
 	vector<int> genotype;	//!< Genotyp chromosomu (przechowuje rozwiazanie).
 	vector<int> machineSchedule;	//!< Informacje o zajetosci maszyn.

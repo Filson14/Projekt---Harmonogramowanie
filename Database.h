@@ -10,8 +10,8 @@
 
 #include <list>
 #include <iostream>
-#include <Job.h>
-#include <Machine.h>
+#include "Job.h"
+#include "Machine.h"
 
 using namespace std;
 

@@ -4,7 +4,7 @@
  *  Created on: Apr 27, 2014
  *      Author: Wojtek
  */
-
+#include "Database.h"
 #include "Chromosom.h"
 
 Chromosom::Chromosom() {
@@ -40,8 +40,14 @@ void Chromosom::generateRandomGenotype() {
 }
 
 int Chromosom::countFitness() {
-	// TODO Cialo funkcji
+	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+	{
+
+
+
+	}
 }
 
 int Chromosom::jobCount=0;	//!< Liczba zadan do wykonania.
 int Chromosom::machineCount=0;
+//Database Chromosom::jobDatabase;  //Brak kompilacji dopóki nie bêdzie definicji konstruktora
