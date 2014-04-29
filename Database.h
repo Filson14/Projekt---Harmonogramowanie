@@ -14,20 +14,28 @@
 #include "Machine.h"
 
 using namespace std;
-
+/**
+ * Klasa obiektu reprezentuj¹cego dane wejsciowe programu.
+ */
 class Database{
 private:
-	list<Job> jobs;
-	list<Machine> machines;
+	list<Job> jobs;			//!< Lista prac, dla których jest generowany harmonogram.
+	list<Machine> machines;	//!< Lista dostêpnych maszyn.
 
 public:
 	Database();
 	~Database();
 
+	/**
+	 * Getter listy prac.
+	 */
 	const list<Job>& getJobs() const {
 		return jobs;
 	}
 
+	/**
+	 * Getter listy maszyn.
+	 */
 	const list<Machine>& getMachines() const {
 		return machines;
 	}

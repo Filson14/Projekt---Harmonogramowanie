@@ -14,15 +14,20 @@
 #include "Machine.h"
 
 using namespace std;
-
+/**
+ * Klasa obiektu reprezentuj¹cego pojedyncz¹ pracê do wykonania.
+ */
 class Job{
 private:
-	list<Task> taskList;
+	list<Task> taskList;	//!< Lista zadañ dla danej pracy.
 
 public:
 	Job();
 	~Job();
 
+	/**
+	 * Getter listy zadañ.
+	 */
 	const list<Task>& getTaskList() const {
 		return taskList;
 	}

@@ -8,9 +8,12 @@
 #ifndef MACHINE_H_
 #define MACHINE_H_
 
+/**
+ * Klasa obiektu reprezentuj¹cego pojedyncz¹ maszynê.
+ */
 class Machine{
 private:
-	int id;
+	int id; //!< ID maszyny.
 
 public:
 	Machine();

@@ -8,29 +8,47 @@
 #ifndef TASK_H_
 #define TASK_H_
 
+#include "Machine.h"
+
 using namespace std;
 
+/**
+ * Klasa obiektu reprezentuj¹cego pojedyncze zadanie w ramach danej pracy.
+ */
 class Task{
 private:
-	int machine;
-	int start;
-	int time;
+	Machine* machine;	//!< WskaŸnik do maszyny u¿ytej w zadaniu.
+	int start;		//!< Czas rozpoczêcia zadania.
+	int time;		//!< Czas trwania zadania.
 
 public:
 	Task();
 	~Task();
 
-	int getMachine() const {
+	/**
+	 * Getter maszyny.
+	 * \return WskaŸnik do maszyny.
+	 */
+	const Machine*& getMachine() const {
 		return machine;
 	}
 
-	void setMachine(int machine) {
+	/**
+	 * Setter maszyny.
+	 * \param machine WskaŸnik do maszyny.
+	 */
+	void setMachine(const Machine*& machine) {
 		this->machine = machine;
 	}
 
+	/**
+	 * Getter czasu pocz¹tkowego zadania.
+	 * \return Czas rozpoczêcia zadania
+	 */
 	int getStart() const {
 		return start;
 	}
+
 
 	void setStart(int start) {
 		this->start = start;
@@ -43,6 +61,8 @@ public:
 	void setTime(int time) {
 		this->time = time;
 	}
+
+
 };
 
 
