@@ -20,8 +20,6 @@ private:
     static Database jobDatabase; //!< baza danych
 	int fitness;	//!< Ocena chromosomu (jakosc rozwiazania).
 	vector<int> genotype;	//!< Genotyp chromosomu (przechowuje rozwiazanie).
-	vector<int> machineSchedule;	//!< Informacje o zajetosci maszyn.
-	vector<int> jobSchedule;	//!< Informacje o postepach prac.
 
 public:
 	Chromosom();
