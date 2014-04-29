@@ -64,7 +64,7 @@ public:
 	 * Funkcja oblicza przystosowanie chromosomu (fitness) na podstawie genotypu.
 	 * \return wartosc zmiennej fitness.
 	 */
-	int countFitness() const;
+	int countFitness() ;
 
 };
 

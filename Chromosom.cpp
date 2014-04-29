@@ -16,29 +16,32 @@ Chromosom::~Chromosom() {
 }
 
 void Chromosom::setJobCount(int jobCount) {
-	// TODO Cialo funkcji
+	Chromosom::jobCount=jobCount;
 }
 
 void Chromosom::setMachineCount(int machineCount) {
-	// TODO Cialo funkcji
+	Chromosom::machineCount=machineCount;
 }
 
 int Chromosom::getFitness() const {
-	// TODO Cialo funkcji
+	return this->fitness;
 }
 
 const vector<int>& Chromosom::getGenotype() {
-	// TODO Cialo funkcji
+	return this->genotype;
 }
 
 void Chromosom::setGenotype(vector<int>& genotype) {
-	// TODO Cialo funkcji
+	this->genotype=genotype;
 }
 
 void Chromosom::generateRandomGenotype() {
 	// TODO Cialo funkcji
 }
 
-int Chromosom::countFitness() const {
+int Chromosom::countFitness() {
 	// TODO Cialo funkcji
 }
+
+int Chromosom::jobCount=0;	//!< Liczba zadan do wykonania.
+int Chromosom::machineCount=0;
