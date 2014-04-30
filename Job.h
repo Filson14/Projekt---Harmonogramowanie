@@ -8,27 +8,28 @@
 #ifndef JOB_H_
 #define JOB_H_
 
-#include <list>
+#include <vector>
 #include <iostream>
 #include "Task.h"
 #include "Machine.h"
 
 using namespace std;
 /**
- * Klasa obiektu reprezentuj¹cego pojedyncz¹ pracê do wykonania.
+ * Klasa obiektu reprezentuj¹cego pojedyñcz¹ pracê do wykonania.
  */
 class Job{
 private:
-	list<Task> taskList;	//!< Lista zadañ dla danej pracy.
+	vector<Task> taskList;	//!< Wektor zadañ dla danej pracy.
 
 public:
 	Job();
 	~Job();
 
 	/**
-	 * Getter listy zadañ.
+	 * Getter waktora zadañ.
+	 * \return Referencja do wektora zadañ.
 	 */
-	const list<Task>& getTaskList() const {
+	const vector<Task>& getTaskList() const {
 		return taskList;
 	}
 };

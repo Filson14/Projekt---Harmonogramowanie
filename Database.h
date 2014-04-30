@@ -8,8 +8,11 @@
 #ifndef DATABASE_H_
 #define DATABASE_H_
 
-#include <list>
+#include <vector>
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 #include "Job.h"
 #include "Machine.h"
 
@@ -19,8 +22,8 @@ using namespace std;
  */
 class Database{
 private:
-	list<Job> jobs;			//!< Lista prac, dla których jest generowany harmonogram.
-	list<Machine> machines;	//!< Lista dostêpnych maszyn.
+	vector<Job> jobs;			//!< Lista prac, dla których jest generowany harmonogram.
+	vector<Machine> machines;	//!< Lista dostêpnych maszyn.
 
 public:
 	Database();
@@ -28,17 +31,27 @@ public:
 
 	/**
 	 * Getter listy prac.
+	 * \return Referencja listy prac.
 	 */
-	const list<Job>& getJobs() const {
+	const vector<Job>& getJobs() const {
 		return jobs;
 	}
 
 	/**
 	 * Getter listy maszyn.
+	 * \return Referencja listy maszyn.
 	 */
-	const list<Machine>& getMachines() const {
+	const vector<Machine>& getMachines() const {
 		return machines;
 	}
+
+	bool readFromFile(const char* filename);
+	bool saveToFile(const char* filename);
+
+	bool machineExists(int id);
+
+	void addJob();
+	void addMachine(int id);
 };
 
 

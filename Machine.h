@@ -8,6 +8,8 @@
 #ifndef MACHINE_H_
 #define MACHINE_H_
 
+using namespace std;
+
 /**
  * Klasa obiektu reprezentuj¹cego pojedyncz¹ maszynê.
  */

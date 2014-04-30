@@ -49,23 +49,31 @@ public:
 		return start;
 	}
 
-
+	/**
+	 * Setter czasu pocz¹tkowego zadania.
+	 * \param start Czas rozpoczêcia zadania.
+	 */
 	void setStart(int start) {
 		this->start = start;
 	}
 
+	/**
+	 * Getter czasu trwania zadania.
+	 * \return Czas trwania zadania
+	*/
 	int getTime() const {
 		return time;
 	}
 
+	/**
+	 * Setter czasu trwania zadania.
+	 * \param time Czas trwania zadania.
+	 */
 	void setTime(int time) {
 		this->time = time;
 	}
 
 
+
 };
-
-
-
-
 #endif /* TASK_H_ */
