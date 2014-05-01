@@ -36,6 +36,7 @@ public:
 	void addTask(Machine* machine, int startTime, int duration);
 
 	void addTask(Task newTask);
+	void deleteTask(int machineId);
 };
 
 

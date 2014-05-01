@@ -16,3 +16,12 @@ void Job::addTask(Machine* machine, int startTime, int duration){
 void Job::addTask(Task newTask){
 	taskList.push_back(newTask);
 }
+
+void Job::deleteTask(int machineId){
+	int i=0;
+	while(taskList[i].getMachine()->getId()!=machineId)
+		i++;
+	if(i < taskList.size()){
+		taskList.erase(taskList.begin()+i);
+	}
+}
