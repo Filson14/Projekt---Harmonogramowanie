@@ -2,11 +2,4 @@
 *.layout
 *.o
 *.cbp
-main.cpp
-Task.h
-Machine.h
-Machine.h
-Job.h
-Database.h
-Task.h
 *.exe
