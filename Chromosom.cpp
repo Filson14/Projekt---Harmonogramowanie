@@ -6,6 +6,8 @@
  */
 #include "Database.h"
 #include "Chromosom.h"
+#include <ctime>
+#include <cstdlib>
 
 Chromosom::Chromosom() {
 	// TODO Auto-generated destructor stub
@@ -36,7 +38,21 @@ void Chromosom::setGenotype(vector<int>& genotype) {
 }
 
 void Chromosom::generateRandomGenotype() {
-	// TODO Cialo funkcji
+	this->genotype=vector <int> (machineCount*jobCount,0);
+	srand( time( NULL ) );
+	vector <int> taskScheduled (jobCount,0);
+	int jobID;
+	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+	{
+	    do
+	    {
+	        jobID=rand()%jobCount;
+	    }
+	    while(taskScheduled[jobID]>=machineCount);
+	    taskScheduled[jobID]++;
+	    *it=jobID;
+	}
+
 }
 
 int Chromosom::countFitness() { //działa przy numeracji maszyn i jobów od 0 - do ustalenia
@@ -65,6 +81,13 @@ int Chromosom::countFitness() { //działa przy numeracji maszyn i jobów od 0 - 
 
     this->fitness=startingfit;
     return this->fitness;
+}
+
+void Chromosom::printGenotype()
+{
+    for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+        cout<<*it<<" ";
+    cout<<endl;
 }
 
 int Chromosom::jobCount=0;	//!< Liczba zadan do wykonania.

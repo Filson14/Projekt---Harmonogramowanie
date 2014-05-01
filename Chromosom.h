@@ -66,6 +66,13 @@ public:
 	 */
 	int countFitness() ;
 
+	/**
+	 * Funkcja wypisuje genotyp.
+	 */
+
+	 void printGenotype();
+
+
 };
 
 #endif /* CHROMOSOM_H_ */
