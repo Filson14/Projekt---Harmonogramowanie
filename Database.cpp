@@ -23,14 +23,17 @@ bool Database::readFromFile(const char* filename){
 			cout << "Plik nieprawid³owy." << endl;
 			return false;
 		}
-		jobCount = fields[0];
-		machinesCount = fields[1];
+		istringstream(fields[0]) >> jobCount;
+		istringstream(fields[1]) >> machinesCount;
 		fields.clear();
 
-		while(getline(inputFile, data, ' ')){
-			cout << data << endl;
-		}
+		cout << jobCount << "x" << machinesCount << endl;
 
+/*		while(getline(inputFile, data, ' ')){
+			cout << data << "__" << endl;
+
+		}
+*/
 	}else{
 		cout << "Wyst¹pi³ b³¹d podczas odczytu pliku.\n";
 	}
