@@ -13,6 +13,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <cstdlib>
+#include <time.h>
 #include "Job.h"
 #include "Machine.h"
 
@@ -33,7 +35,7 @@ public:
 	 * Getter listy prac.
 	 * \return Referencja listy prac.
 	 */
-	const vector<Job>& getJobs() const {
+	vector<Job>& getJobs(){
 		return jobs;
 	}
 
@@ -41,7 +43,7 @@ public:
 	 * Getter listy maszyn.
 	 * \return Referencja listy maszyn.
 	 */
-	const vector<Machine>& getMachines() const {
+	vector<Machine>& getMachines(){
 		return machines;
 	}
 
@@ -55,6 +57,11 @@ public:
 	Job* addJob();
 	Machine* addMachine(int id);
 	void deleteMachine(int id);
+
+	void generateRandomData(int jobCount, int machinesCount);
+	void clearDatabase();
+	void resetDatabase();
+
 };
 
 

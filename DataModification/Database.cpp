@@ -5,10 +5,11 @@ Database::Database(){
 }
 
 Database::~Database(){
-
+	this->clearDatabase();
 }
 
 bool Database::readFromFile(const char* filename){
+	clearDatabase();
 	bool result = false;
 	ifstream inputFile;
 	int jobCount, machinesCount, tmp, flag=0;
@@ -122,15 +123,43 @@ void Database::deleteMachine(int id){
 		for(i=0; i<jobs.size(); i++){
 			jobs[i].deleteTask(id);
 		}
-		/*
 		i = 0;
 		while(machines[i].getId() != id)
 			i++;
 		if(i < machines.size()){
 			machines.erase(machines.begin()+i);
 		}
-		*/
 	}else{
 		cout << "Podana maszyna nie istnieje." << endl;;
+	}
+}
+
+void Database::generateRandomData(int jobCount, int machinesCount){
+	srand(time(NULL));
+	if(jobCount>0 && machinesCount>0){
+		clearDatabase();
+		for(int i=0; i<machinesCount; i++){
+			this->addMachine(i);
+		}
+		for(int i=0; i<jobCount; i++){
+
+		}
+	}
+}
+
+void Database::clearDatabase(){
+	jobs.clear();
+	machines.clear();
+}
+
+void Database::resetDatabase(){
+	int timeSummary;
+	for(int i=0; i<jobs.size(); i++){
+		timeSummary = 0;
+		vector<Task> &list = jobs[i].getTaskList();
+		for(int j=0; j<list.size(); j++){
+			list[j].setStart(timeSummary);
+			timeSummary += list[j].getTime();
+		}
 	}
 }

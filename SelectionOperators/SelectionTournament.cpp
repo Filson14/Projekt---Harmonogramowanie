@@ -4,7 +4,7 @@
  *  Created on: May 1, 2014
  *      Author: Wojtek
  */
-
+/*
 #include "SelectionTournament.h"
 
 SelectionTournament::SelectionTournament(int selectionProbability, int competitorCount) {
@@ -40,3 +40,4 @@ Chromosom * SelectionTournament::selectParent() {
 
 }
 
+*/

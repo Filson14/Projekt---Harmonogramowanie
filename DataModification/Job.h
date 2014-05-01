@@ -29,7 +29,7 @@ public:
 	 * Getter waktora zadañ.
 	 * \return Referencja do wektora zadañ.
 	 */
-	const vector<Task>& getTaskList() const {
+	vector<Task>& getTaskList(){
 		return taskList;
 	}
 
@@ -37,6 +37,8 @@ public:
 
 	void addTask(Task newTask);
 	void deleteTask(int machineId);
+	void changeTaskDuration(int machineId, int duration);
+	//TODO: metoda sprawdzajaca czy w danym jobie u¿yto ju¿ podanej maszyny (?)
 };
 
 
