@@ -19,8 +19,12 @@ void Job::addTask(Task newTask){
 
 void Job::deleteTask(int machineId){
 	int i=0;
-	while(taskList[i].getMachine()->getId()!=machineId)
+	//cout << taskList.size() << endl;
+	while(taskList[i].getMachine()->getId()!=machineId && i<taskList.size()){
+		//cout << taskList[i].getMachine()->getId() << endl;
 		i++;
+	}
+	//cout << i << endl;
 	if(i < taskList.size()){
 		taskList.erase(taskList.begin()+i);
 	}

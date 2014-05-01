@@ -122,11 +122,15 @@ void Database::deleteMachine(int id){
 		for(i=0; i<jobs.size(); i++){
 			jobs[i].deleteTask(id);
 		}
+		/*
 		i = 0;
 		while(machines[i].getId() != id)
 			i++;
 		if(i < machines.size()){
 			machines.erase(machines.begin()+i);
 		}
+		*/
+	}else{
+		cout << "Podana maszyna nie istnieje." << endl;;
 	}
 }
