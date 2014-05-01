@@ -20,12 +20,15 @@ void Job::addTask(Task newTask){
 void Job::deleteTask(int machineId){
 	int i=0;
 	//cout << taskList.size() << endl;
-	while(taskList[i].getMachine()->getId()!=machineId && i<taskList.size()){
-		//cout << taskList[i].getMachine()->getId() << endl;
+	while(taskList[i].getMachine()->getId()!=machineId && i<=taskList.size()-1){
 		i++;
 	}
-	//cout << i << endl;
 	if(i < taskList.size()){
+		int timeToDelete = taskList[i].getTime();
 		taskList.erase(taskList.begin()+i);
+		for(int j=i; j<taskList.size(); j++){
+			int currentStart = taskList[j].getStart();
+			taskList[j].setStart(currentStart - timeToDelete);
+		}
 	}
 }
