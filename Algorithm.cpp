@@ -81,7 +81,7 @@ bool compareChromosoms(const Chromosom * A, const Chromosom * B) {
 }
 
 
-
+/*
 int main(int argc, const char* argv[] )
 {
 	SettingsProblem problem = {1, 1};
@@ -96,3 +96,4 @@ int main(int argc, const char* argv[] )
 	cout << "Finished.";
 
 }
+*/
