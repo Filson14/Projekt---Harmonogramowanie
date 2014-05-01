@@ -10,6 +10,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <algorithm>
+#include "../Algorithm.h"
 #include "SelectionOperator.h"
 
 class SelectionTournament: public SelectionOperator {
@@ -20,7 +21,7 @@ private:
 public:
 	SelectionTournament(int selectionProbability, int competitorCount);
 	virtual ~SelectionTournament();
-	void prepareSelection(const vector<Chromosom *> population);
+	void prepareSelection(const vector<Chromosom *> & population);
 	Chromosom * selectParent();
 };
 

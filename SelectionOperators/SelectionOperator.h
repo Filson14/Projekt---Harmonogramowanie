@@ -17,7 +17,7 @@ public:
 
 	SelectionOperator();
 	virtual ~SelectionOperator();
-	virtual void prepareSelection(const vector<Chromosom *> population) = 0;
+	virtual void prepareSelection(const vector<Chromosom *> & population) = 0;
 	virtual Chromosom * selectParent() = 0;
 };
 

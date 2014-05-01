@@ -13,11 +13,10 @@ SelectionTournament::SelectionTournament(int selectionProbability, int competito
 }
 
 SelectionTournament::~SelectionTournament() {
-	// TODO Auto-generated destructor stub
 }
 
-void SelectionTournament::prepareSelection(const vector<Chromosom *> population) {
-	this->population = population;
+void SelectionTournament::prepareSelection(const vector<Chromosom *> & population) {
+
 }
 
 Chromosom * SelectionTournament::selectParent() {
