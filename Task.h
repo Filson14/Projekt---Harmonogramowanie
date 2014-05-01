@@ -29,7 +29,7 @@ public:
 	 * Getter maszyny.
 	 * \return WskaŸnik do maszyny.
 	 */
-	const Machine* getMachine() const {
+	Machine* getMachine() const {
 	  	return machine;
 	}
 
