@@ -29,16 +29,16 @@ public:
 	 * Getter maszyny.
 	 * \return WskaŸnik do maszyny.
 	 */
-	const Machine*& getMachine() const {
-		return machine;
+	const Machine* getMachine() const {
+	  	return machine;
 	}
 
 	/**
 	 * Setter maszyny.
 	 * \param machine WskaŸnik do maszyny.
 	 */
-	void setMachine(const Machine*& machine) {
-		this->machine = machine;
+	void setMachine(Machine* machine) {
+	  	this->machine = machine;
 	}
 
 	/**
