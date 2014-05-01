@@ -115,3 +115,18 @@ Job* Database::addJob(){
 	this->jobs.push_back(*newJob);
 	return &(jobs.back());
 }
+
+void Database::deleteMachine(int id){
+	int i = 0;
+	if(machineExists(id)){
+		for(i=0; i<jobs.size(); i++){
+			jobs[i].deleteTask(id);
+		}
+		i = 0;
+		while(machines[i].getId() != id)
+			i++;
+		if(i < machines.size()){
+			machines.erase(machines.begin()+i);
+		}
+	}
+}

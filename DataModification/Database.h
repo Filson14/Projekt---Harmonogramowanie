@@ -54,6 +54,7 @@ public:
 	Job* addJob(Job newJob);
 	Job* addJob();
 	Machine* addMachine(int id);
+	void deleteMachine(int id);
 };
 
 
