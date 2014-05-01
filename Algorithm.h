@@ -7,15 +7,17 @@
 
 #ifndef ALGORITHM_H_
 #define ALGORITHM_H_
-#include "Chromosom.h"
 #include <vector>
 #include <algorithm>
+#include "Chromosom.h"
+#include "SettingsStructures.h"
+
+
 
 class Algorithm {
-private:
-	const int MAX_EPOCHS;	//!< Maksymalna liczba epok;
-	const int MAX_EPOCHS_WITHOUT_CHANGE;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
-
+public:
+	int maxEpochs;	//!< Maksymalna liczba epok;
+	int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
 	int jobCount;	//!< Liczba zadan do wykonania.
 	int machineCount;	//!< Liczba dostepnych maszyn.
 	int populationSize;	//!< Rozmiar populacji.
@@ -27,11 +29,12 @@ private:
 	vector<Chromosom*> population;	//!< Aktualna populacja.
 	vector<Chromosom*> newPopulation;	//!< Nowa populacja.
 
-	Chromosom * (*selectionOperator)();	//!< Wskaznik do funkcji wybierajacej osobniki do krzyzowania.
-	void (*crossoverOperator)(Chromosom* parentA, Chromosom* parentB, Chromosom* childA, Chromosom* childB);	//!< Wskaznik do funkcji krzyzujacej osobniki.
+	const SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
+	const MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
+	const CrossoverOperator * crossoverOperator;	//!< Operator krzyzowania osobnikow.
 
 public:
-	Algorithm(int jobCount, int machineCount, int populationSize, int newPopulationSize);
+	Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators);
 	virtual ~Algorithm();
 
 	/**

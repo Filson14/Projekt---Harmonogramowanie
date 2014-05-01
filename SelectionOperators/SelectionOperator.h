@@ -11,6 +11,7 @@
 #include "../Chromosom.h"
 
 class SelectionOperator {
+protected:
 	const vector<Chromosom *> population;
 public:
 

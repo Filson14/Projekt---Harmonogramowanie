@@ -6,22 +6,35 @@
  */
 
 #include "Algorithm.h"
+#include "SettingsStructures.h"
 
-/* ZMIENNE GLOBALNE TYMCZASOWE */
+Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) {
+	this->jobCount = problem.jobCount;
+	this->machineCount = problem.machineCount;
 
-Algorithm::Algorithm(int jobCount, int machineCount, int populationSize, int newPopulationSize) : MAX_EPOCHS(1), MAX_EPOCHS_WITHOUT_CHANGE(2) {
-	this->jobCount = jobCount;
-	this->machineCount = machineCount;
-	this->populationSize = populationSize;
-	this->newPopulationSize = newPopulationSize;
+	this->maxEpochs = algorithm.maxEpochs;
+	this->maxEpochsWithoutChange = algorithm.maxEpochsWithoutChange;
+	this->populationSize = algorithm.populationSize;
+	this->newPopulationSize = algorithm.newPopulationSize;
+	this->mutationProbability = algorithm.mutationProbability;
+	this->crossoverProbability = algorithm.crossoverProbability;
+
+	this->selectionOperator = operators.selectionOperator;
+	this->mutationOperator = operators.mutationOperator;
+	this->crossoverOperator = operators.crossovoerOperator;
+
+	this->bestChromosom = NULL;
 	this->meanPopulationFitness = 0;
-
 	this->population.reserve(populationSize);
 	this->newPopulation.reserve(newPopulationSize);
 }
 
 Algorithm::~Algorithm() {
-	// TODO Auto-generated destructor stub
+	for (int i = 0; i < this->populationSize; i++)
+		delete this->population[i];
+
+	for (int i = 0; i < this->newPopulationSize; i++)
+		delete this->newPopulation[i];
 }
 
 void Algorithm::initializePopulation() {
@@ -40,7 +53,7 @@ double Algorithm::evaluatePopulation() {
 	for (int i = 0; i < this->populationSize; i++)
 		totalFitness += this->population[i]->getFitness();
 
-	return totalFitness / this->populationSize;
+	return (totalFitness / this->populationSize);
 }
 
 void Algorithm::selectNewPopulation() {
@@ -59,15 +72,7 @@ void Algorithm::selectNewPopulation() {
 }
 
 void Algorithm::generateNewPopulation() {
-	Chromosom * parentA = NULL, * parentB = NULL, * childA = NULL, * childB = NULL;
 
-	for (int i = 0; i < newPopulationSize; i = i + 2) {
-		parentA = selectionOperator();
-		parentB = selectionOperator();
-
-		childA->countFitness();
-		childB->countFitness();
-	}
 }
 
 
@@ -79,9 +84,14 @@ bool compareChromosoms(const Chromosom * A, const Chromosom * B) {
 
 int main(int argc, const char* argv[] )
 {
-	int currentEpoch = 0, epochsWithoutChange = 0;
-	Algorithm  algorithm = Algorithm(10, 10, 10, 10);
-	algorithm.initializePopulation();
+	SettingsProblem problem = {1, 1};
+	SettingsAlgorithm algorithm = {10, 10, 5, 5, 1, 1};
+	SettingsOperator operators = {NULL, NULL, NULL};
+	Algorithm  algorithms = Algorithm(problem, algorithm, operators);
+	algorithms.initializePopulation();
+
+	for(int i = 0; i < 5; i++)
+		cout << "Chromosom " << i << ": " << algorithms.population[i] << endl;
 
 	cout << "Finished.";
 
