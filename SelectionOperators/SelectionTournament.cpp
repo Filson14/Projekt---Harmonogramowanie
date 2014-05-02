@@ -22,13 +22,16 @@ void SelectionTournament::prepareSelection(vector<Chromosom *> & population) {
 
 Chromosom * SelectionTournament::selectParent() {
 	int randomCompetitor;
+	double randomProbability, competitorProbability = 1.0;
+	set<int> indicesUsed;
 	vector<Chromosom *> competitors;
-	double competitorProbability = 1.0;
+
 
 	for(int i = 0; i < this->competitorCount; i++) {
-		randomCompetitor = rand() % this->population.size();
-		cout << "Random competitor " << randomCompetitor << endl;
-		//TODO Dont allow the same chromosom multiple times.
+		do {
+			randomCompetitor = rand() % this->population.size();
+		} while (indicesUsed.find(randomCompetitor) != indicesUsed.end());
+		indicesUsed.insert(randomCompetitor);
 		competitors.push_back(this->population[randomCompetitor]);
 	}
 
@@ -36,7 +39,7 @@ Chromosom * SelectionTournament::selectParent() {
 
 	for(int i = 0; i < this->competitorCount; i++) {
 		competitorProbability *= this->selectionProbability;
-		double randomProbability = (double) rand() / (RAND_MAX);
+		randomProbability = (double) rand() / (RAND_MAX);
 
 		if (randomProbability < competitorProbability)
 			return competitors[i];

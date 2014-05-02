@@ -8,6 +8,7 @@
 #include "Algorithm.h"
 #include "SettingsStructures.h"
 #include "SelectionOperators/SelectionTournament.h"
+#include "SelectionOperators/SelectionRoulette.h"
 
 Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) {
 	this->jobCount = problem.jobCount;
@@ -79,7 +80,7 @@ void Algorithm::selectNewPopulation() {
 
 void Algorithm::generateNewPopulation() {
 	this->selectionOperator->prepareSelection(this->population);
-	(this->selectionOperator->selectParent())->printGenotype();
+	this->selectionOperator->selectParent()->printGenotype();
 }
 
 void Algorithm::printPopulation() {
@@ -95,13 +96,12 @@ bool compareChromosoms(const Chromosom * A, const Chromosom * B) {
 }
 
 
-/*
 int main(int argc, const char* argv[] )
 {
 	srand(time(NULL));
 	SettingsProblem problem = {5, 5};
 	SettingsAlgorithm algorithm = {5, 5, 5, 5, 5, 5};
-	SettingsOperator operators = {new SelectionTournament(0.65, 3), NULL, NULL};
+	SettingsOperator operators = { new SelectionRoulette(), NULL, NULL};
 	Algorithm  algorithms = Algorithm(problem, algorithm, operators);
 	Chromosom::setJobCount(problem.jobCount);
 	Chromosom::setMachineCount(problem.machineCount);
@@ -111,4 +111,3 @@ int main(int argc, const char* argv[] )
 
 	cout << "Finished.";
 }
-*/

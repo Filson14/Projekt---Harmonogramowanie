@@ -9,6 +9,7 @@
 #define SELECTIONTOURNAMENT_H_
 #include <ctime>
 #include <cstdlib>
+#include <set>
 #include <algorithm>
 #include "../Algorithm.h"
 #include "SelectionOperator.h"
