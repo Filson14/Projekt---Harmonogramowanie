@@ -135,7 +135,6 @@ void Database::deleteMachine(int id){
 }
 
 Database* Database::generateRandomData(int jobCount, int machinesCount){
-	srand(time(NULL));
 	if(jobCount>0 && machinesCount>0){
 		clearDatabase();
 		for(int i=0; i<machinesCount; i++){
