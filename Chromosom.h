@@ -45,7 +45,7 @@ public:
 	 * \return wartosc zmiennej fitness.
 	 */
 
-	static void setjobDatabase(Database&);
+	static void setJobDatabase(Database&);
 
 	int getFitness() const;
 
@@ -53,7 +53,9 @@ public:
 	 * Funkcja pobiera referencje do genotypu chromosomu.
 	 * \return referencja do genotypu chromosoma (const).
 	 */
-	const vector<int>& getGenotype();
+	const vector<int>& getGenotype() const;
+
+	static Database& getJobDatabase();
 
 	/**
 	 * Funkcja ustawia genotypu chromosomu.

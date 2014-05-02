@@ -34,7 +34,7 @@ void Chromosom::setMachineCount(int machineCount) {
 	Chromosom::machineCount=machineCount;
 }
 
-void Chromosom::setjobDatabase(Database& jobDatabase)
+void Chromosom::setJobDatabase(Database& jobDatabase)
 {
     Chromosom::jobDatabase=jobDatabase;
 }
@@ -43,9 +43,14 @@ int Chromosom::getFitness() const {
 	return this->fitness;
 }
 
-const vector<int>& Chromosom::getGenotype() {
+const vector<int>& Chromosom::getGenotype() const{
 	return this->genotype;
 }
+
+Database& Chromosom::getJobDatabase()  {
+	return Chromosom::jobDatabase;
+}
+
 
 void Chromosom::setGenotype(vector<int>& genotype) {
 	this->genotype=genotype;
