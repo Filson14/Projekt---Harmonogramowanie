@@ -10,7 +10,17 @@
 #include <cstdlib>
 
 Chromosom::Chromosom() {
-	// TODO Auto-generated destructor stub
+
+}
+
+Chromosom::Chromosom(vector<int> genotype) {
+	this->genotype=genotype;
+}
+
+Chromosom::Chromosom(vector<int> genotype,int jobCount, int machineCount ) {
+	this->genotype=genotype;
+	Chromosom::jobCount=jobCount;
+	Chromosom::machineCount=machineCount;
 }
 
 Chromosom::~Chromosom() {

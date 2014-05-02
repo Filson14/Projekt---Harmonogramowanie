@@ -23,6 +23,9 @@ private:
 
 public:
 	Chromosom();
+    Chromosom(vector<int>);
+    Chromosom(vector<int> ,int , int);
+
 	virtual ~Chromosom();
 
 	/**
