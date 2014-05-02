@@ -111,7 +111,7 @@ bool compareChromosoms(const Chromosom * A, const Chromosom * B) {
 	return A->getFitness() < B->getFitness();
 }
 
-
+/*
 int main(int argc, const char* argv[] )
 {
 	srand(time(NULL));
@@ -127,3 +127,4 @@ int main(int argc, const char* argv[] )
 
 	cout << "Finished.";
 }
+*/
