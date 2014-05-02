@@ -124,10 +124,12 @@ void Chromosom::updateDatabaseWithStartTimes()
 
 	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
 	    {
+	        jobDatabase.getJobs()[*it].changeTaskStart(currentMachineId,machineSchedule[currentMachineId]);
 	        jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	    }
 	    else
 	    {
+	        jobDatabase.getJobs()[*it].changeTaskStart(currentMachineId,jobSchedule[*it]);
 	        jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	    }
 	    machineSchedule[currentMachineId]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
