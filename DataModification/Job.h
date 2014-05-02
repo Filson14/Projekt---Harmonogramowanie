@@ -22,7 +22,14 @@ private:
 	vector<Task> taskList;	//!< Wektor zadañ dla danej pracy.
 
 public:
+	/**
+	 * Konstruktor klasy.
+	 */
 	Job();
+
+	/**
+	 * Destruktor klasy.
+	 */
 	~Job();
 
 	/**
@@ -33,13 +40,46 @@ public:
 		return taskList;
 	}
 
+	/**
+	 * Metoda dodaj¹ca task do listy.
+	 * \param machine WskaŸnik do obiektu maszyny u¿ytej do danego zadania.
+	 * \param startTime Moment rozpoczêcia zadania.
+	 * \param duration Czas trwania zadania.
+	 */
 	void addTask(Machine* machine, int startTime, int duration);
 
+	/**
+	 * Metoda dodaj¹ca task do listy.
+	 * \param newTask Obiekt klasy Task z ustawionymi polami.
+	 */
 	void addTask(Task newTask);
+
+	/**
+	 * Metoda usuwaj¹ca z listy task dotycz¹cy podanej maszyny.
+	 * \param machineId Id maszyny, której zadanie dotyczy.
+	 */
 	void deleteTask(int machineId);
+
+	/*
+	 * Metoda zmieniaj¹ca czas trwania tasku dotycz¹cego podanej maszyny.
+	 * \param machineId Id maszyny, której zadanie dotyczy.
+	 * \param duration Czas trwania zadania do ustawienia.
+	 */
 	void changeTaskDuration(int machineId, int duration);
+
+	/**
+	 * Metoda zmieniaj¹ca czas rozpoczêcia tasku dotycz¹cego podanej maszyny.
+	 * \param machineId Id maszyny, której zadanie dotyczy.
+	 * \param time Nowy czas rozpoczêcia zadania.
+	 */
 	void changeTaskStart(int machineId, int time);
-	//TODO: metoda sprawdzajaca czy w danym jobie u¿yto ju¿ podanej maszyny (?)
+
+	/**
+	 * Funkcja sprawdzaj¹ca czy podana maszyna zosta³a ju¿ przypisana do listy zadañ.
+	 * \param machineId Id maszyny, któr¹ sprawdzamy.
+	 * \return True - jesli maszyna zosta³a ju¿ u¿yta; False - w przeciwnym wypadku.
+	 */
+	bool isMachineUsed(int machineId);
 };
 
 

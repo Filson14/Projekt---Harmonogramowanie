@@ -22,7 +22,17 @@ private:
 	int time;		//!< Czas trwania zadania.
 
 public:
+	/**
+	 * Konstruktor klasy.
+	 * \param machine WskaŸnik do maszyny u¿ytej przy zadaniu.
+	 * \param startTimr Czas rozpoczêcia zadania.
+	 * \param duration Czas trwania zadania.
+	 */
 	Task(Machine* machine, int startTime, int duration);
+
+	/**
+	 * Destruktor klasy.
+	 */
 	~Task();
 
 	/**

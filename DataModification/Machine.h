@@ -18,13 +18,29 @@ private:
 	int id; //!< ID maszyny.
 
 public:
+	/**
+	 * Konstruktor klasy.
+	 * \param id Id maszyny
+	 */
 	Machine(int id);
+
+	/**
+	 * Destruktor klasy.
+	 */
 	~Machine();
 
+	/**
+	 * Getter dla id maszyny.
+	 * \return Id maszyny.
+	 */
 	int getId() const {
 		return id;
 	}
 
+	/**
+	 * Setter dla id maszyny.
+	 * \param id Id do ustawienia
+	 */
 	void setId(int id) {
 		this->id = id;
 	}
