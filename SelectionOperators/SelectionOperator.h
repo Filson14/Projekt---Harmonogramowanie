@@ -12,12 +12,12 @@
 
 class SelectionOperator {
 protected:
-	const vector<Chromosom *> population;
+	vector<Chromosom *> population;
 public:
 
 	SelectionOperator();
 	virtual ~SelectionOperator();
-	virtual void prepareSelection(const vector<Chromosom *> & population) = 0;
+	virtual void prepareSelection(vector<Chromosom *> & population) = 0;
 	virtual Chromosom * selectParent() = 0;
 };
 

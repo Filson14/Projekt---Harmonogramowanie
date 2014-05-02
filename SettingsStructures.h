@@ -5,9 +5,9 @@
 #include "./CrossoverOperators/CrossoverOperator.h"
 
 struct SettingsOperator {
-	const SelectionOperator * selectionOperator;
-	const MutationOperator * mutationOperator;
-	const CrossoverOperator * crossovoerOperator;
+	SelectionOperator * selectionOperator;
+	MutationOperator * mutationOperator;
+	CrossoverOperator * crossovoerOperator;
 
 	//SettingsOperator(SelectionOperator * selectionOperator, MutationOperator * mutationOperator, CrossoverOperator * crossoverOperator);
 	//~SettingsOperator();

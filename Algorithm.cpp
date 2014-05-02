@@ -7,6 +7,7 @@
 
 #include "Algorithm.h"
 #include "SettingsStructures.h"
+#include "SelectionOperators/SelectionTournament.h"
 
 Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) {
 	this->jobCount = problem.jobCount;
@@ -42,8 +43,13 @@ void Algorithm::initializePopulation() {
 	for(int i = 0; i < populationSize; i++) {
 		newChromosom = new Chromosom();
 		newChromosom->generateRandomGenotype();
-		newChromosom->countFitness();
-		this->population[i] = newChromosom;
+
+		//TODO Usunac po testach.
+		newChromosom->setRandomFitness();
+		//TODO Odkomentowac jak wersja Olka i Filipa beda w pelni dzialajace.
+		//newChromosom->countFitness();
+
+		this->population.push_back(newChromosom);
 	}
 }
 
@@ -72,28 +78,37 @@ void Algorithm::selectNewPopulation() {
 }
 
 void Algorithm::generateNewPopulation() {
-
+	this->selectionOperator->prepareSelection(this->population);
+	(this->selectionOperator->selectParent())->printGenotype();
 }
+
+void Algorithm::printPopulation() {
+		for(int i = 0; i < this->populationSize; i++) {
+			cout << "Chromosom " << i << ": " << this->population[i] << " | Fitness: " << this->population[i]->getFitness() << " | Genotype: ";
+			this->population[i]->printGenotype();
+		}
+	}
 
 
 bool compareChromosoms(const Chromosom * A, const Chromosom * B) {
-	return A->getFitness() > B->getFitness();
+	return A->getFitness() < B->getFitness();
 }
 
 
 /*
 int main(int argc, const char* argv[] )
 {
-	SettingsProblem problem = {1, 1};
-	SettingsAlgorithm algorithm = {10, 10, 5, 5, 1, 1};
-	SettingsOperator operators = {NULL, NULL, NULL};
+	srand(time(NULL));
+	SettingsProblem problem = {5, 5};
+	SettingsAlgorithm algorithm = {5, 5, 5, 5, 5, 5};
+	SettingsOperator operators = {new SelectionTournament(0.65, 3), NULL, NULL};
 	Algorithm  algorithms = Algorithm(problem, algorithm, operators);
+	Chromosom::setJobCount(problem.jobCount);
+	Chromosom::setMachineCount(problem.machineCount);
 	algorithms.initializePopulation();
-
-	for(int i = 0; i < 5; i++)
-		cout << "Chromosom " << i << ": " << algorithms.population[i] << endl;
+	algorithms.printPopulation();
+	algorithms.generateNewPopulation();
 
 	cout << "Finished.";
-
 }
 */

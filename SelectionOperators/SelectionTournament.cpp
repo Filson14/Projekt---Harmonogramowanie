@@ -4,10 +4,10 @@
  *  Created on: May 1, 2014
  *      Author: Wojtek
  */
-/*
+
 #include "SelectionTournament.h"
 
-SelectionTournament::SelectionTournament(int selectionProbability, int competitorCount) {
+SelectionTournament::SelectionTournament(double selectionProbability, int competitorCount) {
 	this->competitorCount = competitorCount;
 	this->selectionProbability = selectionProbability;
 }
@@ -15,29 +15,31 @@ SelectionTournament::SelectionTournament(int selectionProbability, int competito
 SelectionTournament::~SelectionTournament() {
 }
 
-void SelectionTournament::prepareSelection(const vector<Chromosom *> & population) {
+void SelectionTournament::prepareSelection(vector<Chromosom *> & population) {
 
+	this->population = population;
 }
 
 Chromosom * SelectionTournament::selectParent() {
-	int competitorProbability = this->selectionProbability;
 	int randomCompetitor;
 	vector<Chromosom *> competitors;
-	srand(time(NULL));
+	double competitorProbability = 1.0;
 
 	for(int i = 0; i < this->competitorCount; i++) {
-		randomCompetitor = rand() % population.size();
-		competitors.push_back(population[randomCompetitor]);
+		randomCompetitor = rand() % this->population.size();
+		cout << "Random competitor " << randomCompetitor << endl;
+		//TODO Dont allow the same chromosom multiple times.
+		competitors.push_back(this->population[randomCompetitor]);
 	}
 
 	sort(competitors.begin(), competitors.end(), compareChromosoms);
 
 	for(int i = 0; i < this->competitorCount; i++) {
+		competitorProbability *= this->selectionProbability;
+		double randomProbability = (double) rand() / (RAND_MAX);
 
+		if (randomProbability < competitorProbability)
+			return competitors[i];
 	}
-
-
-
+	return competitors.back();
 }
-
-*/

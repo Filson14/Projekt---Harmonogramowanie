@@ -29,9 +29,9 @@ public:
 	vector<Chromosom*> population;	//!< Aktualna populacja.
 	vector<Chromosom*> newPopulation;	//!< Nowa populacja.
 
-	const SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
-	const MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
-	const CrossoverOperator * crossoverOperator;	//!< Operator krzyzowania osobnikow.
+	SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
+	MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
+	CrossoverOperator * crossoverOperator;	//!< Operator krzyzowania osobnikow.
 
 public:
 	Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators);
@@ -60,6 +60,11 @@ public:
 	//TODO Operator mutacji
 	//TODO Operatory krzyzowania
 	//TODO Operatory selekcji
+
+	/**
+	 * Funkcja wyswietla populacje.
+	 */
+	void printPopulation();
 };
 
 bool compareChromosoms(const Chromosom * A, const Chromosom * B);

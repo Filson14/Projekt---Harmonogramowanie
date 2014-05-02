@@ -16,12 +16,12 @@
 class SelectionTournament: public SelectionOperator {
 private:
 	int competitorCount;
-	int selectionProbability;
+	double selectionProbability;
 
 public:
-	SelectionTournament(int selectionProbability, int competitorCount);
+	SelectionTournament(double selectionProbability, int competitorCount);
 	virtual ~SelectionTournament();
-	void prepareSelection(const vector<Chromosom *> & population);
+	void prepareSelection(vector<Chromosom *> & population);
 	Chromosom * selectParent();
 };
 
