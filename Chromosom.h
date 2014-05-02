@@ -55,7 +55,7 @@ public:
 	 */
 	const vector<int>& getGenotype() const;
 
-	const Database& getJobDatabase() const;
+	static Database& getJobDatabase();
 
 	/**
 	 * Funkcja ustawia genotypu chromosomu.

@@ -47,8 +47,8 @@ const vector<int>& Chromosom::getGenotype() const{
 	return this->genotype;
 }
 
-const Database& Chromosom::getJobDatabase() const {
-	return this->jobDatabase;
+Database& Chromosom::getJobDatabase()  {
+	return Chromosom::jobDatabase;
 }
 
 
