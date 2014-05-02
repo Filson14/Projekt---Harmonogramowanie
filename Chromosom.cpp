@@ -10,7 +10,6 @@
 #include <cstdlib>
 
 Chromosom::Chromosom() {
-
 }
 
 Chromosom::Chromosom(vector<int> genotype) {
@@ -48,8 +47,7 @@ void Chromosom::setGenotype(vector<int>& genotype) {
 }
 
 void Chromosom::generateRandomGenotype() {
-	this->genotype=vector <int> (machineCount*jobCount,0);
-	srand( time( NULL ) );
+    this->genotype=vector <int> (machineCount*jobCount,0);
 	vector <int> taskScheduled (jobCount,0);
 	int jobID;
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
