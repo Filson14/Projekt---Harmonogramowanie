@@ -38,6 +38,7 @@ public:
 	void addTask(Task newTask);
 	void deleteTask(int machineId);
 	void changeTaskDuration(int machineId, int duration);
+	void changeTaskStart(int machineId, int time);
 	//TODO: metoda sprawdzajaca czy w danym jobie u¿yto ju¿ podanej maszyny (?)
 };
 
