@@ -34,6 +34,11 @@ void Chromosom::setMachineCount(int machineCount) {
 	Chromosom::machineCount=machineCount;
 }
 
+void Chromosom::setjobDatabase(Database& jobDatabase)
+{
+    Chromosom::jobDatabase=jobDatabase;
+}
+
 int Chromosom::getFitness() const {
 	return this->fitness;
 }
@@ -97,6 +102,39 @@ void Chromosom::printGenotype()
         cout<<*it<<" ";
     cout<<endl;
 }
+
+void Chromosom::updateDatabaseWithStartTimes()
+{
+    vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
+	vector<int> jobSchedule(jobCount,0);	//!< Informacje o postepach prac.
+	vector<int> currentTaskCount(jobCount,0);
+	int startingfit=0;
+	int currentTasknum;
+	int currentMachineId;
+	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+	{
+	    currentTasknum=currentTaskCount[*it];
+	    currentMachineId=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getMachine()->getId();
+	    currentTaskCount[*it]++;
+
+	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
+	    {
+	        jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+	    }
+	    else
+	    {
+	        jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+	    }
+	    machineSchedule[currentMachineId]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+	}
+
+}
+
+void Chromosom::setRandomFitness()
+{
+    this->fitness=rand()%1000;
+}
+
 
 int Chromosom::jobCount=0;	//!< Liczba zadan do wykonania.
 int Chromosom::machineCount=0;

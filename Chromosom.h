@@ -44,6 +44,9 @@ public:
 	 * Funkcja pobiera wartosc fitness chromosomu.
 	 * \return wartosc zmiennej fitness.
 	 */
+
+	static void setjobDatabase(Database&);
+
 	int getFitness() const;
 
 	/**
@@ -74,6 +77,11 @@ public:
 	 */
 
 	 void printGenotype();
+
+	 void updateDatabaseWithStartTimes();
+
+	 void setRandomFitness();
+
 
 
 };
