@@ -31,10 +31,8 @@ Chromosom * SelectionRoulette::selectParent() {
 	sort(this->population.begin(), this->population.end(), compareChromosoms);
 
 	vector<Chromosom *>::iterator it = this->population.begin();
-	while((combinedNormalizedFitness += ((double)(this->totalFitness - (*it)->getFitness()) / this->totalFitness)) < randomProbability) {
-		cout << combinedNormalizedFitness << endl;
+	while((combinedNormalizedFitness += ((double)(this->totalFitness - (*it)->getFitness()) / this->totalFitness)) < randomProbability)
 		it++;
-	}
 
 	if(it == this->population.end())
 		it--;
