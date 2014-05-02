@@ -32,13 +32,13 @@ public:
 	 * Funkcja ustawia zmienna statyczna jobCount.
 	 * \param jobCount liczba zadan do wykoniania
 	 */
-	void setJobCount(int jobCount);
+	static void setJobCount(int jobCount);
 
 	/**
 	 * Funkcja ustawia zmienna statyczna machineCount.
 	 * \param machineCount liczba dostepnych maszyn.
 	 */
-	void setMachineCount(int machineCount);
+	static void setMachineCount(int machineCount);
 
 	/**
 	 * Funkcja pobiera wartosc fitness chromosomu.
