@@ -94,8 +94,8 @@ int Chromosom::countFitness() { //działa przy numeracji maszyn i jobów od 0 - 
 	    machineSchedule[currentMachineId]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	}
 	for(vector<int>::iterator it=jobSchedule.begin();it!=jobSchedule.end();it++)
-	    if(jobSchedule[*it]>startingfit)
-            startingfit=jobSchedule[*it];
+	    if(*it>startingfit)
+            startingfit=*it;
 
     this->fitness=startingfit;
     return this->fitness;
