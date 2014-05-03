@@ -17,6 +17,7 @@
 #include <time.h>
 #include "Job.h"
 #include "Machine.h"
+//#include "../SettingsStructures.h"
 
 using namespace std;
 /**
@@ -130,6 +131,12 @@ public:
 	 * Metoda prezentuj¹ca bazê danych (wypisywanie w konsoli).
 	 */
 	void presentData();
+
+	/**
+	 * Funkcja generuj¹ca strukturê SettingsProblem.
+	 * \return Struktura SettingsProblem utworzona na podstawie danych w bazie.
+	 */
+	//struct SettingsProblem generateSettingsStruct();
 };
 
 
