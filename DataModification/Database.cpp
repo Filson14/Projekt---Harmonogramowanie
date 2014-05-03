@@ -228,11 +228,11 @@ void Database::presentData(){
 	}
 	cout << endl;
 }
-/*
+
 struct SettingsProblem Database::generateSettingsStruct(){
 	struct SettingsProblem StngsPrblm;
 	StngsPrblm.jobCount = jobs.size();
 	StngsPrblm.machineCount = machines.size();
 	return StngsPrblm;
 }
-*/
+

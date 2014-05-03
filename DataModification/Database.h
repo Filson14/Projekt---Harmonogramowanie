@@ -17,7 +17,7 @@
 #include <time.h>
 #include "Job.h"
 #include "Machine.h"
-//#include "../SettingsStructures.h"
+#include "../SettingsStructures.h"
 
 using namespace std;
 /**
@@ -136,7 +136,7 @@ public:
 	 * Funkcja generuj¹ca strukturê SettingsProblem.
 	 * \return Struktura SettingsProblem utworzona na podstawie danych w bazie.
 	 */
-	//struct SettingsProblem generateSettingsStruct();
+	struct SettingsProblem generateSettingsStruct();
 };
 
 
