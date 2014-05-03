@@ -14,20 +14,20 @@ struct SettingsOperator {
 };
 
 struct SettingsAlgorithm {
-	const int maxEpochs;	//!< Maksymalna liczba epok;
-	const int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
-	const int populationSize;	//!< Rozmiar populacji.
-	const int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
-	const double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
-	const double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
+	int maxEpochs;	//!< Maksymalna liczba epok;
+	int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
+	int populationSize;	//!< Rozmiar populacji.
+	int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
+	double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
+	double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
 
 	//SettingsAlgorithm(int maxEpochs, int maxEpochsWithoutChange, int populationSize, int newPopulationSize, int mutationProability, int crossoverProbability);
 	//~SettingsAlgorithm();
 };
 
 struct SettingsProblem {
-	const int jobCount;
-	const int machineCount;
+	int jobCount;
+	int machineCount;
 
 	//SettingsProblem (int jobCount, int machineCount);
 	//~SettingsProblem();
