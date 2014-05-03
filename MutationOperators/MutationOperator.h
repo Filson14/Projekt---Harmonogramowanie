@@ -7,11 +7,18 @@
 
 #ifndef MUTATIONOPERATOR_H_
 #define MUTATIONOPERATOR_H_
+#include "../Chromosom.h"
 
 class MutationOperator {
 public:
 	MutationOperator();
 	virtual ~MutationOperator();
+
+	/**
+	 * Funkcja dokonuje mutacji chromosomu.
+	 * \param chromosom osobnik ktory podlega mutacji.
+	 */
+	virtual void performMutation(Chromosom & chromosom) = 0;
 };
 
 #endif /* MUTATIONOPERATOR_H_ */

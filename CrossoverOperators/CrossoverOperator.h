@@ -13,6 +13,14 @@ class CrossoverOperator {
 public:
 	CrossoverOperator();
 	virtual ~CrossoverOperator();
+
+	/**
+	 * Funkcja dokonuje krzyzowania.
+	 * \param parentA pierwszy osobnik pelniacy role rodzica.
+	 * \param parentB drugi osobnik pelniacy role rodzica.
+	 * \param childA pierwszy osobnik pelniacy role dziecka.
+	 * \param childB drugi osobnik pelniacy role dziecka.
+	 */
 	virtual void crossChromosoms(const Chromosom & parentA, const Chromosom & parentB, Chromosom & childA, Chromosom & childB) = 0;
 
 };

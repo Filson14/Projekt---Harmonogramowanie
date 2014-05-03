@@ -5,9 +5,9 @@
 #include "./CrossoverOperators/CrossoverOperator.h"
 
 struct SettingsOperator {
-	SelectionOperator * selectionOperator;
-	MutationOperator * mutationOperator;
-	CrossoverOperator * crossoverOperator;
+	SelectionOperator * selectionOperator;	//!< Wskaznik do klasy pelniacej funkcje operatora selekcji.
+	MutationOperator * mutationOperator;	//!< Wskaznik do klasy pelniacej funkcje operatora mutacji.
+	CrossoverOperator * crossoverOperator;	//!< Wskaznik do klasy pelniacej funkcje operatora krzyzowania.
 
 	//SettingsOperator(SelectionOperator * selectionOperator, MutationOperator * mutationOperator, CrossoverOperator * crossoverOperator);
 	//~SettingsOperator();
@@ -26,8 +26,8 @@ struct SettingsAlgorithm {
 };
 
 struct SettingsProblem {
-	int jobCount;
-	int machineCount;
+	int jobCount;	//!< Ilosc prac do wykonania.
+	int machineCount;	//!< Ilosc dostepnych maszyn.
 
 	//SettingsProblem (int jobCount, int machineCount);
 	//~SettingsProblem();
