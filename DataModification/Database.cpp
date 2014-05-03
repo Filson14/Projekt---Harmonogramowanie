@@ -16,6 +16,8 @@ bool Database::readFromFile(const char* filename){
 	string data;
 	vector<string> fields;
 	vector<int> newMachines, times;
+	Job *newJob;
+
 	inputFile.open(filename, ios::in);
 	if(inputFile.good()){
 		int pos = 0;
@@ -57,7 +59,7 @@ bool Database::readFromFile(const char* filename){
 		}
 		if(lineCounter == jobCount && newMachines.size() == jobCount*machinesCount && times.size() == jobCount*machinesCount){
 			for(int i=0; i<jobCount; i++){
-				Job *newJob = new Job();
+				newJob = new Job();
 				int timeSummary=0;
 				for(int j=0; j<machinesCount; j++){
 					int number = i*machinesCount+j;
@@ -124,9 +126,9 @@ bool Database::machineExists(int id){
 }
 
 Machine* Database::addMachine(int id){
-	Machine newMachine(id);
-	this->machines.push_back(newMachine);
-	return &(machines.back());
+	Machine *newMachine = new Machine(id);
+	this->machines.push_back(*newMachine);
+	return newMachine;
 }
 
 Job* Database::addJob(Job newJob){
