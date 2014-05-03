@@ -48,3 +48,28 @@ void Job::changeTaskDuration(int machineId, int duration){
 		}
 	}
 }
+
+void Job::changeTaskStart(int machineId, int time){
+	int i=0;
+	if(time >= 0){
+		while(i<=taskList.size()-1 && taskList[i].getMachine()->getId()!=machineId){
+			i++;
+		}
+		if(i<taskList.size())
+			taskList[i].setStart(time);
+	}
+}
+
+bool Job::isMachineUsed(int machineId){
+	bool result = false;
+
+	for(int i=0; i<taskList.size(); i++){
+		if(taskList[i].getMachine()->getId()==machineId){
+			result = true;
+			break;
+		}
+	}
+	return result;
+}
+
+

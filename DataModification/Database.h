@@ -126,6 +126,10 @@ public:
 	 */
 	void resetDatabase();
 
+	/**
+	 * Metoda prezentuj¹ca bazê danych (wypisywanie w konsoli).
+	 */
+	void presentData();
 };
 
 

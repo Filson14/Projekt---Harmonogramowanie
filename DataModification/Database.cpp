@@ -29,14 +29,13 @@ bool Database::readFromFile(const char* filename){
 
 		pos = 0;
 		flag = 0;
-
+		int lineCounter = 0;
 		while(getline(inputFile,data)){
 			pos = 0;
 			for(int i=0; i<data.length(); i++){
 				if(data[i] == ' '){
 					istringstream(data.substr(pos, i-pos)) >> tmp;
 					pos = i+1;
-
 					if(flag == 0){
 						newMachines.push_back(tmp);
 						flag = 1;
@@ -54,8 +53,9 @@ bool Database::readFromFile(const char* filename){
 				times.push_back(tmp);
 				flag = 0;
 			}
+			lineCounter++;
 		}
-		if(newMachines.size() == jobCount*machinesCount && times.size() == jobCount*machinesCount){
+		if(lineCounter == jobCount && newMachines.size() == jobCount*machinesCount && times.size() == jobCount*machinesCount){
 			for(int i=0; i<jobCount; i++){
 				Job *newJob = new Job();
 				int timeSummary=0;
@@ -75,10 +75,33 @@ bool Database::readFromFile(const char* filename){
 			cout << "Nieprawid³owa forma pliku." << endl;
 		}
 	}else{
-		cout << "Wyst¹pi³ b³¹d podczas odczytu pliku.\n";
+		cout << "Wyst¹pi³ b³¹d podczas odczytu pliku." << endl;
 	}
 
 	inputFile.close();
+	return result;
+}
+
+bool Database::saveToFile(const char* filename){
+	bool result = false;
+	ofstream outputFile;
+	outputFile.open(filename, ios::out | ios::trunc);
+	if(outputFile.is_open()){
+		outputFile << jobs.size() << "x" << machines.size();
+		for(int i=0; i<jobs.size(); i++){
+			outputFile << endl;
+			vector<Task> tasks = jobs[i].getTaskList();
+			for(int j=0; j<tasks.size(); j++){
+				if(j != 0)
+					outputFile << " ";
+				outputFile << tasks[j].getMachine()->getId() << " ";
+				outputFile << tasks[j].getTime();
+			}
+		}
+	}else{
+		cout << "Nie uda³o siê otworzyæ pliku." << endl;
+	}
+	outputFile.close();
 	return result;
 }
 
@@ -135,15 +158,40 @@ void Database::deleteMachine(int id){
 }
 
 Database* Database::generateRandomData(int jobCount, int machinesCount){
+	int randMachine, randElem, timeSummary, randTime;
+	Job *newJob;
+	vector<int> tempVector;
 	if(jobCount>0 && machinesCount>0){
 		clearDatabase();
 		for(int i=0; i<machinesCount; i++){
 			this->addMachine(i);
+			tempVector.push_back(i);
 		}
-		for(int i=0; i<jobCount; i++){
 
+		for(int i=0; i<jobCount; i++){
+			newJob = new Job();
+			timeSummary = 0;
+
+			for(int j=0; j<machinesCount; j++){
+				/*randElem = rand() % tempVector.size();
+				//while dla bezpieczenstwa - ponowne losowanie nie powinno byc konieczne
+				while(newJob->isMachineUsed(tempVector[randElem]))
+					randElem = rand() % tempVector.size();
+				randMachine = tempVector[randElem];
+				*/
+				randMachine = rand() % machinesCount;
+				while(newJob->isMachineUsed(randMachine))
+					randMachine = rand() % machinesCount;
+
+				randTime = rand() % 20;
+				newJob->addTask(this->getMachine(randMachine), timeSummary, randTime);
+				timeSummary += randTime;
+			}
+			//cout << endl;
+			this->addJob(*newJob);
 		}
 	}
+
 	return this;
 }
 
@@ -162,4 +210,19 @@ void Database::resetDatabase(){
 			timeSummary += list[j].getTime();
 		}
 	}
+}
+
+void Database::presentData(){
+	cout << endl << "Prezentujê dane:" << endl;
+	cout <<  "<maszyna>(<d³ugosc>/<start>)" << endl << endl;
+	for(int i=0; i<jobs.size(); i++){
+		vector<Task> tasks = jobs[i].getTaskList();
+		for(int j=0; j<tasks.size(); j++){
+			cout << jobs[i].getTaskList()[j].getMachine()->getId() << "(";
+			cout << jobs[i].getTaskList()[j].getTime() << "/";
+			cout << jobs[i].getTaskList()[j].getStart() << ")  ";
+		}
+		cout << endl;
+	}
+	cout << endl;
 }
