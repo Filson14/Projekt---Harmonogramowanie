@@ -7,7 +7,7 @@
 struct SettingsOperator {
 	SelectionOperator * selectionOperator;
 	MutationOperator * mutationOperator;
-	CrossoverOperator * crossovoerOperator;
+	CrossoverOperator * crossoverOperator;
 
 	//SettingsOperator(SelectionOperator * selectionOperator, MutationOperator * mutationOperator, CrossoverOperator * crossoverOperator);
 	//~SettingsOperator();
