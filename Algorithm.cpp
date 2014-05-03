@@ -10,6 +10,9 @@
 #include "SelectionOperators/SelectionTournament.h"
 #include "SelectionOperators/SelectionRoulette.h"
 #include "CrossoverOperators/CrossoverOnePoint.h"
+#include "CrossoverOperators/CrossoverTwoPoint.h"
+#include "MutationOperators/MutationSwapping.h"
+#include "MutationOperators/MutationInversion.h"
 
 Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) {
 	this->jobCount = problem.jobCount;
@@ -24,7 +27,7 @@ Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm 
 
 	this->selectionOperator = operators.selectionOperator;
 	this->mutationOperator = operators.mutationOperator;
-	this->crossoverOperator = operators.crossovoerOperator;
+	this->crossoverOperator = operators.crossoverOperator;
 
 	this->bestChromosom = NULL;
 	this->meanPopulationFitness = 0;
@@ -95,7 +98,9 @@ void Algorithm::generateNewPopulation() {
 	parentB->printGenotype();
 	cout << "Child B Genotype:  ";
 	childB->printGenotype();
-
+	mutationOperator->performMutation(*childB);
+	cout << "Chmut B Genotype:  ";
+	childB->printGenotype();
 
 }
 
@@ -117,7 +122,7 @@ int main(int argc, const char* argv[] )
 	srand(time(NULL));
 	SettingsProblem problem = {5, 5};
 	SettingsAlgorithm algorithm = {5, 5, 5, 5, 5, 5};
-	SettingsOperator operators = {new SelectionTournament(0.65, 3), NULL, new CrossoverOnePoint()};
+	SettingsOperator operators = {new SelectionTournament(0.65, 3), new MutationInversion(), new CrossoverTwoPoint()};
 	Algorithm  algorithms = Algorithm(problem, algorithm, operators);
 	Chromosom::setJobCount(problem.jobCount);
 	Chromosom::setMachineCount(problem.machineCount);
