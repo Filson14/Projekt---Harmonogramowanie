@@ -4,20 +4,20 @@
  *  Created on: Apr 27, 2014
  *      Author: Wojtek
  */
-#include "DataModification/Database.h"
 #include "Chromosom.h"
 #include <ctime>
 #include <cstdlib>
 
 Chromosom::Chromosom() {
+
 }
 
 Chromosom::Chromosom(vector<int> genotype) {
 	this->genotype=genotype;
 }
 
-Chromosom::Chromosom(vector<int> genotype,int jobCount, int machineCount ) {
-	this->genotype=genotype;
+Chromosom::Chromosom(Database& jobDatabase,int jobCount, int machineCount ) {
+	Chromosom::jobDatabase=jobDatabase;
 	Chromosom::jobCount=jobCount;
 	Chromosom::machineCount=machineCount;
 }

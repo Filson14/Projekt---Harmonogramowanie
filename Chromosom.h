@@ -13,6 +13,11 @@
 #include "DataModification/Database.h"
 using namespace std;
 
+/**
+ * Klasa przechowuje chromosom. Ka¿dy chromosom odpowiada jednemu poprawnemu rozwi¹zaniu problemu.
+ * Krzy¿uj¹c oraz mutuj¹c wybrane chromosomy zbli¿amy siê do optymalnego rozwi¹zania.
+ */
+
 class Chromosom {
 private:
 	static int jobCount;	//!< Liczba zadan do wykonania.
@@ -22,9 +27,23 @@ private:
 	vector<int> genotype;	//!< Genotyp chromosomu (przechowuje rozwiazanie).
 
 public:
+    /**
+	 * Domyœlny konstruktor klasy Chromosom.
+	 * Tworzony Chromosom ma pusty genotyp.
+	 */
 	Chromosom();
-    Chromosom(vector<int>);
-    Chromosom(vector<int> ,int , int);
+	/**
+	 * Konstruktor który pozwala na pocz¹tkowe ustawienie genotypu.
+	 * \param genotype genotyp chromosomu
+	 */
+    Chromosom(vector<int> genotype);
+    /**
+	 * Konstruktor który pozwala na pocz¹tkowe ustawienie bazy danych wejœciowych, liczby zadañ oraz liczby maszyn.
+	 * \param jobDatabase baza danych wejœciowych.
+     * \param jobCount liczba zadan do wykoniania.
+     * \param machineCount liczba dostepnych maszyn.
+	 */
+    Chromosom(Database& jobDatabase,int jobCount, int machineCount);
 
 	virtual ~Chromosom();
 
@@ -44,17 +63,25 @@ public:
 	 * Funkcja pobiera wartosc fitness chromosomu.
 	 * \return wartosc zmiennej fitness.
 	 */
+	 int getFitness() const;
 
-	static void setJobDatabase(Database&);
+    /**
+	 * Funkcja ustawia baze danych wejœciowych dla algorytmu.
+	 * \param jobDatabase Baza danych wejœciowych
+	 */
+	static void setJobDatabase(Database& jobDatabase);
 
-	int getFitness() const;
 
 	/**
-	 * Funkcja pobiera referencje do genotypu chromosomu.
+	 * Funkcja zwraca referencje do genotypu chromosomu.
 	 * \return referencja do genotypu chromosoma (const).
 	 */
 	const vector<int>& getGenotype() const;
 
+    /**
+	 * Funkcja zwraca referencje do bazy danych wejœciowych.
+	 * \return referencja do bazy danych wejœciowych.
+	 */
 	static Database& getJobDatabase();
 
 	/**
@@ -75,14 +102,19 @@ public:
 	int countFitness() ;
 
 	/**
-	 * Funkcja wypisuje genotyp.
+	 * Funkcja wypisuje genotyp na standardowe wyjœcie (konsolê).
 	 */
+    void printGenotype();
 
-	 void printGenotype();
+    /**
+	 * Funkcja aktualizuje bazê danych wejœciowych o czasu rozpoczêcia poszczególnych zadañ w ka¿dej z prac.
+	 */
+    void updateDatabaseWithStartTimes();
 
-	 void updateDatabaseWithStartTimes();
-
-	 void setRandomFitness();
+    /**
+	 * Funkcja ustawia zmienn¹ fitness na losow¹ wartoœæ z zakresu 0-999 (w celach testowych).
+	 */
+    void setRandomFitness();
 
 
 
