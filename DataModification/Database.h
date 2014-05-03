@@ -17,7 +17,6 @@
 #include <time.h>
 #include "Job.h"
 #include "Machine.h"
-#include "../SettingsStructures.h"
 
 using namespace std;
 /**
@@ -39,6 +38,17 @@ public:
 	 */
 	~Database();
 
+	/**
+	 * Funkcja zwracaj¹ca ilosæ prac.
+	 * \return Ilosæ obiektów Job w bazie.
+	 */
+	int getJobsAmount();
+
+	/**
+	 * Funkcja zwracaj¹ca ilosæ maszyn.
+	 * \return Ilosæ obiektów Machine w bazie.
+	 */
+	int getMachinesAmount();
 	/**
 	 * Getter listy prac.
 	 * \return Referencja listy prac.
@@ -131,12 +141,6 @@ public:
 	 * Metoda prezentuj¹ca bazê danych (wypisywanie w konsoli).
 	 */
 	void presentData();
-
-	/**
-	 * Funkcja generuj¹ca strukturê SettingsProblem.
-	 * \return Struktura SettingsProblem utworzona na podstawie danych w bazie.
-	 */
-	struct SettingsProblem generateSettingsStruct();
 };
 
 

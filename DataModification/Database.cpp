@@ -8,6 +8,14 @@ Database::~Database(){
 	this->clearDatabase();
 }
 
+int Database::getJobsAmount(){
+	return jobs.size();
+}
+
+int Database::getMachinesAmount(){
+	return machines.size();
+}
+
 bool Database::readFromFile(const char* filename){
 	clearDatabase();
 	bool result = false;
@@ -16,7 +24,7 @@ bool Database::readFromFile(const char* filename){
 	string data;
 	vector<string> fields;
 	vector<int> newMachines, times;
-	Job *newJob;
+	//Job *newJob;
 
 	inputFile.open(filename, ios::in);
 	if(inputFile.good()){
@@ -59,18 +67,21 @@ bool Database::readFromFile(const char* filename){
 		}
 		if(lineCounter == jobCount && newMachines.size() == jobCount*machinesCount && times.size() == jobCount*machinesCount){
 			for(int i=0; i<jobCount; i++){
-				newJob = new Job();
+				//newJob = new Job();
+				this->addJob();
 				int timeSummary=0;
 				for(int j=0; j<machinesCount; j++){
 					int number = i*machinesCount+j;
 					if(machineExists(newMachines[number])){
-						newJob->addTask(this->getMachine(newMachines[number]), timeSummary, times[number]);
+						//newJob->addTask(this->getMachine(newMachines[number]), timeSummary, times[number]);
+						jobs.back().addTask(this->getMachine(newMachines[number]), timeSummary, times[number]);
 					}else{
-						newJob->addTask(this->addMachine(newMachines[number]), timeSummary, times[number]);
+						//newJob->addTask(this->addMachine(newMachines[number]), timeSummary, times[number]);
+						jobs.back().addTask(this->addMachine(newMachines[number]), timeSummary, times[number]);
 					}
 					timeSummary += times[number];
 				}
-				this->addJob(*newJob);
+				//this->addJob(*newJob);
 			}
 			result = true;
 		}else{
@@ -137,8 +148,10 @@ Job* Database::addJob(Job newJob){
 }
 
 Job* Database::addJob(){
-	Job *newJob = new Job();
-	this->jobs.push_back(*newJob);
+	/*Job *newJob = new Job();
+	this->jobs.push_back(*newJob);*/
+	Job newJob;
+	this->jobs.push_back(newJob);
 	return &(jobs.back());
 }
 
@@ -228,11 +241,3 @@ void Database::presentData(){
 	}
 	cout << endl;
 }
-
-struct SettingsProblem Database::generateSettingsStruct(){
-	struct SettingsProblem StngsPrblm;
-	StngsPrblm.jobCount = jobs.size();
-	StngsPrblm.machineCount = machines.size();
-	return StngsPrblm;
-}
-
