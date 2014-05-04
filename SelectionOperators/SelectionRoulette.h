@@ -22,13 +22,13 @@ public:
 	 * Funkcja przygotowuje klase do procesu selekcji.
 	 * \param population referencja do wektora zawierajacego populacje chromosomow.
 	 */
-	void prepareSelection(vector<Chromosom *> & population);
+	void prepareSelection(vector<Chromosom> & population);
 
 	/**
 	 * Funkcja wybiera osobnika metoda ruletki.
 	 * \return wybrany osobnik z populacji.
 	 */
-	Chromosom * selectParent();
+	Chromosom & selectParent();
 };
 
 #endif /* SELECTIONROULETTE_H_ */

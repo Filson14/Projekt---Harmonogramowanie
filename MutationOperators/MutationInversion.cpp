@@ -17,32 +17,32 @@ MutationInversion::~MutationInversion() {
 }
 
 void MutationInversion::performMutation(Chromosom & chromosom) {
-	int inversionPoint1, inversionPoint2;
-	vector<int> genotype = chromosom.getGenotype();
+	int inversionPointA, inversionPointB;
+	const vector<int> & genotype = chromosom.getGenotype();
 	vector<int> inversedGenotype;
 
-	inversionPoint1 = inversionPoint2 = rand() % genotype.size();
-	while (inversionPoint1  == inversionPoint2)
-		inversionPoint2 = rand() % genotype.size();
+	inversionPointA = inversionPointB = rand() % genotype.size();
+	while (inversionPointA  == inversionPointB)
+		inversionPointB = rand() % genotype.size();
 
-	if (inversionPoint1 > inversionPoint2) {
-		int temp = inversionPoint1;
-		inversionPoint1 = inversionPoint2;
-		inversionPoint2 = temp;
+	if (inversionPointA > inversionPointB) {
+		int temp = inversionPointA;
+		inversionPointA = inversionPointB;
+		inversionPointB = temp;
 	}
 
-	for (vector<int>::iterator it = genotype.begin() + inversionPoint2; it != genotype.end(); it++)
+	for (vector<int>::const_iterator it = genotype.cbegin() + inversionPointB; it != genotype.cend(); it++)
 		inversedGenotype.push_back(*it);
 
-	for (vector<int>::iterator it = genotype.begin() + inversionPoint1; it != genotype.begin() + inversionPoint2; it++)
+	for (vector<int>::const_iterator it = genotype.cbegin() + inversionPointA; it != genotype.cbegin() + inversionPointB; it++)
 		inversedGenotype.push_back(*it);
 
-	for (vector<int>::iterator it = genotype.begin(); it != genotype.begin() + inversionPoint1; it++)
+	for (vector<int>::const_iterator it = genotype.cbegin(); it != genotype.cbegin() + inversionPointA; it++)
 			inversedGenotype.push_back(*it);
 
 	chromosom.setGenotype(inversedGenotype);
 
 	//TODO Usunac wypisywanie w wersji finalnej.
-	cout << "swappingPoint1: " << inversionPoint1 << " swappingPoint2: " << inversionPoint2 << endl;
+	cout << "inversionPointA: " << inversionPointA << " inversionPointB: " << inversionPointB << endl;
 }
 

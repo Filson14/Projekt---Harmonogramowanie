@@ -29,100 +29,114 @@ Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm 
 	this->mutationOperator = operators.mutationOperator;
 	this->crossoverOperator = operators.crossoverOperator;
 
-	this->bestChromosom = NULL;
 	this->meanPopulationFitness = 0;
 	this->population.reserve(populationSize);
 	this->newPopulation.reserve(newPopulationSize);
 }
 
 Algorithm::~Algorithm() {
-	for (int i = 0; i < this->populationSize; i++)
-		delete this->population[i];
 
-	for (int i = 0; i < this->newPopulationSize; i++)
-		delete this->newPopulation[i];
+	this->population.clear();
+	this->newPopulation.clear();
 }
 
 void Algorithm::initializePopulation() {
-	Chromosom * newChromosom;
+	Chromosom newChromosom;
 	for(int i = 0; i < populationSize; i++) {
-		newChromosom = new Chromosom();
-		newChromosom->generateRandomGenotype();
+		newChromosom = Chromosom();
+		newChromosom.generateRandomGenotype();
 
 		//TODO Usunac po testach.
-		newChromosom->setRandomFitness();
+		newChromosom.setRandomFitness();
 		//TODO Odkomentowac jak wersja Olka i Filipa beda w pelni dzialajace.
 		//newChromosom->countFitness();
-
 		this->population.push_back(newChromosom);
 	}
+
+	sort(this->population.begin(), this->population.end(), compareChromosoms);
 }
 
 double Algorithm::evaluatePopulation() {
 	long totalFitness = 0;
 
-	for (int i = 0; i < this->populationSize; i++)
-		totalFitness += this->population[i]->getFitness();
-
+	for(vector<Chromosom>::iterator it = this->population.begin(); it != this->population.end(); it++) {
+		//TODO Usunac w finalenj wersji.
+		(*it).setRandomFitness();
+		totalFitness += (*it).getFitness();
+		//totalFitness += (*it).countFitness();
+	}
 	return (totalFitness / this->populationSize);
 }
 
 void Algorithm::selectNewPopulation() {
 	sort(this->newPopulation.begin(), this->newPopulation.end(), compareChromosoms);
+	this->population.clear();
 
-	for(int i = 0; i < newPopulationSize; i++) {
-		if (i < populationSize) {
-			delete population[i];
-			population[i] = newPopulation[i];
-		}
-		else
-			delete newPopulation[i];
-
-		newPopulation[i] = NULL;
-	}
+	for(int i = 0; i < populationSize; i++)
+		this->population[i] = this->newPopulation[i];
 }
 
 void Algorithm::generateNewPopulation() {
-	Chromosom * parentA, * parentB, * childA = new Chromosom(), * childB = new Chromosom();
+	Chromosom childA, childB;
+
 	this->selectionOperator->prepareSelection(this->population);
-	parentA = this->selectionOperator->selectParent();
-	parentB = this->selectionOperator->selectParent();
+	for(int index = 0; index < newPopulationSize;)
+	{
+		childA = Chromosom();
+		childB = Chromosom();
+		Chromosom& parentA = this->selectionOperator->selectParent();
+		Chromosom& parentB = this->selectionOperator->selectParent();
 
-	crossoverOperator->crossChromosoms(*parentA, *parentB, *childA, *childB);
+		if (parentA.getGenotype() == parentB.getGenotype()) {
+			cout << "=== THE SAME PARENTS ===" << endl;
+			continue;
+		}
+		crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
+		childA.setRandomFitness();
+		childB.setRandomFitness();
+		this->newPopulation.push_back(childA);
+		this->newPopulation.push_back(childB);
+		index = index + 2;
 
-	cout << "Parent A Genotype: ";
-	parentA->printGenotype();
-	cout << "Child A Genotype:  ";
-	childA->printGenotype();
-	cout << "Parent B Genotype: ";
-	parentB->printGenotype();
-	cout << "Child B Genotype:  ";
-	childB->printGenotype();
-	mutationOperator->performMutation(*childB);
-	cout << "Chmut B Genotype:  ";
-	childB->printGenotype();
+		//TODO Usunac w finalnej wersji.
+		cout << "Parent A Genotype: ";
+		parentA.printGenotype();
+		//cout << "Child A Genotype:  ";
+		//childA.printGenotype();
+		cout << "Parent B Genotype: ";
+		parentB.printGenotype();
+		//cout << "Child B Genotype:  ";
+		//childB.printGenotype();
+	}
 
+	//TODO Napisac funkcje sprawdzajaca jakosc nowej populacji.
+
+	int i = 0;
+	for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
+		cout << "Chromosom " << i++ << ": " << " | Fitness: " << (*it).getFitness() << " | Genotype: ";
+		(*it).printGenotype();
+	}
 }
 
 void Algorithm::printPopulation() {
-		for(int i = 0; i < this->populationSize; i++) {
-			cout << "Chromosom " << i << ": " << this->population[i] << " | Fitness: " << this->population[i]->getFitness() << " | Genotype: ";
-			this->population[i]->printGenotype();
-		}
+	int i = 0;
+	for(vector<Chromosom>::iterator it = this->population.begin(); it != this->population.end(); it++) {
+		cout << "Chromosom " << i++ << ": " << " | Fitness: " << (*it).getFitness() << " | Genotype: ";
+		(*it).printGenotype();
 	}
-
-
-bool compareChromosoms(const Chromosom * A, const Chromosom * B) {
-	return A->getFitness() < B->getFitness();
 }
 
-/*
+
+bool compareChromosoms(const Chromosom & A, const Chromosom & B) {
+	return A.getFitness() < B.getFitness();
+}
+
 int main(int argc, const char* argv[] )
 {
 	srand(time(NULL));
 	SettingsProblem problem = {5, 5};
-	SettingsAlgorithm algorithm = {5, 5, 5, 5, 5, 5};
-	SettingsOperator operators = {new SelectionTournament(0.65, 3), new MutationInversion(), new CrossoverTwoPoint()};
+	SettingsAlgorithm algorithm = {5, 5, 10, 10, 5, 5};
+	SettingsOperator operators = {new SelectionTournament(0.95, 3), new MutationInversion(), new CrossoverTwoPoint()};
 	Algorithm  algorithms = Algorithm(problem, algorithm, operators);
 	Chromosom::setJobCount(problem.jobCount);
 	Chromosom::setMachineCount(problem.machineCount);
@@ -132,4 +146,4 @@ int main(int argc, const char* argv[] )
 
 	cout << "Finished.";
 }
-*/
+

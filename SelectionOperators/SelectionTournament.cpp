@@ -15,16 +15,16 @@ SelectionTournament::SelectionTournament(double selectionProbability, int compet
 SelectionTournament::~SelectionTournament() {
 }
 
-void SelectionTournament::prepareSelection(vector<Chromosom *> & population) {
+void SelectionTournament::prepareSelection(vector<Chromosom> & population) {
 
 	this->population = population;
 }
 
-Chromosom * SelectionTournament::selectParent() {
+Chromosom & SelectionTournament::selectParent() {
 	int randomCompetitor;
 	double randomProbability, competitorProbability = 1.0;
 	set<int> indicesUsed;
-	vector<Chromosom *> competitors;
+	vector<int> competitors;
 
 
 	for(int i = 0; i < this->competitorCount; i++) {
@@ -32,17 +32,17 @@ Chromosom * SelectionTournament::selectParent() {
 			randomCompetitor = rand() % this->population.size();
 		} while (indicesUsed.find(randomCompetitor) != indicesUsed.end());
 		indicesUsed.insert(randomCompetitor);
-		competitors.push_back(this->population[randomCompetitor]);
+		competitors.push_back(randomCompetitor);
 	}
 
-	sort(competitors.begin(), competitors.end(), compareChromosoms);
+	sort(competitors.begin(), competitors.end());
 
 	for(int i = 0; i < this->competitorCount; i++) {
 		competitorProbability *= this->selectionProbability;
 		randomProbability = (double) rand() / (RAND_MAX);
 
 		if (randomProbability < competitorProbability)
-			return competitors[i];
+			return this->population[competitors[i]];
 	}
-	return competitors.back();
+	return this->population[competitors[competitors.back()]];
 }

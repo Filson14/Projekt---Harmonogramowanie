@@ -18,8 +18,8 @@ CrossoverOnePoint::~CrossoverOnePoint() {
 
 void CrossoverOnePoint::crossChromosoms(const Chromosom & parentA, const Chromosom & parentB, Chromosom & childA, Chromosom & childB) {
 	int crossoverPoint;
-	const vector<int> parentAGenotype = parentA.getGenotype();
-	const vector<int> parentBGenotype = parentB.getGenotype();
+	const vector<int> & parentAGenotype = parentA.getGenotype();
+	const vector<int> & parentBGenotype = parentB.getGenotype();
 	vector<int> childAGenotype = parentA.getGenotype();
 	vector<int> childBGenotype = parentB.getGenotype();
 

@@ -17,20 +17,20 @@ MutationSwapping::~MutationSwapping() {
 }
 
 void MutationSwapping::performMutation(Chromosom & chromosom) {
-	int swappingPoint1, swappingPoint2;
+	int swappingPointA, swappingPointB;
 	vector<int> genotype = chromosom.getGenotype();
 
-	swappingPoint1 = swappingPoint2 = rand() % genotype.size();
-	while (swappingPoint1  == swappingPoint2)
-		swappingPoint2 = rand() % genotype.size();
+	swappingPointA = swappingPointB = rand() % genotype.size();
+	while (swappingPointA  == swappingPointB)
+		swappingPointB = rand() % genotype.size();
 
-	int temp = genotype[swappingPoint1];
-	genotype[swappingPoint1] = genotype[swappingPoint2];
-	genotype[swappingPoint2] = temp;
+	int temp = genotype[swappingPointA];
+	genotype[swappingPointA] = genotype[swappingPointB];
+	genotype[swappingPointB] = temp;
 
 	chromosom.setGenotype(genotype);
 
 	//TODO Usunac wypisywanie w wersji finalnej.
-	cout << "swappingPoint1: " << swappingPoint1 << " swappingPoint2: " << swappingPoint2 << endl;
+	cout << "swappingPointA: " << swappingPointA << " swappingPointB: " << swappingPointB << endl;
 }
 

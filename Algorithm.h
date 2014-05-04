@@ -25,9 +25,9 @@ public:
 	double meanPopulationFitness;	//!< Srednie przystosowanie populacji.
 	double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
 	double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
-	Chromosom* bestChromosom;	//!< Liczba dostepnych maszyn.
-	vector<Chromosom*> population;	//!< Aktualna populacja.
-	vector<Chromosom*> newPopulation;	//!< Nowa populacja.
+	Chromosom bestChromosom;	//!< Liczba dostepnych maszyn.
+	vector<Chromosom> population;	//!< Aktualna populacja.
+	vector<Chromosom> newPopulation;	//!< Nowa populacja.
 
 	SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
 	MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
@@ -53,6 +53,11 @@ public:
 	void selectNewPopulation();
 
 	/**
+	 * Funkcja odpowiada za dzialanie algorytmu.
+	 */
+	void runAlgorithm();
+
+	/**
 	 * Funkcja tworzy nowa populacje.
 	 */
 	void generateNewPopulation();
@@ -67,6 +72,6 @@ public:
 	void printPopulation();
 };
 
-bool compareChromosoms(const Chromosom * A, const Chromosom * B);
+bool compareChromosoms(const Chromosom & A, const Chromosom & B);
 
 #endif /* ALGORITHM_H_ */
