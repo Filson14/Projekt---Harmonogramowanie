@@ -31,6 +31,6 @@ void MutationSwapping::performMutation(Chromosom & chromosom) {
 	chromosom.setGenotype(genotype);
 
 	//TODO Usunac wypisywanie w wersji finalnej.
-	cout << "swappingPointA: " << swappingPointA << " swappingPointB: " << swappingPointB << endl;
+	//cout << "swappingPointA: " << swappingPointA << " swappingPointB: " << swappingPointB << endl;
 }
 

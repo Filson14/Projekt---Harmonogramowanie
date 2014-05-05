@@ -43,6 +43,6 @@ void MutationInversion::performMutation(Chromosom & chromosom) {
 	chromosom.setGenotype(inversedGenotype);
 
 	//TODO Usunac wypisywanie w wersji finalnej.
-	cout << "inversionPointA: " << inversionPointA << " inversionPointB: " << inversionPointB << endl;
+	//cout << "inversionPointA: " << inversionPointA << " inversionPointB: " << inversionPointB << endl;
 }
 

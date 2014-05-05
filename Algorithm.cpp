@@ -82,12 +82,23 @@ void Algorithm::generateNewPopulation() {
 			s++;
 			continue;
 		}
-		crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
 
-		if (!childA.isValid() && !childB.isValid()) {
-			x++;
-			continue;
+		if ((double) rand() / (RAND_MAX) < this->crossoverProbability) {
+			crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
+			if (!childA.isValid() && !childB.isValid()) {
+				x++;
+				continue;
+			}
+		} else {
+			childA = parentA;
+			childB = parentB;
 		}
+
+		if ((double) rand() / (RAND_MAX) < this->mutationProbability)
+			mutationOperator->performMutation(childA);
+
+		if ((double) rand() / (RAND_MAX) < this->mutationProbability)
+					mutationOperator->performMutation(childB);
 
 		this->newPopulation.push_back(childA);
 		this->newPopulation.push_back(childB);
@@ -146,7 +157,7 @@ void Algorithm::runAlgorithm() {
 		cout << "OK" << endl;
 
 		if(compareChromosoms(this->population[0], this->bestChromosom)) {
-			bestChromosom = this->population[0];
+			this->bestChromosom = this->population[0];
 			epochsWithoutChange = 0;
 		}
 		else
@@ -158,6 +169,9 @@ void Algorithm::runAlgorithm() {
 		//cout << "New population: " << endl;
 		//this->printPopulation(this->newPopulation);
 	} while (currentEpoche++ < this->maxEpochs && epochsWithoutChange < this->maxEpochsWithoutChange);
+
+	cout << "AND THE WINNER IS... *drum roll*" << endl;
+	this->bestChromosom.printChromosom();
 }
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {
@@ -168,17 +182,16 @@ bool compareChromosoms(const Chromosom & A, const Chromosom & B) {
 int main(int argc, const char* argv[] )
 {
 	srand(time(NULL));
-	SettingsProblem problem = {5, 5};
+	SettingsProblem problem = {3, 3};
 	SettingsAlgorithm algorithm = {5, 5, 10, 10, 5, 5};
 	SettingsOperator operators = {new SelectionTournament(0.95, 3), new MutationInversion(), new CrossoverTwoPoint()};
 	Algorithm  algorithms = Algorithm(problem, algorithm, operators);
 	Chromosom::setJobCount(problem.jobCount);
 	Chromosom::setMachineCount(problem.machineCount);
-	algorithms.initializePopulation();
-	algorithms.printPopulation();
-	algorithms.generateNewPopulation();
+	algorithms.runAlgorithm();
 
 	cout << "Finished.";
 }
 */
+
 
