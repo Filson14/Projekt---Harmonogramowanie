@@ -47,14 +47,12 @@ void Algorithm::initializePopulation() {
 
 double Algorithm::evaluatePopulation() {
 	long totalFitness = 0;
-	int i = 0;
 
 	for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
 		//TODO Usunac po testach.
 		(*it).setRandomFitness();
 		totalFitness += (*it).getFitness();
 		//(*it).countFitness();
-		cout << i++;
 	}
 	return (totalFitness / this->populationSize);
 }
@@ -136,6 +134,7 @@ void Algorithm::runAlgorithm() {
 		cout << "Evaluate population...";
 		this->evaluatePopulation();
 		cout << "OK" << endl;
+
 		cout << "Population: " << endl;
 		this->printPopulation(this->population);
 		cout << "New population: " << endl;
@@ -145,8 +144,6 @@ void Algorithm::runAlgorithm() {
 		this->selectNewPopulation();
 		cout << "OK" << endl;
 	}
-
-	this->bestChromosom.printChromosom();
 }
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {
