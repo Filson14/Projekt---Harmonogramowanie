@@ -43,5 +43,5 @@ Chromosom & SelectionTournament::selectParent() {
 		if (randomProbability < competitorProbability)
 			return this->population[competitors[i]];
 	}
-	return this->population[competitors[competitors.back()]];
+	return this->population[competitors.back()];
 }

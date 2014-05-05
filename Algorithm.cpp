@@ -83,7 +83,8 @@ void Algorithm::generateNewPopulation() {
 			continue;
 		}
 
-		if ((double) rand() / (RAND_MAX) < this->crossoverProbability) {
+		if (((double) rand()) / (RAND_MAX) < this->crossoverProbability) {
+			//TODO Wiecej szans dla tych samych rodzicow (brute force?).
 			crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
 			if (!childA.isValid() && !childB.isValid()) {
 				x++;
@@ -116,16 +117,6 @@ void Algorithm::generateNewPopulation() {
 	}
 
 	cout << "(" << s << ", " << x << ") ";
-/*
-	int equalCount = 0;
-	for(int i = 0; i < newPopulationSize; i++) {
-		for(int j = i+1; j < newPopulationSize; j++) {
-			if(this->newPopulation[i].getGenotype() == this->newPopulation[j].getGenotype())
-				equalCount++;
-		}
-	}
-	cout << "Equal count: " << equalCount << endl;
-*/
 }
 
 void Algorithm::printPopulation(const vector<Chromosom> & population) {
