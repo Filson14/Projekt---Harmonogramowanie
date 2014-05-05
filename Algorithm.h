@@ -44,7 +44,7 @@ public:
 	virtual ~Algorithm();
 
 	/**
-	 * Funkcja tworzy poczatkowa populacje chromosomow.
+	 * Funkcja tworzy poczatkowa populacje chromosomow oraz ja ewaluuje.
 	 */
 	void initializePopulation();
 

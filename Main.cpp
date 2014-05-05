@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 	Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
 
 	SettingsProblem problem = {Chromosom::getJobDatabase().getJobsAmount(), Chromosom::getJobDatabase().getMachinesAmount()};
-	SettingsAlgorithm algorithm = {5, 5, 6, 12, 0.5, 0.5};
+	SettingsAlgorithm algorithm = {5, 5, 20, 40, 0.5, 0.5};
 	SettingsOperator operators = {new SelectionTournament(0.9, 4), new MutationInversion(), new CrossoverTwoPoint()};
 
 	Algorithm algo(problem, algorithm, operators);
