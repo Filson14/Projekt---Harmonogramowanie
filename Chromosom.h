@@ -59,6 +59,9 @@ public:
 	 */
 	static void setMachineCount(int machineCount);
 
+	static int getMachineCount() ;
+	static int getJobCount() ;
+
 	/**
 	 * Funkcja pobiera wartosc fitness chromosomu.
 	 * \return wartosc zmiennej fitness.

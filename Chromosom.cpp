@@ -6,20 +6,24 @@
  */
 #include "Chromosom.h"
 #include <ctime>
+#include <limits>
 #include <cstdlib>
 
 Chromosom::Chromosom() {
+    fitness=std::numeric_limits<int>::max();
 
 }
 
 Chromosom::Chromosom(vector<int> genotype) {
 	this->genotype=genotype;
+	fitness=std::numeric_limits<int>::max();
 }
 
 Chromosom::Chromosom(Database& jobDatabase,int jobCount, int machineCount ) {
 	Chromosom::jobDatabase=jobDatabase;
 	Chromosom::jobCount=jobCount;
 	Chromosom::machineCount=machineCount;
+	fitness=std::numeric_limits<int>::max();
 }
 
 Chromosom::~Chromosom() {
@@ -42,6 +46,15 @@ void Chromosom::setJobDatabase(Database& jobDatabase)
 int Chromosom::getFitness() const {
 	return this->fitness;
 }
+
+int Chromosom::getJobCount()  {
+	return Chromosom::jobCount;
+}
+
+int Chromosom::getMachineCount()  {
+	return Chromosom::machineCount;
+}
+
 
 const vector<int>& Chromosom::getGenotype() const{
 	return this->genotype;
