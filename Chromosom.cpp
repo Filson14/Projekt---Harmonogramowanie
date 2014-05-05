@@ -121,6 +121,14 @@ void Chromosom::printGenotype()
     cout<<endl;
 }
 
+void Chromosom::printChromosom()
+{
+    cout<<"Genotype:  ";
+    for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+        cout<<setw(2)<<*it<<" ";
+    cout<<"Chromosom fitness: "<<setw(4)<<fitness<<endl;
+}
+
 void Chromosom::updateDatabaseWithStartTimes()
 {
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.

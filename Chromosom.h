@@ -9,6 +9,7 @@
 #define CHROMOSOM_H_
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include "DataModification/Database.h"
 using namespace std;
@@ -108,6 +109,8 @@ public:
 	 * Funkcja wypisuje genotyp na standardowe wyjœcie (konsolê).
 	 */
     void printGenotype();
+
+    void printChromosom();
 
     /**
 	 * Funkcja aktualizuje bazê danych wejœciowych o czasu rozpoczêcia poszczególnych zadañ w ka¿dej z prac.
