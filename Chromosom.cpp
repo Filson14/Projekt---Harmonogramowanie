@@ -87,6 +87,9 @@ void Chromosom::generateRandomGenotype() {
 }
 
 int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w od 0 - do ustalenia
+
+    if(!isValid())
+        return fitness;
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
 	vector<int> jobSchedule(jobCount,0);	//!< Informacje o postepach prac.
 	vector<int> currentTaskCount(jobCount,0);
@@ -96,13 +99,17 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
 	{
 	    currentTasknum=currentTaskCount[*it];
+       // cout<<"Przed current get machine ID cuurent task num: "<<currentTasknum<<" a job"<<*it<<endl;
+        //cout<<flush;
 	    currentMachineId=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getMachine()->getId();
+	   // cout<<"Current job num: "<<(*it)<<" current machined ID: "<<currentMachineId<<"task of the job: "<<currentTasknum<<"time of the task"<<jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime()<<endl;
 	    currentTaskCount[*it]++;
 
 	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
 	        jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	    else
 	        jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+
 
 	    machineSchedule[currentMachineId]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	}
@@ -111,6 +118,9 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
             startingfit=*it;
 
     this->fitness=startingfit;
+    machineSchedule.clear();
+    jobSchedule.clear();
+    currentTaskCount.clear();
     return this->fitness;
 }
 
@@ -163,6 +173,25 @@ void Chromosom::setRandomFitness()
 {
     this->fitness=rand()%1000;
 }
+
+
+bool Chromosom::isValid()
+{
+    vector<int> taskCount(jobCount,0);
+    for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+    {
+        taskCount[*it]++;
+    }
+    for(vector<int>::iterator it=taskCount.begin();it!=taskCount.end();it++)
+    {
+        if(*it!=machineCount)
+            return false;
+    }
+    return true;
+
+
+}
+
 
 
 int Chromosom::jobCount=0;	//!< Liczba zadan do wykonania.

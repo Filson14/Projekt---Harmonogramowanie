@@ -62,6 +62,7 @@ public:
 
 	static int getMachineCount() ;
 	static int getJobCount() ;
+	bool isValid();
 
 	/**
 	 * Funkcja pobiera wartosc fitness chromosomu.
