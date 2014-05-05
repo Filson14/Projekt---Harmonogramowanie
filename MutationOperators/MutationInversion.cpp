@@ -31,13 +31,13 @@ void MutationInversion::performMutation(Chromosom & chromosom) {
 		inversionPointB = temp;
 	}
 
-	for (vector<int>::const_iterator it = genotype.cbegin() + inversionPointB; it != genotype.cend(); it++)
+	for (vector<int>::const_iterator it = genotype.begin() + inversionPointB; it != genotype.end(); it++)
 		inversedGenotype.push_back(*it);
 
-	for (vector<int>::const_iterator it = genotype.cbegin() + inversionPointA; it != genotype.cbegin() + inversionPointB; it++)
+	for (vector<int>::const_iterator it = genotype.begin() + inversionPointA; it != genotype.begin() + inversionPointB; it++)
 		inversedGenotype.push_back(*it);
 
-	for (vector<int>::const_iterator it = genotype.cbegin(); it != genotype.cbegin() + inversionPointA; it++)
+	for (vector<int>::const_iterator it = genotype.begin(); it != genotype.begin() + inversionPointA; it++)
 			inversedGenotype.push_back(*it);
 
 	chromosom.setGenotype(inversedGenotype);
