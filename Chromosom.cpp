@@ -123,10 +123,11 @@ void Chromosom::printGenotype()
 
 void Chromosom::printChromosom()
 {
-    cout<<"Genotype:  ";
+    cout<<"Fitness:"<<setw(4)<<fitness<<" |";
+    cout<<" Genotype: ";
     for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
         cout<<setw(2)<<*it<<" ";
-    cout<<"Chromosom fitness: "<<setw(4)<<fitness<<endl;
+    cout<<endl;
 }
 
 void Chromosom::updateDatabaseWithStartTimes()
