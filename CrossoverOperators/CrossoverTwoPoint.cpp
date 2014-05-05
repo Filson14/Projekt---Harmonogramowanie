@@ -42,9 +42,9 @@ void CrossoverTwoPoint::crossChromosoms(const Chromosom & parentA, const Chromos
 	}
 
 	for(int i = 0; i < crossoverPointB; i++) {
-			childAGenotype[i] = parentBGenotype[i];
-			childBGenotype[i] = parentAGenotype[i];
-		}
+		childAGenotype[i] = parentBGenotype[i];
+		childBGenotype[i] = parentAGenotype[i];
+	}
 
 	childA.setGenotype(childAGenotype);
 	childB.setGenotype(childBGenotype);

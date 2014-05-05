@@ -16,7 +16,6 @@ SelectionTournament::~SelectionTournament() {
 }
 
 void SelectionTournament::prepareSelection(vector<Chromosom> & population) {
-
 	this->population = population;
 }
 

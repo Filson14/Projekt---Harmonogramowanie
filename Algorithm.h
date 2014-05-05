@@ -71,7 +71,7 @@ public:
 	/**
 	 * Funkcja wyswietla populacje.
 	 */
-	void printPopulation();
+	void printPopulation(const vector<Chromosom> & population);
 };
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B);

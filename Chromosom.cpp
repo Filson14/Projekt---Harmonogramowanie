@@ -86,7 +86,7 @@ void Chromosom::generateRandomGenotype() {
 
 }
 
-int Chromosom::countFitness() { //działa przy numeracji maszyn i jobów od 0 - do ustalenia
+int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w od 0 - do ustalenia
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
 	vector<int> jobSchedule(jobCount,0);	//!< Informacje o postepach prac.
 	vector<int> currentTaskCount(jobCount,0);
@@ -114,18 +114,18 @@ int Chromosom::countFitness() { //działa przy numeracji maszyn i jobów od 0 - 
     return this->fitness;
 }
 
-void Chromosom::printGenotype()
+void Chromosom::printGenotype() const
 {
-    for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+    for(vector<int>::const_iterator it=genotype.begin();it!=genotype.end();it++)
         cout<<*it<<" ";
     cout<<endl;
 }
 
-void Chromosom::printChromosom()
+void Chromosom::printChromosom() const
 {
     cout<<"Fitness:"<<setw(4)<<fitness<<" |";
     cout<<" Genotype: ";
-    for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+    for(vector<int>::const_iterator it=genotype.begin();it!=genotype.end();it++)
         cout<<setw(2)<<*it<<" ";
     cout<<endl;
 }

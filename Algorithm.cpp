@@ -23,8 +23,6 @@ Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm 
 	this->crossoverOperator = operators.crossoverOperator;
 
 	this->meanPopulationFitness = 0;
-	this->population.reserve(populationSize);
-	this->newPopulation.reserve(newPopulationSize);
 }
 
 Algorithm::~Algorithm() {
@@ -38,25 +36,25 @@ void Algorithm::initializePopulation() {
 	for(int i = 0; i < populationSize; i++) {
 		newChromosom = Chromosom();
 		newChromosom.generateRandomGenotype();
+		newChromosom.countFitness();
 
 		//TODO Usunac po testach.
 		//newChromosom.setRandomFitness();
-		//TODO Odkomentowac jak wersja Olka i Filipa beda w pelni dzialajace.
-		newChromosom.countFitness();
 		this->population.push_back(newChromosom);
 	}
-
 	sort(this->population.begin(), this->population.end(), compareChromosoms);
 }
 
 double Algorithm::evaluatePopulation() {
 	long totalFitness = 0;
+	int i = 0;
 
-	for(vector<Chromosom>::iterator it = this->population.begin(); it != this->population.end(); it++) {
-		//TODO Usunac w finalenj wersji.
-		//(*it).setRandomFitness();
-		//totalFitness += (*it).getFitness();
-		totalFitness += (*it).countFitness();
+	for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
+		//TODO Usunac po testach.
+		(*it).setRandomFitness();
+		totalFitness += (*it).getFitness();
+		//(*it).countFitness();
+		cout << i++;
 	}
 	return (totalFitness / this->populationSize);
 }
@@ -68,7 +66,7 @@ void Algorithm::selectNewPopulation() {
 	for(int i = 0; i < populationSize; i++)
 		this->population.push_back(this->newPopulation[i]);
 
-	//this->newPopulation.clear();
+	this->newPopulation.clear();
 }
 
 void Algorithm::generateNewPopulation() {
@@ -87,8 +85,6 @@ void Algorithm::generateNewPopulation() {
 			continue;
 		}
 		crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
-		//childA.setRandomFitness();
-		//childB.setRandomFitness();
 		this->newPopulation.push_back(childA);
 		this->newPopulation.push_back(childB);
 		index = index + 2;
@@ -103,46 +99,51 @@ void Algorithm::generateNewPopulation() {
 		//cout << "Child B Genotype:  ";
 		//childB.printGenotype();
 	}
-
-	//TODO Napisac funkcje sprawdzajaca jakosc nowej populacji.
-
-	//int i = 0;
-	//for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
-	//	cout << "Chromosom " << i++ << ": " << " | Fitness: " << (*it).getFitness() << " | Genotype: ";
-	//	(*it).printGenotype();
-	//}
-
-	//int equalCount = 0;
-	//for(int i = 0; i < newPopulationSize; i++) {
-	//	for(int j = i+1; j < newPopulationSize; j++) {
-	//		if(this->newPopulation[i].getGenotype() == this->newPopulation[j].getGenotype())
-	//			equalCount++;
-	//	}
-	//}
-	//cout << "Equal count: " << equalCount << endl;
-}
-
-void Algorithm::printPopulation() {
+/*
 	int i = 0;
-	for(vector<Chromosom>::iterator it = this->population.begin(); it != this->population.end(); it++) {
+	for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
 		cout << "Chromosom " << i++ << ": " << " | Fitness: " << (*it).getFitness() << " | Genotype: ";
 		(*it).printGenotype();
 	}
+
+	int equalCount = 0;
+	for(int i = 0; i < newPopulationSize; i++) {
+		for(int j = i+1; j < newPopulationSize; j++) {
+			if(this->newPopulation[i].getGenotype() == this->newPopulation[j].getGenotype())
+				equalCount++;
+		}
+	}
+	cout << "Equal count: " << equalCount << endl;
+*/
+}
+
+void Algorithm::printPopulation(const vector<Chromosom> & population) {
+	for(vector<Chromosom>::const_iterator it = population.begin(); it != population.end(); it++)
+		(*it).printChromosom();
 }
 
 void Algorithm::runAlgorithm() {
+	cout << "Initializing population... ";
 	this->initializePopulation();
-	this->evaluatePopulation();
+	cout << "OK" << endl;
 
 	for(int i = 0; i < 10; i++) {
-		this->printPopulation();
+
+		cout << "Generating new population (epoche: " << i << ")... ";
 		this->generateNewPopulation();
+		cout << "OK" << endl;
+
+		cout << "Evaluate population...";
 		this->evaluatePopulation();
+		cout << "OK" << endl;
+		cout << "Population: " << endl;
+		this->printPopulation(this->population);
+		cout << "New population: " << endl;
+		this->printPopulation(this->newPopulation);
+
+		cout << "Select new population... ";
 		this->selectNewPopulation();
-
-		this->bestChromosom = this->population[0];
-
-		cout << "Epoch: " << i << endl;
+		cout << "OK" << endl;
 	}
 
 	this->bestChromosom.printChromosom();
