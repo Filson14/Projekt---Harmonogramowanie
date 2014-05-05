@@ -62,10 +62,6 @@ public:
 	 */
 	void generateNewPopulation();
 
-	//TODO Operator mutacji
-	//TODO Operatory krzyzowania
-	//TODO Operatory selekcji
-
 	/**
 	 * Funkcja wyswietla populacje.
 	 */

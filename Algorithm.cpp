@@ -47,9 +47,9 @@ void Algorithm::initializePopulation() {
 		newChromosom.generateRandomGenotype();
 
 		//TODO Usunac po testach.
-		newChromosom.setRandomFitness();
+		//newChromosom.setRandomFitness();
 		//TODO Odkomentowac jak wersja Olka i Filipa beda w pelni dzialajace.
-		//newChromosom->countFitness();
+		newChromosom.countFitness();
 		this->population.push_back(newChromosom);
 	}
 
@@ -61,9 +61,9 @@ double Algorithm::evaluatePopulation() {
 
 	for(vector<Chromosom>::iterator it = this->population.begin(); it != this->population.end(); it++) {
 		//TODO Usunac w finalenj wersji.
-		(*it).setRandomFitness();
-		totalFitness += (*it).getFitness();
-		//totalFitness += (*it).countFitness();
+		//(*it).setRandomFitness();
+		//totalFitness += (*it).getFitness();
+		totalFitness += (*it).countFitness();
 	}
 	return (totalFitness / this->populationSize);
 }
@@ -88,7 +88,7 @@ void Algorithm::generateNewPopulation() {
 		Chromosom& parentB = this->selectionOperator->selectParent();
 
 		if (parentA.getGenotype() == parentB.getGenotype()) {
-			cout << "=== THE SAME PARENTS ===" << endl;
+			//cout << "=== THE SAME PARENTS ===" << endl;
 			continue;
 		}
 		crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
@@ -99,23 +99,32 @@ void Algorithm::generateNewPopulation() {
 		index = index + 2;
 
 		//TODO Usunac w finalnej wersji.
-		cout << "Parent A Genotype: ";
-		parentA.printGenotype();
+		//cout << "Parent A Genotype: ";
+		//parentA.printGenotype();
 		//cout << "Child A Genotype:  ";
 		//childA.printGenotype();
-		cout << "Parent B Genotype: ";
-		parentB.printGenotype();
+		//cout << "Parent B Genotype: ";
+		//parentB.printGenotype();
 		//cout << "Child B Genotype:  ";
 		//childB.printGenotype();
 	}
 
 	//TODO Napisac funkcje sprawdzajaca jakosc nowej populacji.
 
-	int i = 0;
-	for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
-		cout << "Chromosom " << i++ << ": " << " | Fitness: " << (*it).getFitness() << " | Genotype: ";
-		(*it).printGenotype();
-	}
+	//int i = 0;
+	//for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
+	//	cout << "Chromosom " << i++ << ": " << " | Fitness: " << (*it).getFitness() << " | Genotype: ";
+	//	(*it).printGenotype();
+	//}
+
+	//int equalCount = 0;
+	//for(int i = 0; i < newPopulationSize; i++) {
+	//	for(int j = i+1; j < newPopulationSize; j++) {
+	//		if(this->newPopulation[i].getGenotype() == this->newPopulation[j].getGenotype())
+	//			equalCount++;
+	//	}
+	//}
+	//cout << "Equal count: " << equalCount << endl;
 }
 
 void Algorithm::printPopulation() {
@@ -126,11 +135,22 @@ void Algorithm::printPopulation() {
 	}
 }
 
+void Algorithm::runAlgorithm() {
+	this->initializePopulation();
+	this->evaluatePopulation();
+
+	for(int i = 0; i < 100; i++) {
+		this->generateNewPopulation();
+		this->evaluatePopulation();
+		this->selectNewPopulation();
+	}
+}
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {
 	return A.getFitness() < B.getFitness();
 }
 
+/*
 int main(int argc, const char* argv[] )
 {
 	srand(time(NULL));
@@ -146,4 +166,5 @@ int main(int argc, const char* argv[] )
 
 	cout << "Finished.";
 }
+*/
 
