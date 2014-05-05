@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
 	srand(time(NULL));
 
-	Chromosom::getJobDatabase().readFromFile("./test.txt");
+	Chromosom::getJobDatabase().readFromFile("/Users/Wojtek/Documents/Eclipse/Harmonogramowanie/Projekt-Harmonogramowanie/test.txt");
 	Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
 	Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
 

@@ -66,7 +66,9 @@ void Algorithm::selectNewPopulation() {
 	this->population.clear();
 
 	for(int i = 0; i < populationSize; i++)
-		this->population[i] = this->newPopulation[i];
+		this->population.push_back(this->newPopulation[i]);
+
+	//this->newPopulation.clear();
 }
 
 void Algorithm::generateNewPopulation() {
@@ -85,8 +87,8 @@ void Algorithm::generateNewPopulation() {
 			continue;
 		}
 		crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
-		childA.setRandomFitness();
-		childB.setRandomFitness();
+		//childA.setRandomFitness();
+		//childB.setRandomFitness();
 		this->newPopulation.push_back(childA);
 		this->newPopulation.push_back(childB);
 		index = index + 2;
@@ -132,11 +134,18 @@ void Algorithm::runAlgorithm() {
 	this->initializePopulation();
 	this->evaluatePopulation();
 
-	for(int i = 0; i < 100; i++) {
+	for(int i = 0; i < 10; i++) {
+		this->printPopulation();
 		this->generateNewPopulation();
 		this->evaluatePopulation();
 		this->selectNewPopulation();
+
+		this->bestChromosom = this->population[0];
+
+		cout << "Epoch: " << i << endl;
 	}
+
+	this->bestChromosom.printChromosom();
 }
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {

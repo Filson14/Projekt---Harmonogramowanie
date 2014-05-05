@@ -34,7 +34,7 @@ void CrossoverTwoPoint::crossChromosoms(const Chromosom & parentA, const Chromos
 	}
 
 	//TODO Usunac w finalnej wersji.
-	cout << "Crossover Point1: " << crossoverPointA << " Crossover Point2: " << crossoverPointB << endl;
+	//cout << "Crossover Point1: " << crossoverPointA << " Crossover Point2: " << crossoverPointB << endl;
 
 	for(int i = 0; i < crossoverPointA; i++) {
 		childAGenotype[i] = parentBGenotype[i];
