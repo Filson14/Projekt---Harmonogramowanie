@@ -6,13 +6,6 @@
  */
 
 #include "Algorithm.h"
-#include "SettingsStructures.h"
-#include "SelectionOperators/SelectionTournament.h"
-#include "SelectionOperators/SelectionRoulette.h"
-#include "CrossoverOperators/CrossoverOnePoint.h"
-#include "CrossoverOperators/CrossoverTwoPoint.h"
-#include "MutationOperators/MutationSwapping.h"
-#include "MutationOperators/MutationInversion.h"
 
 Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) {
 	this->jobCount = problem.jobCount;

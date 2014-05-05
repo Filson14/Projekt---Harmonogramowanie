@@ -11,6 +11,12 @@
 #include <algorithm>
 #include "Chromosom.h"
 #include "SettingsStructures.h"
+#include "SelectionOperators/SelectionTournament.h"
+#include "SelectionOperators/SelectionRoulette.h"
+#include "CrossoverOperators/CrossoverOnePoint.h"
+#include "CrossoverOperators/CrossoverTwoPoint.h"
+#include "MutationOperators/MutationSwapping.h"
+#include "MutationOperators/MutationInversion.h"
 
 
 

@@ -1,15 +1,15 @@
-#include "Algorithm.h"
 #include <iostream>
+#include "Algorithm.h"
 #include "./DataModification/Database.h"
 #include "./DataModification/Job.h"
 #include "./DataModification/Machine.h"
 #include "./DataModification/Task.h"
-#include "SettingsStructures.h"
+
 
 int main(int argc, char *argv[]){
 	srand(time(NULL));
 
-	Chromosom::getJobDatabase().readFromFile("test.txt");
+	Chromosom::getJobDatabase().readFromFile("./test.txt");
 	Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
 	Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
 
