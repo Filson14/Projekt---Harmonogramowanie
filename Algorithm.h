@@ -21,7 +21,7 @@
 
 
 class Algorithm {
-public:
+private:
 	int maxEpochs;	//!< Maksymalna liczba epok;
 	int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
 	int jobCount;	//!< Liczba zadan do wykonania.

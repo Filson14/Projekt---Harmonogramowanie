@@ -159,10 +159,11 @@ void Algorithm::runAlgorithm() {
 		//this->printPopulation(this->population);
 		//cout << "New population: " << endl;
 		//this->printPopulation(this->newPopulation);
-	} while (currentEpoche++ < this->maxEpochs && epochsWithoutChange < this->maxEpochsWithoutChange);
+	} while (currentEpoche++ < this->maxEpochs);// && epochsWithoutChange < this->maxEpochsWithoutChange);
 
 	cout << "AND THE WINNER IS... *drum roll*" << endl;
 	this->bestChromosom.printChromosom();
+	this->bestChromosom.updateDatabaseWithStartTimes();
 }
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {

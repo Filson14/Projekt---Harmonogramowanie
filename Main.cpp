@@ -9,15 +9,15 @@
 int main(int argc, char *argv[]){
 	srand(time(NULL));
 
-	if(Chromosom::getJobDatabase().readFromFile("test5.txt")){
+	if(Chromosom::getJobDatabase().readFromFile("/Users/Wojtek/Documents/Eclipse/Harmonogramowanie/Projekt-Harmonogramowanie/test1.txt")){
 		Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
 		Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
 
 		Chromosom::getJobDatabase().presentData();
 
 		SettingsProblem problem = {Chromosom::getJobDatabase().getJobsAmount(), Chromosom::getJobDatabase().getMachinesAmount()};
-		SettingsAlgorithm algorithm = {30, 15, 16, 20, 0.75, 0.35};
-		SettingsOperator operators = {new SelectionTournament(0.5, 8), new MutationInversion(), new CrossoverTwoPoint()};
+		SettingsAlgorithm algorithm = {500, 75, 20, 30, 0.85, 0.25};
+		SettingsOperator operators = {new SelectionTournament(0.7, 8), new MutationInversion(), new CrossoverTwoPoint()};
 
 		Algorithm algo(problem, algorithm, operators);
 		algo.runAlgorithm();
