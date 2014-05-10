@@ -80,6 +80,18 @@ public:
 	 * \return True - jesli maszyna zosta³a ju¿ u¿yta; False - w przeciwnym wypadku.
 	 */
 	bool isMachineUsed(int machineId);
+
+	/**
+	 * Metoda zmieniaj¹ca kolejnosæ tasków
+	 * \param currPos Task, którego miejsce wykonania zmieniamy.
+	 * \param newPos Miejsce wykonania jakie chcemy ustawiæ.
+	 */
+	void changeTaskPosition(int currPos, int newPos);
+
+	/**
+	 * Metoda zeruj¹ca czasy rozpoczêcia tasków (Wszystkie taski wykonywane w sposób ci¹g³y.
+	 */
+	void resetTimetable();
 };
 
 

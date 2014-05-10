@@ -9,12 +9,22 @@ Job::~Job(){
 }
 
 void Job::addTask(Machine* machine, int startTime, int duration){
-	Task newTask(machine, startTime, duration);
-	this->taskList.push_back(newTask);
+	if( !isMachineUsed(machine->getId()) ){
+		int minStartTime = taskList.back().getStart() + taskList.back().getTime();
+		if( startTime < minStartTime )
+			startTime = minStartTime;
+		Task newTask(machine, startTime, duration);
+		this->taskList.push_back(newTask);
+	}
 }
 
 void Job::addTask(Task newTask){
-	taskList.push_back(newTask);
+	if( !isMachineUsed(newTask.getMachine()->getId()) ){
+		int minStartTime = taskList.back().getStart() + taskList.back().getTime();
+		if( newTask.getStart() < minStartTime )
+			newTask.setStart(minStartTime);
+		taskList.push_back(newTask);
+	}
 }
 
 void Job::deleteTask(int machineId){
@@ -23,12 +33,13 @@ void Job::deleteTask(int machineId){
 		i++;
 	}
 	if(i < taskList.size()){
-		int timeToDelete = taskList[i].getTime();
+		//int timeToDelete = taskList[i].getTime();
 		taskList.erase(taskList.begin()+i);
-		for(int j=i; j<taskList.size(); j++){
+		resetTimetable();
+		/*for(int j=i; j<taskList.size(); j++){
 			int currentStart = taskList[j].getStart();
 			taskList[j].setStart(currentStart - timeToDelete);
-		}
+		}*/
 	}
 }
 
@@ -39,12 +50,13 @@ void Job::changeTaskDuration(int machineId, int duration){
 			i++;
 		}
 		if(i < taskList.size()){
-			int diff = duration - taskList[i].getTime();
+			//int diff = duration - taskList[i].getTime();
 			taskList[i].setTime(duration);
-			for(int j=i+1; j<taskList.size(); j++){
+			resetTimetable();
+			/*for(int j=i+1; j<taskList.size(); j++){
 				int currentStart = taskList[j].getStart();
 				taskList[j].setStart(currentStart + diff);
-			}
+			}*/
 		}
 	}
 }
@@ -62,7 +74,6 @@ void Job::changeTaskStart(int machineId, int time){
 
 bool Job::isMachineUsed(int machineId){
 	bool result = false;
-
 	for(int i=0; i<taskList.size(); i++){
 		if(taskList[i].getMachine()->getId()==machineId){
 			result = true;
@@ -72,4 +83,19 @@ bool Job::isMachineUsed(int machineId){
 	return result;
 }
 
+void Job::changeTaskPosition(int currPos, int newPos){
+	if( (currPos < taskList.size()) && (newPos < taskList.size()) && (currPos != newPos) ){
+		Task temp = taskList[currPos];
+		taskList.erase(taskList.begin() + currPos);
+		taskList.insert(taskList.begin() + newPos, temp);
+		resetTimetable();
+	}
+}
 
+void Job::resetTimetable(){
+	int timeSummary = 0;
+	for(int i=0; i<taskList.size(); i++){
+		taskList[i].setStart(timeSummary);
+		timeSummary += taskList[i].getTime();
+	}
+}

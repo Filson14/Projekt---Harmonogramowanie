@@ -223,14 +223,8 @@ void Database::clearDatabase(){
 }
 
 void Database::resetDatabase(){
-	int timeSummary;
 	for(int i=0; i<jobs.size(); i++){
-		timeSummary = 0;
-		vector<Task> &list = jobs[i].getTaskList();
-		for(int j=0; j<list.size(); j++){
-			list[j].setStart(timeSummary);
-			timeSummary += list[j].getTime();
-		}
+		jobs[i].resetTimetable();
 	}
 }
 
@@ -247,4 +241,14 @@ void Database::presentData(){
 		cout << endl;
 	}
 	cout << endl;
+}
+
+bool Database::checkDatabase(){
+	bool result = true;
+	int machinesCount = machines.size();
+	for(int i=0; i<jobs.size(); i++){
+		if( jobs[i].getTaskList().size() != machinesCount )
+			result = false;
+	}
+	return result;
 }

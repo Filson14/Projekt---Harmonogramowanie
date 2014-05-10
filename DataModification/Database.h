@@ -142,6 +142,13 @@ public:
 	 * Metoda prezentuj¹ca bazê danych (wypisywanie w konsoli).
 	 */
 	void presentData();
+
+
+	/**
+	 * Funkcja sprawdza czy w sekwencjach wszystkich Job'ów u¿ytko wszystkich maszyn w bazie.
+	 * \return True - jesli wszystko siê zgadza; False - w przeciwnym wypadku.
+	 */
+	bool checkDatabase();
 };
 
 

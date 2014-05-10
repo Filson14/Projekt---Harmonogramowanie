@@ -82,8 +82,5 @@ public:
 	void setTime(int time) {
 		this->time = time;
 	}
-
-
-
 };
 #endif /* TASK_H_ */
