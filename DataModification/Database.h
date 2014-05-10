@@ -26,7 +26,7 @@ using namespace std;
 class Database{
 private:
 	vector<Job> jobs;			//!< Lista prac, dla których jest generowany harmonogram.
-	vector<Machine> machines;	//!< Lista dostêpnych maszyn.
+	vector<Machine*> machines;	//!< Lista wskaŸników do dostêpnych maszyn.
 
 public:
 	/**
@@ -62,7 +62,7 @@ public:
 	 * Getter listy maszyn.
 	 * \return Referencja listy maszyn.
 	 */
-	vector<Machine>& getMachines(){
+	vector<Machine*>& getMachines(){
 		return machines;
 	}
 

@@ -121,8 +121,8 @@ bool Database::saveToFile(const char* filename){
 Machine* Database::getMachine(int id){
 	Machine *result = NULL;
 	for(int i=0; i<machines.size(); i++){
-		if(machines[i].getId() == id){
-			result = &(machines[i]);
+		if(machines[i]->getId() == id){
+			result = machines[i];
 			break;
 		}
 	}
@@ -138,7 +138,7 @@ bool Database::machineExists(int id){
 
 Machine* Database::addMachine(int id){
 	Machine *newMachine = new Machine(id);
-	this->machines.push_back(*newMachine);
+	this->machines.push_back(newMachine);
 	return newMachine;
 }
 
@@ -162,9 +162,10 @@ void Database::deleteMachine(int id){
 			jobs[i].deleteTask(id);
 		}
 		i = 0;
-		while(machines[i].getId() != id)
+		while(machines[i]->getId() != id)
 			i++;
 		if(i < machines.size()){
+			delete machines[i];
 			machines.erase(machines.begin()+i);
 		}
 	}else{
@@ -174,7 +175,7 @@ void Database::deleteMachine(int id){
 
 Database* Database::generateRandomData(int jobCount, int machinesCount){
 	int randMachine, randElem, timeSummary, randTime;
-	Job *newJob;
+	//Job *newJob;
 	vector<int> tempVector;
 	if(jobCount>0 && machinesCount>0){
 		clearDatabase();
@@ -184,7 +185,8 @@ Database* Database::generateRandomData(int jobCount, int machinesCount){
 		}
 
 		for(int i=0; i<jobCount; i++){
-			newJob = new Job();
+			//newJob = new Job();
+			this->addJob();
 			timeSummary = 0;
 
 			for(int j=0; j<machinesCount; j++){
@@ -195,15 +197,18 @@ Database* Database::generateRandomData(int jobCount, int machinesCount){
 				randMachine = tempVector[randElem];
 				*/
 				randMachine = rand() % machinesCount;
-				while(newJob->isMachineUsed(randMachine))
+				while(jobs.back().isMachineUsed(randMachine))
 					randMachine = rand() % machinesCount;
-
+				/*while(newJob->isMachineUsed(randMachine))
+					randMachine = rand() % machinesCount;
 				randTime = rand() % 20;
-				newJob->addTask(this->getMachine(randMachine), timeSummary, randTime);
+				newJob->addTask(this->getMachine(randMachine), timeSummary, randTime);*/
+				randTime = rand() % 20;
+				jobs.back().addTask(this->getMachine(randMachine), timeSummary, randTime);
 				timeSummary += randTime;
 			}
 			//cout << endl;
-			this->addJob(*newJob);
+			//this->addJob(*newJob);
 		}
 	}
 
@@ -212,6 +217,8 @@ Database* Database::generateRandomData(int jobCount, int machinesCount){
 
 void Database::clearDatabase(){
 	jobs.clear();
+	for(int i=0; i<machines.size(); i++)
+		delete machines[i];
 	machines.clear();
 }
 
