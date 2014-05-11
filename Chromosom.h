@@ -8,7 +8,10 @@
 #ifndef CHROMOSOM_H_
 #define CHROMOSOM_H_
 
+#define RANDOMREPAIR 50
+
 #include <iostream>
+#include <algorithm>
 #include <iomanip>
 #include <vector>
 #include "DataModification/Database.h"
@@ -122,6 +125,8 @@ public:
 	 * Funkcja ustawia zmienn� fitness na losow� warto�� z zakresu 0-999 (w celach testowych).
 	 */
     void setRandomFitness();
+
+    bool repairChromosom();
 
 
 

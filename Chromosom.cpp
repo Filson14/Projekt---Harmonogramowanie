@@ -192,6 +192,50 @@ bool Chromosom::isValid()
 
 }
 
+bool Chromosom::repairChromosom()
+{
+    if (isValid())
+        return false;
+
+    vector<int> taskCount(jobCount,0);
+    vector<int> jobsleft;
+    int rand1,rand2;
+
+    for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+    {
+        taskCount[*it]++;
+    }
+
+
+    for(vector<int>::iterator it=taskCount.begin();it!=taskCount.end();it++)
+    {
+
+        for(int i=*it;i<jobCount;i++)
+            jobsleft.push_back(it-taskCount.begin());
+    }
+
+    for(int i=0;i<RANDOMREPAIR;i++)
+    {
+        rand1=rand()%jobsleft.size();
+        rand2=rand()%jobsleft.size();
+        swap(jobsleft[rand1],jobsleft[rand2]);
+
+    }
+
+    taskCount=vector<int>(jobCount,0);
+
+    for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
+    {
+        taskCount[*it]++;
+        if(taskCount[*it]>jobCount)
+        {
+            *it=jobsleft.back();
+            jobsleft.pop_back();
+        }
+    }
+    return true;
+
+}
 
 
 int Chromosom::jobCount=0;	//!< Liczba zadan do wykonania.
