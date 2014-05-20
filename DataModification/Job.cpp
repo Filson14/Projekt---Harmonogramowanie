@@ -10,7 +10,9 @@ Job::~Job(){
 
 void Job::addTask(Machine* machine, int startTime, int duration){
 	if( !isMachineUsed(machine->getId()) ){
-		int minStartTime = taskList.back().getStart() + taskList.back().getTime();
+		int minStartTime = 0;
+		if(taskList.size()!=0)
+			minStartTime = taskList.back().getStart() + taskList.back().getTime();
 		if( startTime < minStartTime )
 			startTime = minStartTime;
 		Task newTask(machine, startTime, duration);
