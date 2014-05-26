@@ -96,6 +96,7 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 	int startingfit=0;
 	int currentTasknum;
 	int currentMachineId;
+    int jobstarttime;
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
 	{
 	    currentTasknum=currentTaskCount[*it];
@@ -106,12 +107,17 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 	    currentTaskCount[*it]++;
 
 	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
-	        jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
-	    else
-	        jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+        {
+            jobstarttime=machineSchedule[currentMachineId];
+            jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+        }
+        else
+        {
+             jobstarttime=jobSchedule[*it];
+             jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+        }
 
-
-	    machineSchedule[currentMachineId]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+        machineSchedule[currentMachineId]=jobstarttime+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	}
 	for(vector<int>::iterator it=jobSchedule.begin();it!=jobSchedule.end();it++)
 	    if(*it>startingfit)
@@ -145,9 +151,9 @@ void Chromosom::updateDatabaseWithStartTimes()
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
 	vector<int> jobSchedule(jobCount,0);	//!< Informacje o postepach prac.
 	vector<int> currentTaskCount(jobCount,0);
-	int startingfit=0;
 	int currentTasknum;
 	int currentMachineId;
+    int jobstarttime;
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
 	{
 	    currentTasknum=currentTaskCount[*it];
@@ -156,15 +162,17 @@ void Chromosom::updateDatabaseWithStartTimes()
 
 	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
 	    {
+            jobstarttime=machineSchedule[currentMachineId];
 	        jobDatabase.getJobs()[*it].changeTaskStart(currentMachineId,machineSchedule[currentMachineId]);
 	        jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	    }
 	    else
 	    {
+            jobstarttime=jobSchedule[*it];
 	        jobDatabase.getJobs()[*it].changeTaskStart(currentMachineId,jobSchedule[*it]);
 	        jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	    }
-	    machineSchedule[currentMachineId]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+        machineSchedule[currentMachineId]=jobstarttime+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	}
 
 }
