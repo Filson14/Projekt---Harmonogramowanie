@@ -25,12 +25,4 @@ struct SettingsAlgorithm {
 	//~SettingsAlgorithm();
 };
 
-struct SettingsProblem {
-	int jobCount;	//!< Ilosc prac do wykonania.
-	int machineCount;	//!< Ilosc dostepnych maszyn.
-
-	//SettingsProblem (int jobCount, int machineCount);
-	//~SettingsProblem();
-};
-
 #endif /* SettingsStructures.h */

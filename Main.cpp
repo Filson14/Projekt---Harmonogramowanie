@@ -13,13 +13,10 @@ int main(int argc, char *argv[]){
 		Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
 		Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
 
-		Chromosom::getJobDatabase().presentData();
-
-		SettingsProblem problem = {Chromosom::getJobDatabase().getJobsAmount(), Chromosom::getJobDatabase().getMachinesAmount()};
 		SettingsAlgorithm algorithm = {500, 75, 20, 30, 0.85, 0.25};
 		SettingsOperator operators = {new SelectionTournament(0.7, 8), new MutationInversion(), new CrossoverTwoPoint()};
 
-		Algorithm algo(problem, algorithm, operators);
+        Algorithm algo(algorithm, operators);
 		algo.runAlgorithm();
 
 		Chromosom::getJobDatabase().presentData();

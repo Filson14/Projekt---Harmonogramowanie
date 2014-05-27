@@ -7,9 +7,7 @@
 
 #include "Algorithm.h"
 
-Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) {
-	this->jobCount = problem.jobCount;
-	this->machineCount = problem.machineCount;
+Algorithm::Algorithm(struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) : QObject() {
 
 	this->maxEpochs = algorithm.maxEpochs;
 	this->maxEpochsWithoutChange = algorithm.maxEpochsWithoutChange;
@@ -22,11 +20,15 @@ Algorithm::Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm 
 	this->mutationOperator = operators.mutationOperator;
 	this->crossoverOperator = operators.crossoverOperator;
 
-	this->meanPopulationFitness = 0;
+    this->statistics.epoch = 0;
+    this->statistics.lastImprovement = 0;
+    this->statistics.sameParents = 0;
+    this->statistics.mutationCount = 0;
+    this->statistics.crossoverCount = 0;
+    this->statistics.invalidSolutions = 0;
 }
 
 Algorithm::~Algorithm() {
-
 	this->population.clear();
 	this->newPopulation.clear();
 }
@@ -47,9 +49,6 @@ double Algorithm::evaluatePopulation() {
 	long totalFitness = 0;
 
 	for(vector<Chromosom>::iterator it = this->newPopulation.begin(); it != this->newPopulation.end(); it++) {
-		//TODO Usunac po testach.
-		//(*it).setRandomFitness();
-		//totalFitness += (*it).getFitness();
 		totalFitness += (*it).countFitness();
 	}
 

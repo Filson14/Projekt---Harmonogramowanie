@@ -7,10 +7,12 @@
 
 #ifndef ALGORITHM_H_
 #define ALGORITHM_H_
+#include <QObject>
 #include <vector>
 #include <algorithm>
 #include "Chromosom.h"
 #include "SettingsStructures.h"
+#include "StatisticsStructure.h"
 #include "SelectionOperators/SelectionTournament.h"
 #include "SelectionOperators/SelectionRoulette.h"
 #include "CrossoverOperators/CrossoverOnePoint.h"
@@ -20,15 +22,15 @@
 
 
 
-class Algorithm {
+class Algorithm : public QObject
+{
+
+    Q_OBJECT
 private:
 	int maxEpochs;	//!< Maksymalna liczba epok;
 	int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
-	int jobCount;	//!< Liczba zadan do wykonania.
-	int machineCount;	//!< Liczba dostepnych maszyn.
 	int populationSize;	//!< Rozmiar populacji.
-	int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
-	double meanPopulationFitness;	//!< Srednie przystosowanie populacji.
+    int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
 	double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
 	double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
 	Chromosom bestChromosom;	//!< Liczba dostepnych maszyn.
@@ -38,10 +40,11 @@ private:
 	SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
 	MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
 	CrossoverOperator * crossoverOperator;	//!< Operator krzyzowania osobnikow.
+    AlgorithmStatistics statistics; //!< Struktura przechowująca statystyki pracy algorytmu.
 
 public:
-	Algorithm(struct SettingsProblem & problem, struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators);
-	virtual ~Algorithm();
+    Algorithm(struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators);
+    virtual ~Algorithm();
 
 	/**
 	 * Funkcja tworzy poczatkowa populacje chromosomow oraz ja ewaluuje.
@@ -72,6 +75,9 @@ public:
 	 * Funkcja wyswietla populacje.
 	 */
 	void printPopulation(const vector<Chromosom> & population);
+
+signals:
+public slots:
 };
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B);
