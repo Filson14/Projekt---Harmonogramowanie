@@ -173,6 +173,12 @@ void Database::deleteMachine(int id){
 	}
 }
 
+void Database::deleteJob(int num){
+	if(jobs.size()>0 && num < jobs.size()){
+		jobs.erase(jobs.begin()+num);
+	}
+}
+
 Database* Database::generateRandomData(int jobCount, int machinesCount){
 	int randMachine, randElem, timeSummary, randTime;
 	//Job *newJob;

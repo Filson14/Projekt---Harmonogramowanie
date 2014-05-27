@@ -121,6 +121,12 @@ public:
 	void deleteMachine(int id);
 
 	/**
+	 * Metoda usuwaj¹ca sekwencjê Joba.
+	 * \param num Numer Joba do usuniêcia.
+	 */
+	void deleteJob(int num);
+
+	/**
 	 * Funkcja generuj¹ca losowe dane wejsciowe do programu.
 	 * \param jobCount Ilosc prac do wygenerowania.
 	 * \param machinesCount Ilosc maszyn do u¿ycia.
