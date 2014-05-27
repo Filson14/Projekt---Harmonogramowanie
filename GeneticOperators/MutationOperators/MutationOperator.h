@@ -7,7 +7,7 @@
 
 #ifndef MUTATIONOPERATOR_H_
 #define MUTATIONOPERATOR_H_
-#include "../Chromosom.h"
+#include "../../Algorithm/Chromosom.h"
 
 class MutationOperator {
 public:

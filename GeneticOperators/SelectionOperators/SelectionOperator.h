@@ -8,7 +8,7 @@
 #ifndef SELECTIONOPERATOR_H_
 #define SELECTIONOPERATOR_H_
 #include <vector>
-#include "../Chromosom.h"
+#include "../../Algorithm/Chromosom.h"
 
 class SelectionOperator {
 protected:

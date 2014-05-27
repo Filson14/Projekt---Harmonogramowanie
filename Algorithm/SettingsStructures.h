@@ -1,8 +1,8 @@
 #ifndef SETTINGSSTRUCTURES_H_
 #define SETTINGSSTRUCTURES_H_
-#include "./SelectionOperators/SelectionOperator.h"
-#include "./MutationOperators/MutationOperator.h"
-#include "./CrossoverOperators/CrossoverOperator.h"
+#include "../GeneticOperators/SelectionOperators/SelectionOperator.h"
+#include "../GeneticOperators/MutationOperators/MutationOperator.h"
+#include "../GeneticOperators/CrossoverOperators/CrossoverOperator.h"
 
 struct SettingsOperator {
 	SelectionOperator * selectionOperator;	//!< Wskaznik do klasy pelniacej funkcje operatora selekcji.

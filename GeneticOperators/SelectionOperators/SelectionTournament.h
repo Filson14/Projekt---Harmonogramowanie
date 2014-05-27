@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <set>
 #include <algorithm>
-#include "../Algorithm.h"
+
 #include "SelectionOperator.h"
 
 class SelectionTournament: public SelectionOperator {

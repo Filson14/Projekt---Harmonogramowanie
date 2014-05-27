@@ -7,7 +7,7 @@
 
 #ifndef CROSSOVEROPERATOR_H_
 #define CROSSOVEROPERATOR_H_
-#include "../Chromosom.h"
+#include "../../Algorithm/Chromosom.h"
 
 class CrossoverOperator {
 public:

@@ -4,7 +4,7 @@
  *  Created on: May 2, 2014
  *      Author: Wojtek
  */
-#include "../Algorithm.h"
+
 #include "SelectionRoulette.h"
 
 SelectionRoulette::SelectionRoulette() {

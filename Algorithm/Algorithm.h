@@ -13,12 +13,12 @@
 #include "Chromosom.h"
 #include "SettingsStructures.h"
 #include "StatisticsStructure.h"
-#include "SelectionOperators/SelectionTournament.h"
-#include "SelectionOperators/SelectionRoulette.h"
-#include "CrossoverOperators/CrossoverOnePoint.h"
-#include "CrossoverOperators/CrossoverTwoPoint.h"
-#include "MutationOperators/MutationSwapping.h"
-#include "MutationOperators/MutationInversion.h"
+#include "../GeneticOperators/SelectionOperators/SelectionTournament.h"
+#include "../GeneticOperators/SelectionOperators/SelectionRoulette.h"
+#include "../GeneticOperators/CrossoverOperators/CrossoverOnePoint.h"
+#include "../GeneticOperators/CrossoverOperators/CrossoverTwoPoint.h"
+#include "../GeneticOperators/MutationOperators/MutationSwapping.h"
+#include "../GeneticOperators/MutationOperators/MutationInversion.h"
 
 
 
