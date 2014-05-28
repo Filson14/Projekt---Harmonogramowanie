@@ -16,7 +16,7 @@ private:
     QVector<QColor> cVect;
     QVector<ExtQCPStatisticalBox*> allSP;
 public:
-    explicit BlockPlot(Chromosom* best=0,QWidget *parent = 0);
+    explicit BlockPlot(QWidget *parent = 0,Chromosom* best=0);
 
 signals:
 

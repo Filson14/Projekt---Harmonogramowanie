@@ -2,7 +2,7 @@
 
 
 
-BlockPlot::BlockPlot(Chromosom* best,QWidget *parent) :
+BlockPlot::BlockPlot(QWidget *parent,Chromosom* best) :
     QCustomPlot(parent)
 {
     setAutoAddPlottableToLegend(false);
