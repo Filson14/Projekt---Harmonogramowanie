@@ -1,4 +1,5 @@
 #include "statisticswidget.h"
+#include <qapplication.h>
 
 StatisticsWidget::StatisticsWidget(QWidget *parent) : QWidget(parent)
 {
@@ -15,7 +16,7 @@ StatisticsWidget::StatisticsWidget(QWidget *parent) : QWidget(parent)
     this->meanMutCountLabel = new QLabel("Mutation count (mean)");
     this->meanInvalidSolutionsLabel = new QLabel("Invalid solutions (mean)");
 
-    this->meanFitnessLabel = new QLabel("Population fitness");
+    this->popFitnessLabel = new QLabel("Population fitness");
     this->bestFitnessLabel = new QLabel("Best fitness");
     this->lastImprovementLabel = new QLabel("Last improvement");
 
@@ -25,9 +26,9 @@ StatisticsWidget::StatisticsWidget(QWidget *parent) : QWidget(parent)
     this->epochEdit->setMaximumWidth(LINE_EDIT_WIDTH_MAX);
 
 
-    this->meanFitnessEdit = new QLineEdit();
-    this->meanFitnessEdit->setReadOnly(true);
-    this->meanFitnessEdit->setMaximumWidth(LINE_EDIT_WIDTH_MAX);
+    this->popFitnessEdit = new QLineEdit();
+    this->popFitnessEdit->setReadOnly(true);
+    this->popFitnessEdit->setMaximumWidth(LINE_EDIT_WIDTH_MAX);
 
     this->meanCrossCountEdit = new QLineEdit();
     this->meanCrossCountEdit->setReadOnly(true);
@@ -54,7 +55,7 @@ StatisticsWidget::StatisticsWidget(QWidget *parent) : QWidget(parent)
     this->algStatisticsLayout->addRow(meanMutCountLabel, meanMutCountEdit);
     this->algStatisticsLayout->addRow(meanInvalidSolutionsLabel, meanInvalidSolutionsEdit);
 
-    this->popStatisticsLayout->addRow(meanFitnessLabel, meanFitnessEdit);
+    this->popStatisticsLayout->addRow(popFitnessLabel, popFitnessEdit);
     this->popStatisticsLayout->addRow(bestFitnessLabel, bestFitnessEdit);
     this->popStatisticsLayout->addRow(lastImprovementLabel, lastImprovementEdit);
 
@@ -74,4 +75,26 @@ StatisticsWidget::StatisticsWidget(QWidget *parent) : QWidget(parent)
 StatisticsWidget::~StatisticsWidget()
 {
 
+}
+
+void StatisticsWidget::updateStatistics(AlgorithmStatistics & statistics)
+{
+    printf("I got your signal. Updating.\n");
+    fflush(NULL);
+    epochEdit->setText(QString::number(statistics.epoch.back()));
+
+    //meanCrossCountEdit->setText(QString::number(statistics.crossoverCount));
+    //meanMutCountEdit->setText(QString::number(statistics.mutationCount));
+    //meanInvalidSolutionsEdit->setText(QString::number(statistics.invalidSolutions));
+    popFitnessEdit->setText(QString::number(statistics.populationFitness.back()));
+    bestFitnessEdit->setText(QString::number(statistics.bestFitness.back()));
+    lastImprovementEdit->setText(QString::number(statistics.lastImprovement));
+    statPlot->epoch = QVector<double>::fromStdVector(statistics.epoch);
+    statPlot->bestFitness = QVector<double>::fromStdVector(statistics.bestFitness);
+    statPlot->popFitness = QVector<double>::fromStdVector(statistics.populationFitness);
+    printf("Es: %d, Bs: %d, Ps: %d", statPlot->epoch.size(), statPlot->bestFitness.size(), statPlot->popFitness.size());
+    fflush(NULL);
+    statPlot->updatePlot();
+
+    QApplication::processEvents();
 }

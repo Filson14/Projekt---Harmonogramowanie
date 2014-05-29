@@ -1,6 +1,6 @@
 #include <QApplication>
-#include "mainwindow.h"
-#include "controller.h"
+#include "./GUI/mainwindow.h"
+#include "./Controller/controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
     Chromosom::getJobDatabase().readFromFile("/Users/Wojtek/Documents/Projekty/Harmonogramowanie/TestData/test1.txt");
     Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
     Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
-
     Algorithm * alg = new Algorithm();
     MainWindow w;
     Controller controller(alg, w.setWidget, w.statWidget);

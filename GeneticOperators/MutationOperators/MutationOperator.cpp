@@ -16,3 +16,7 @@ MutationOperator::~MutationOperator() {
 	// TODO Auto-generated destructor stub
 }
 
+void MutationOperator::identifyObject() {
+    printf("I am a mutation operator.\n");
+    fflush(NULL);
+}

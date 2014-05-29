@@ -23,6 +23,7 @@ public:
 	 */
 	virtual void crossChromosoms(const Chromosom & parentA, const Chromosom & parentB, Chromosom & childA, Chromosom & childB) = 0;
 
+    void identifyObject();
 };
 
 #endif /* CROSSOVEROPERATOR_H_ */

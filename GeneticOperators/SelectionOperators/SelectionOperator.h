@@ -29,6 +29,8 @@ public:
 	 * \return wybrany osobnik z populacji.
 	 */
 	virtual Chromosom & selectParent() = 0;
+
+    void identifyObject();
 };
 
 #endif /* SELECTIONOPERATOR_H_ */

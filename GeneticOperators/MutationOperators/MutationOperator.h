@@ -19,6 +19,8 @@ public:
 	 * \param chromosom osobnik ktory podlega mutacji.
 	 */
 	virtual void performMutation(Chromosom & chromosom) = 0;
+
+    void identifyObject();
 };
 
 #endif /* MUTATIONOPERATOR_H_ */

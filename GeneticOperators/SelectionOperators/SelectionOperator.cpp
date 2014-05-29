@@ -16,3 +16,7 @@ SelectionOperator::~SelectionOperator() {
 	// TODO Auto-generated destructor stub
 }
 
+void SelectionOperator::identifyObject() {
+    printf("I am a selection operator.\n");
+    fflush(NULL);
+}

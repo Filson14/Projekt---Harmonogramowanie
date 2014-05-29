@@ -16,3 +16,7 @@ CrossoverOperator::~CrossoverOperator() {
 	// TODO Auto-generated destructor stub
 }
 
+void CrossoverOperator::identifyObject() {
+    printf("I am a crossover operator.\n");
+    fflush(NULL);
+}

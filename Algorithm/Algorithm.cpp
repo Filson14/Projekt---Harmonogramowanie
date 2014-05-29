@@ -7,42 +7,41 @@
 
 #include "Algorithm.h"
 
-Algorithm::Algorithm(struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators) : QObject() {
+Algorithm::Algorithm() : QObject() {
 
-	this->maxEpochs = algorithm.maxEpochs;
-	this->maxEpochsWithoutChange = algorithm.maxEpochsWithoutChange;
-	this->populationSize = algorithm.populationSize;
-	this->newPopulationSize = algorithm.newPopulationSize;
-	this->mutationProbability = algorithm.mutationProbability;
-	this->crossoverProbability = algorithm.crossoverProbability;
+}
 
-	this->selectionOperator = operators.selectionOperator;
-	this->mutationOperator = operators.mutationOperator;
-	this->crossoverOperator = operators.crossoverOperator;
+Algorithm::Algorithm(struct AlgorithmSettings & settings) : QObject() {
 
-    this->statistics.epoch = 0;
-    this->statistics.lastImprovement = 0;
-    this->statistics.sameParents = 0;
-    this->statistics.mutationCount = 0;
-    this->statistics.crossoverCount = 0;
-    this->statistics.invalidSolutions = 0;
+    this->settings.maxEpochs = settings.maxEpochs;
+    this->settings.maxEpochsWithoutChange = settings.maxEpochsWithoutChange;
+    this->settings.populationSize = settings.populationSize;
+    this->settings.newPopulationSize = settings.newPopulationSize;
+    this->settings.mutationProbability = settings.mutationProbability;
+    this->settings.crossoverProbability = settings.crossoverProbability;
+
+    this->settings.selectionOperator = settings.selectionOperator;
+    this->settings.mutationOperator = settings.mutationOperator;
+    this->settings.crossoverOperator = settings.crossoverOperator;
+
+    this->statistics.clearStatistics();
 }
 
 Algorithm::~Algorithm() {
-	this->population.clear();
-	this->newPopulation.clear();
+    population.clear();
+    newPopulation.clear();
 }
 
 void Algorithm::initializePopulation() {
 	Chromosom newChromosom;
-	for(int i = 0; i < populationSize; i++) {
+    for(int i = 0; i < settings.populationSize; i++) {
 		newChromosom = Chromosom();
 		newChromosom.generateRandomGenotype();
 		newChromosom.countFitness();
 
-		this->population.push_back(newChromosom);
+        population.push_back(newChromosom);
 	}
-	sort(this->population.begin(), this->population.end(), compareChromosoms);
+    sort(population.begin(), population.end(), compareChromosoms);
 }
 
 double Algorithm::evaluatePopulation() {
@@ -52,39 +51,39 @@ double Algorithm::evaluatePopulation() {
 		totalFitness += (*it).countFitness();
 	}
 
-	return (totalFitness / this->newPopulationSize);
+    return (totalFitness / settings.newPopulationSize);
 }
 
 void Algorithm::selectNewPopulation() {
-	sort(this->newPopulation.begin(), this->newPopulation.end(), compareChromosoms);
-	this->population.clear();
+    sort(newPopulation.begin(), newPopulation.end(), compareChromosoms);
+    population.clear();
 
-	for(int i = 0; i < populationSize; i++)
-		this->population.push_back(this->newPopulation[i]);
+    for(int i = 0; i < settings.populationSize; i++)
+        population.push_back(newPopulation[i]);
 
-	this->newPopulation.clear();
+    newPopulation.clear();
 }
 
 void Algorithm::generateNewPopulation() {
 	Chromosom childA, childB;
 	int x = 0, s = 0;
 
-	this->selectionOperator->prepareSelection(this->population);
-	for(int index = 0; index < newPopulationSize;)
+    settings.selectionOperator->prepareSelection(population);
+    for(int index = 0; index < settings.newPopulationSize;)
 	{
 		childA = Chromosom();
-		childB = Chromosom();
-		Chromosom& parentA = this->selectionOperator->selectParent();
-		Chromosom& parentB = this->selectionOperator->selectParent();
+        childB = Chromosom();
+
+        Chromosom& parentA = settings.selectionOperator->selectParent();
+        Chromosom& parentB = settings.selectionOperator->selectParent();
 
 		if (parentA.getGenotype() == parentB.getGenotype()) {
 			s++;
 			continue;
 		}
 
-		if (((double) rand()) / (RAND_MAX) < this->crossoverProbability) {
-			//TODO Wiecej szans dla tych samych rodzicow (brute force?).
-			crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
+        if (((double) rand()) / (RAND_MAX) < settings.crossoverProbability) {
+            settings.crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
 			if (!childA.isValid() && !childB.isValid()) {
 				x++;
 				continue;
@@ -94,25 +93,15 @@ void Algorithm::generateNewPopulation() {
 			childB = parentB;
 		}
 
-		if ((double) rand() / (RAND_MAX) < this->mutationProbability)
-			mutationOperator->performMutation(childA);
+        if ((double) rand() / (RAND_MAX) < settings.mutationProbability)
+            settings.mutationOperator->performMutation(childA);
 
-		if ((double) rand() / (RAND_MAX) < this->mutationProbability)
-					mutationOperator->performMutation(childB);
+        if ((double) rand() / (RAND_MAX) < settings.mutationProbability)
+            settings.mutationOperator->performMutation(childB);
 
 		this->newPopulation.push_back(childA);
 		this->newPopulation.push_back(childB);
-		index = index + 2;
-
-		//TODO Usunac w finalnej wersji.
-		//cout << "Parent A Genotype: ";
-		//parentA.printGenotype();
-		//cout << "Child A Genotype:  ";
-		//childA.printGenotype();
-		//cout << "Parent B Genotype: ";
-		//parentB.printGenotype();
-		//cout << "Child B Genotype:  ";
-		//childB.printGenotype();
+        index = index + 2;
 	}
 
 	cout << "(" << s << ", " << x << ") ";
@@ -124,45 +113,71 @@ void Algorithm::printPopulation(const vector<Chromosom> & population) {
 }
 
 void Algorithm::runAlgorithm() {
-	int currentEpoche = 0;
-	int epochsWithoutChange = 0;
+    int currentEpoch = 0;
+    int lastImprovement = 0;
+    statistics.clearStatistics();
 
-	cout << "Initializing population... ";
-	this->initializePopulation();
+    cout << "Initializing population... ";
+    this->initializePopulation();
 	cout << "OK" << endl;
 	this->bestChromosom = this->population[0];
 	do {
 
-		cout << "Epoche: " << currentEpoche << " ====================== "<< endl;
-		cout << "Generating new population... ";
+        cout << "Epoche: " << currentEpoch << " ====================== "<< endl;
+        cout << "Generating new population... ";
 		this->generateNewPopulation();
 		cout << "OK" << endl;
 
 		cout << "Evaluate population...";
-		double mean = this->evaluatePopulation();
+        double meanFitness = this->evaluatePopulation();
 		cout << "OK" << endl;
 
 		cout << "Select new population... ";
 		this->selectNewPopulation();
-		cout << "OK" << endl;
-
-		if(compareChromosoms(this->population[0], this->bestChromosom)) {
-			this->bestChromosom = this->population[0];
-			epochsWithoutChange = 0;
+        cout << "OK" << endl;
+        if(compareChromosoms(population[0], bestChromosom)) {
+            bestChromosom = population[0];
+            lastImprovement = 0;
+            emit newBestChromosom();
 		}
 		else
-			epochsWithoutChange++;
+            lastImprovement++;
 
-		cout << "Mean fitness: " << mean << endl;
-		//cout << "Population: " << endl;
-		//this->printPopulation(this->population);
-		//cout << "New population: " << endl;
-		//this->printPopulation(this->newPopulation);
-	} while (currentEpoche++ < this->maxEpochs);// && epochsWithoutChange < this->maxEpochsWithoutChange);
+
+        statistics.lastImprovement = lastImprovement;
+        statistics.epoch.push_back((double)currentEpoch);
+        statistics.bestFitness.push_back(bestChromosom.getFitness());
+        statistics.populationFitness.push_back(meanFitness);
+
+
+        if (currentEpoch % 10 == 0)
+            emit newStatistics();
+
+        cout << "Mean fitness: " << meanFitness << endl;
+    } while ((currentEpoch++ < settings.maxEpochs));// && epochsWithoutChange < this->maxEpochsWithoutChange);
 
 	cout << "AND THE WINNER IS... *drum roll*" << endl;
-	this->bestChromosom.printChromosom();
-	this->bestChromosom.updateDatabaseWithStartTimes();
+    bestChromosom.printChromosom();
+    bestChromosom.updateDatabaseWithStartTimes();
+}
+
+void Algorithm::updateSettings(struct AlgorithmSettings & settings)
+{
+    this->settings.maxEpochs = settings.maxEpochs;
+    this->settings.maxEpochsWithoutChange = settings.maxEpochsWithoutChange;
+    this->settings.populationSize = settings.populationSize;
+    this->settings.newPopulationSize = settings.newPopulationSize;
+    this->settings.mutationProbability = settings.mutationProbability;
+    this->settings.crossoverProbability = settings.crossoverProbability;
+
+    this->settings.selectionOperator = settings.selectionOperator;
+    this->settings.mutationOperator = settings.mutationOperator;
+    this->settings.crossoverOperator = settings.crossoverOperator;
+}
+
+void Algorithm::fetchStatistics(AlgorithmStatistics & statistics)
+{
+    statistics = this->statistics;
 }
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {

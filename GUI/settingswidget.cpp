@@ -33,10 +33,12 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent)
     this->crossProbabilityEdit = new QDoubleSpinBox();
     crossProbabilityEdit->setRange(DOUBLE_SPIN_MIN, DOUBLE_SPIN_MAX);
     crossProbabilityEdit->setSingleStep(DOUBLE_SPIN_STEP);
+    crossProbabilityEdit->setValue(0.75);
 
     this->mutProbabilityEdit = new QDoubleSpinBox();
     mutProbabilityEdit->setRange(DOUBLE_SPIN_MIN, DOUBLE_SPIN_MAX);
     mutProbabilityEdit->setSingleStep(DOUBLE_SPIN_STEP);
+    mutProbabilityEdit->setValue(0.35);
 
     this->popSizeEdit = new QSpinBoxEnhenced();
     popSizeEdit->setRange(SPIN_MIN, SPIN_MAX);
@@ -84,7 +86,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent)
     widgetLayout->addWidget(algorithmGroup);
     widgetLayout->addWidget(populationGroup);
     widgetLayout->addWidget(operatorGroup);
-    widgetLayout->addWidget(this->runButton);
+    widgetLayout->addWidget(runButton);
 
 
     this->setLayout(widgetLayout);
@@ -98,7 +100,19 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::runButtonClicked()
 {
-
-    printf("Holly shit it works.");
+    printf("Holly shit it works.\n");
     fflush(NULL);
+    emit runAlgorithm();
+}
+
+void SettingsWidget::fetchSettings(struct AlgorithmSettings & settings)
+{
+    settings.maxEpochs = epochCountEdit->value();
+    settings.maxEpochsWithoutChange = epochCountEdit->value();
+    settings.populationSize = popSizeEdit->value();
+    settings.newPopulationSize = newPopSizeEdit->value();
+    settings.crossoverProbability = crossProbabilityEdit->value();
+    settings.mutationProbability = mutProbabilityEdit->value();
+
+    /* USTAWIENIA OPERATORÓW */
 }

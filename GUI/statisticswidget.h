@@ -16,6 +16,7 @@
 #include <QCheckBox>
 #include <QLayout>
 #include "statisticsplotwidget.h"
+#include "../Algorithm/StatisticsStructure.h"
 
 #define LINE_EDIT_WIDTH_MAX 65
 
@@ -31,14 +32,14 @@ private:
     QGroupBox *popStatisticsGroup;
     QGroupBox *plotStatisticsGroup;
     QLabel *epochLabel;
-    QLabel *meanFitnessLabel;
+    QLabel *popFitnessLabel;
     QLabel *meanCrossCountLabel;
     QLabel *meanMutCountLabel;
     QLabel *lastImprovementLabel;
     QLabel *bestFitnessLabel;
     QLabel *meanInvalidSolutionsLabel;
     QLineEdit *epochEdit;
-    QLineEdit *meanFitnessEdit;
+    QLineEdit *popFitnessEdit;
     QLineEdit *meanCrossCountEdit;
     QLineEdit *meanMutCountEdit;
     QLineEdit *lastImprovementEdit;
@@ -49,6 +50,8 @@ private:
 public:
     explicit StatisticsWidget(QWidget *parent = 0);
     ~StatisticsWidget();
+    void updateStatistics(AlgorithmStatistics & statistics);
+
 signals:
 
 public slots:

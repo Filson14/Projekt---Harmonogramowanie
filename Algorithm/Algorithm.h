@@ -24,26 +24,28 @@
 
 class Algorithm : public QObject
 {
-
     Q_OBJECT
+
 private:
-	int maxEpochs;	//!< Maksymalna liczba epok;
-	int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
-	int populationSize;	//!< Rozmiar populacji.
-    int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
-	double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
-	double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
+    AlgorithmSettings settings;
+    //int maxEpochs;	//!< Maksymalna liczba epok;
+    //int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
+    //int populationSize;	//!< Rozmiar populacji.
+    //int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
+    //double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
+    //double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
 	Chromosom bestChromosom;	//!< Liczba dostepnych maszyn.
 	vector<Chromosom> population;	//!< Aktualna populacja.
 	vector<Chromosom> newPopulation;	//!< Nowa populacja.
 
-	SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
-	MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
-	CrossoverOperator * crossoverOperator;	//!< Operator krzyzowania osobnikow.
+    //SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
+    //MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
+    //CrossoverOperator * crossoverOperator;	//!< Operator krzyzowania osobnikow.
     AlgorithmStatistics statistics; //!< Struktura przechowująca statystyki pracy algorytmu.
 
 public:
-    Algorithm(struct SettingsAlgorithm & algorithm, struct SettingsOperator & operators);
+    Algorithm();
+    Algorithm(struct AlgorithmSettings & settings);
     virtual ~Algorithm();
 
 	/**
@@ -76,7 +78,19 @@ public:
 	 */
 	void printPopulation(const vector<Chromosom> & population);
 
+    /**
+     * \brief updateSettings
+     * \param algorithm
+     * \param operators
+     */
+    void updateSettings(struct AlgorithmSettings & settings);
+
+    void fetchStatistics(AlgorithmStatistics & statistics);
+
 signals:
+    void newBestChromosom();
+    void newStatistics();
+
 public slots:
 };
 

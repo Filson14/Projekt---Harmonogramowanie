@@ -14,11 +14,12 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include "qspinboxenhenced.h"
+#include "../Algorithm/SettingsStructures.h"
 
 #define DOUBLE_SPIN_MIN 0.0
 #define DOUBLE_SPIN_MAX 1.0
 #define DOUBLE_SPIN_STEP 0.05
-#define SPIN_MIN 5
+#define SPIN_MIN 10
 #define SPIN_MAX 30000
 #define SPIN_STEP 25
 
@@ -26,13 +27,14 @@ class SettingsWidget : public QWidget
 {
     Q_OBJECT
 
+signals:
+    void runAlgorithm();
+
 private slots:
     void runButtonClicked();
 
 
 private:
-    void getSettings();
-
     QHBoxLayout *widgetLayout;  //!< Glowny layout widgetu SettingsWidget
     QFormLayout *algorithmGroupLayout;  //!< Layout groupboxa algorithmGroup
     QFormLayout *operatorGroupLayout;   //!< Layout groupboxa operatorGroup
@@ -65,16 +67,7 @@ private:
 public:
     explicit SettingsWidget(QWidget *parent = 0);
     ~SettingsWidget();
-
-/*
- * signals:
- *      Deklaracja sygnałów emitowane przez dialog.
- */
-
- /*
-  * slots:
-  *     Deklaracja slotów w posiadaniu klasy.
-  */
+    void fetchSettings(struct AlgorithmSettings & settings);
 
 };
 
