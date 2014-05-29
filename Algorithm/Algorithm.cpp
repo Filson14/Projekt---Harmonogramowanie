@@ -163,7 +163,7 @@ void Algorithm::runAlgorithm() {
             emit newStatistics(statistics);
 
         cout << "Mean fitness: " << meanFitness << endl;
-    } while ((currentEpoch++ < settings.maxEpochs) && (lastImprovement < settings.maxEpochsWithoutChange));// && epochsWithoutChange < this->maxEpochsWithoutChange);
+    } while ((currentEpoch++ < settings.maxEpochs) && (lastImprovement < settings.maxEpochsWithoutChange));
 
 	cout << "AND THE WINNER IS... *drum roll*" << endl;
     bestChromosom.printChromosom();

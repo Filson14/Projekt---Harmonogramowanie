@@ -10,6 +10,7 @@ Controller::Controller(Algorithm * algorithm, MainWindow * window, Database * da
 
 
     connect(settingsWidget, SIGNAL(runAlgorithm()), statisticsWidget, SLOT(clearStatistics()));
+    connect(settingsWidget, SIGNAL(runAlgorithm()), window, SLOT(onRunAlgorithm()));
     connect(settingsWidget, SIGNAL(runAlgorithm()), this, SLOT(runAlgorithm()));
     connect(algorithm, SIGNAL(newBestChromosom(Database*)), blockPlotWidget, SLOT(onDataChanged(Database*)));
     connect(algorithm, SIGNAL(newStatistics(const AlgorithmStatistics &)), statisticsWidget, SLOT(updateStatistics(const AlgorithmStatistics &)));

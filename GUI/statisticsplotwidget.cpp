@@ -18,7 +18,7 @@ StatisticsPlotWidget::StatisticsPlotWidget(QWidget *parent) : QCustomPlot(parent
 
     this->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
     this->replot();
-    this->setFixedHeight(200);
+    this->setFixedHeight(175);
     this->setFixedWidth(300);
 }
 
