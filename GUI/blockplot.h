@@ -20,8 +20,10 @@ public:
 
 signals:
 
+
 public slots:
     void onDataChanged(Database* );
+    void onBlockSelected(bool);
 
 
 };
