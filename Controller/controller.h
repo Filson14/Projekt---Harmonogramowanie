@@ -4,27 +4,29 @@
 #include <QObject>
 #include "./Algorithm/Algorithm.h"
 #include "./Algorithm/SettingsStructures.h"
-#include "./GUI/settingswidget.h"
-#include "./GUI/statisticswidget.h"
+#include "./GUI/mainwindow.h"
+#include "./GUI/blockplot.h"
+#include "./DataModification/Database.h"
 
 
 class Controller : public QObject
 {
     Q_OBJECT
 public:
-    explicit Controller(Algorithm * algorithm, SettingsWidget * settingsWidget, StatisticsWidget * statisticsWidget, QObject *parent = 0);
+    explicit Controller(Algorithm * algorithm, MainWindow * window, Database * database, QObject *parent = 0);
 
 signals:
 
 public slots:
     void runAlgorithm();
     void updateBestChromosom();
-    void updateStatistics();
 
 private:
     Algorithm * algorithm;
+    Database * database;
     SettingsWidget * settingsWidget;
     StatisticsWidget * statisticsWidget;
+    BlockPlot * blockPlotWidget;
 
 
 };

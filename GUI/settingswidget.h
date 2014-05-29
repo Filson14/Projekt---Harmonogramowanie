@@ -56,8 +56,8 @@ private:
     QLabel *selOperatorLabel;
     QLabel *popSizeLabel;
     QLabel *newPopSizeLabel;
-    QSpinBox *epochCountEdit;
-    QSpinBox *noImprovementEdit;
+    QSpinBoxEnhenced *epochCountEdit;
+    QSpinBoxEnhenced *noImprovementEdit;
     QDoubleSpinBox *crossProbabilityEdit;
     QDoubleSpinBox *mutProbabilityEdit;
     QSpinBoxEnhenced *popSizeEdit;

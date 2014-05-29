@@ -4,15 +4,15 @@
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     QApplication a(argc, argv);
-    Chromosom::getJobDatabase().readFromFile("/Users/Wojtek/Documents/Projekty/Projekt-Harmonogramowanie/TestData/test4.txt");
+    Chromosom::getJobDatabase().readFromFile("/Users/Wojtek/Documents/Projekty/Harmonogramowanie/TestData/test1.txt");
     Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
     Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
     Algorithm * alg = new Algorithm();
-    //Baza danych *.
-    MainWindow w;
-    Controller controller(alg, w.ui->mAlgorithmWidget, w.ui->mStatisticWidget);
-    w.show();
+    MainWindow * win = new MainWindow();
+    Controller controller(alg, win, &Chromosom::getJobDatabase());
+    win->show();
 
     return a.exec();
 }

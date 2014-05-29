@@ -17,8 +17,9 @@
 #include "../GeneticOperators/SelectionOperators/SelectionRoulette.h"
 #include "../GeneticOperators/CrossoverOperators/CrossoverOnePoint.h"
 #include "../GeneticOperators/CrossoverOperators/CrossoverTwoPoint.h"
-#include "../GeneticOperators/MutationOperators/MutationSwapping.h"
-#include "../GeneticOperators/MutationOperators/MutationInversion.h"
+#include "../GeneticOperators/MutationOperators/MutationSwappingPoint.h"
+#include "../GeneticOperators/MutationOperators/MutationSwappingSegment.h"
+#include "../GeneticOperators/MutationOperators/MutationReverse.h"
 
 
 
@@ -27,21 +28,12 @@ class Algorithm : public QObject
     Q_OBJECT
 
 private:
-    AlgorithmSettings settings;
-    //int maxEpochs;	//!< Maksymalna liczba epok;
-    //int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
-    //int populationSize;	//!< Rozmiar populacji.
-    //int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
-    //double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
-    //double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
+    AlgorithmSettings settings; //!< Struktura przechowująca ustawienia algorytmu.
+    AlgorithmStatistics statistics; //!< Struktura przechowująca statystyki pracy algorytmu.
 	Chromosom bestChromosom;	//!< Liczba dostepnych maszyn.
 	vector<Chromosom> population;	//!< Aktualna populacja.
-	vector<Chromosom> newPopulation;	//!< Nowa populacja.
+    vector<Chromosom> newPopulation;	//!< Nowa populacja.
 
-    //SelectionOperator * selectionOperator;	//!< Operator selekcji osobnikow.
-    //MutationOperator * mutationOperator;	//!< Operator mutacji osobnik
-    //CrossoverOperator * crossoverOperator;	//!< Operator krzyzowania osobnikow.
-    AlgorithmStatistics statistics; //!< Struktura przechowująca statystyki pracy algorytmu.
 
 public:
     Algorithm();
@@ -85,12 +77,9 @@ public:
      */
     void updateSettings(struct AlgorithmSettings & settings);
 
-    void fetchStatistics(AlgorithmStatistics & statistics);
-
 signals:
-    void newBestChromosom();
-    void newBestChromosom(const Chromosom & best);
-    void newStatistics();
+
+    void newBestChromosom(Database *);
     void newStatistics(const AlgorithmStatistics & stats);
 
 public slots:

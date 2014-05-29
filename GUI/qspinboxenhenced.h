@@ -13,6 +13,7 @@ signals:
 
 public slots:
     void setNewMinimum(int value);
+    void setNewMaximum(int value);
 
 };
 

@@ -147,7 +147,7 @@ void Algorithm::runAlgorithm() {
             bestChromosom = population[0];
             bestChromosom.updateDatabaseWithStartTimes();
             lastImprovement = 0;
-            emit newBestChromosom(bestChromosom);
+            emit newBestChromosom(&bestChromosom.getJobDatabase());
 		}
 		else
             lastImprovement++;
@@ -163,50 +163,29 @@ void Algorithm::runAlgorithm() {
             emit newStatistics(statistics);
 
         cout << "Mean fitness: " << meanFitness << endl;
-    } while ((currentEpoch++ < settings.maxEpochs));// && epochsWithoutChange < this->maxEpochsWithoutChange);
+    } while ((currentEpoch++ < settings.maxEpochs) && (lastImprovement < settings.maxEpochsWithoutChange));// && epochsWithoutChange < this->maxEpochsWithoutChange);
 
 	cout << "AND THE WINNER IS... *drum roll*" << endl;
     bestChromosom.printChromosom();
     bestChromosom.updateDatabaseWithStartTimes();
 }
 
-void Algorithm::updateSettings(struct AlgorithmSettings & settings)
+void Algorithm::updateSettings(struct AlgorithmSettings & newSettings)
 {
-    this->settings.maxEpochs = settings.maxEpochs;
-    this->settings.maxEpochsWithoutChange = settings.maxEpochsWithoutChange;
-    this->settings.populationSize = settings.populationSize;
-    this->settings.newPopulationSize = settings.newPopulationSize;
-    this->settings.mutationProbability = settings.mutationProbability;
-    this->settings.crossoverProbability = settings.crossoverProbability;
+    this->settings.maxEpochs = newSettings.maxEpochs;
+    this->settings.maxEpochsWithoutChange = newSettings.maxEpochsWithoutChange;
+    this->settings.repairChromosom = newSettings.repairChromosom;
+    this->settings.populationSize = newSettings.populationSize;
+    this->settings.newPopulationSize = newSettings.newPopulationSize;
+    this->settings.mutationProbability = newSettings.mutationProbability;
+    this->settings.crossoverProbability = newSettings.crossoverProbability;
 
-    this->settings.selectionOperator = settings.selectionOperator;
-    this->settings.mutationOperator = settings.mutationOperator;
-    this->settings.crossoverOperator = settings.crossoverOperator;
-}
-
-void Algorithm::fetchStatistics(AlgorithmStatistics & statistics)
-{
-    statistics = this->statistics;
+    this->settings.selectionOperator = newSettings.selectionOperator;
+    this->settings.mutationOperator = newSettings.mutationOperator;
+    this->settings.crossoverOperator = newSettings.crossoverOperator;
 }
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {
 	return A.getFitness() < B.getFitness();
 }
-
-/*
-int main(int argc, const char* argv[] )
-{
-	srand(time(NULL));
-	SettingsProblem problem = {3, 3};
-	SettingsAlgorithm algorithm = {5, 5, 10, 10, 5, 5};
-	SettingsOperator operators = {new SelectionTournament(0.95, 3), new MutationInversion(), new CrossoverTwoPoint()};
-	Algorithm  algorithms = Algorithm(problem, algorithm, operators);
-	Chromosom::setJobCount(problem.jobCount);
-	Chromosom::setMachineCount(problem.machineCount);
-	algorithms.runAlgorithm();
-
-	cout << "Finished.";
-}
-*/
-
 

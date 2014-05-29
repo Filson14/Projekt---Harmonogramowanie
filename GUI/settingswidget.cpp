@@ -22,15 +22,16 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent)
     this->popSizeLabel = new QLabel("Population size");
     this->newPopSizeLabel = new QLabel("New population size");
 
-    this->epochCountEdit = new QSpinBox();
+    this->epochCountEdit = new QSpinBoxEnhenced();
     epochCountEdit->setRange(SPIN_MIN, SPIN_MAX);
     epochCountEdit->setSingleStep(SPIN_STEP);
     epochCountEdit->setValue(START_EPOCH_NUMBER);
 
-    this->noImprovementEdit = new QSpinBox();
+    this->noImprovementEdit = new QSpinBoxEnhenced();
     noImprovementEdit->setRange(SPIN_MIN, SPIN_MAX);
     noImprovementEdit->setSingleStep(SPIN_STEP);
     noImprovementEdit->setValue(START_EPOCH_NUMBER);
+    connect(epochCountEdit, SIGNAL(valueChanged(int)), noImprovementEdit, SLOT(setNewMaximum(int)));
 
     this->crossProbabilityEdit = new QDoubleSpinBox();
     crossProbabilityEdit->setRange(DOUBLE_SPIN_MIN, DOUBLE_SPIN_MAX);

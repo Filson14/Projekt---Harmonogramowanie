@@ -1,14 +1,17 @@
 #include "controller.h"
 
-Controller::Controller(Algorithm * algorithm, SettingsWidget * settingsWidget, StatisticsWidget * statisticsWidget, QObject *parent) : QObject(parent)
+Controller::Controller(Algorithm * algorithm, MainWindow * window, Database * database, QObject *parent) : QObject(parent)
 {
     this->algorithm = algorithm;
-    this->settingsWidget = settingsWidget;
-    this->statisticsWidget = statisticsWidget;
+    this->database = database;
+    this->settingsWidget = window->ui->mAlgorithmWidget;
+    this->statisticsWidget = window->ui->mStatisticWidget;
+    this->blockPlotWidget = window->ui->mBlockPlot;
 
-    connect(settingsWidget, SIGNAL(runAlgorithm()), this, SLOT(runAlgorithm()));
+
     connect(settingsWidget, SIGNAL(runAlgorithm()), statisticsWidget, SLOT(clearStatistics()));
-    connect(algorithm, SIGNAL(newBestChromosom()), this, SLOT(updateBestChromosom()));
+    connect(settingsWidget, SIGNAL(runAlgorithm()), this, SLOT(runAlgorithm()));
+    connect(algorithm, SIGNAL(newBestChromosom(Database*)), blockPlotWidget, SLOT(onDataChanged(Database*)));
     connect(algorithm, SIGNAL(newStatistics(const AlgorithmStatistics &)), statisticsWidget, SLOT(updateStatistics(const AlgorithmStatistics &)));
 }
 
@@ -17,8 +20,8 @@ void Controller::runAlgorithm()
     AlgorithmSettings settings;
     this->settingsWidget->fetchSettings(settings);
     settings.crossoverOperator = new CrossoverTwoPoint();
-    settings.mutationOperator = new MutationInversion();
-    settings.selectionOperator = new SelectionTournament(0.7, 3);
+    settings.mutationOperator = new MutationSwappingPoint();
+    settings.selectionOperator = new SelectionTournament(0.8, 5);
 
     algorithm->updateSettings(settings);
     algorithm->runAlgorithm();
@@ -30,12 +33,3 @@ void Controller::updateBestChromosom()
     fflush(NULL);
 }
 
-void Controller::updateStatistics()
-{
-    AlgorithmStatistics statistics;
-    algorithm->fetchStatistics(statistics);
-    statisticsWidget->updateStatistics(statistics);
-
-    printf("newStatistics signal recieved, I'm on it.\n");
-    fflush(NULL);
-}

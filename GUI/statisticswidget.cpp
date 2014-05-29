@@ -78,7 +78,7 @@ StatisticsWidget::~StatisticsWidget()
 }
 
 void StatisticsWidget::clearStatistics() {
-    statPlot->clearGraphs();
+    statPlot->clearPlot();
 }
 
 void StatisticsWidget::updateStatistics(const AlgorithmStatistics & statistics)
