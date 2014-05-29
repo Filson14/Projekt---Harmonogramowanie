@@ -73,7 +73,7 @@ void AddingWidget::fillMachinesCombo(){
     machineCombo->clear();
     machineCombo->addItem("Select...");
     durationSpin->setValue(0);
-    if(jobCombo->currentIndex()!=0){
+    if(jobCombo->currentIndex()>0){
         Job &currJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
         vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
         for(int i=0; i<allMachines.size(); i++){
