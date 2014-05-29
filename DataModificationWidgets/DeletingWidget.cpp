@@ -95,7 +95,7 @@ void DeletingWidget::fillMachineCombo(){
 void DeletingWidget::fillTaskMachineCombo(){
     taskMachineCombo->clear();
     taskMachineCombo->addItem("Select...");
-    if(taskJobCombo->currentIndex()!=0){
+    if(taskJobCombo->currentIndex()>0){
         Job &currJob = Chromosom::getJobDatabase().getJobs()[taskJobCombo->currentText().toInt()];
         vector <Task> &allTasks = currJob.getTaskList();
         for(int i=0; i<allTasks.size(); i++){
