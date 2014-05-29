@@ -24,6 +24,8 @@ private slots:
     void loadDataFromFile();
     void saveDataToFile();
     void generateRandomData();
+    void resetDatabase();
+    void clearDatabase();
     void emitChangeSignal();
     void updateWidgets();
 

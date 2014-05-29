@@ -34,11 +34,11 @@ EditingWidget::EditingWidget(QWidget *parent) :
     QVBoxLayout *jobLay = new QVBoxLayout();
     QVBoxLayout *taskLay = new QVBoxLayout();
 
-    QGroupBox *jobGrp = new QGroupBox("JOB");
-    QGroupBox *taskDataGrp = new QGroupBox("TASK DATA");
-    QGroupBox *taskGrp = new QGroupBox("TASK");
+    QGroupBox *jobGrp = new QGroupBox("Job");
+    QGroupBox *taskDataGrp = new QGroupBox("Task data");
+    QGroupBox *taskGrp = new QGroupBox("Task");
 
-    QPushButton *saveBtn = new QPushButton("SAVE");
+    QPushButton *saveBtn = new QPushButton("Save");
 
     QObject::connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveChanges()));
 
@@ -92,9 +92,11 @@ void EditingWidget::fillTaskCombo(){
     positionCombo->clear();
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
-    vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
-    for(int i=0; i<tasks.size(); i++)
-        taskCombo->addItem(QString::number(i));
+    if(jobCombo->currentIndex()>0){
+        vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
+        for(int i=0; i<tasks.size(); i++)
+            taskCombo->addItem(QString::number(i));
+    }
 }
 
 void EditingWidget::fillMachineCombo(){
@@ -103,30 +105,34 @@ void EditingWidget::fillMachineCombo(){
     positionCombo->clear();
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
-    Job &currJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
-    vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
+    if(jobCombo->currentIndex()>0 && taskCombo->currentIndex()>0){
+        Job &currJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
+        vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
 
-    machineCombo->addItem(QString::number(currJob.getTaskList()[taskCombo->currentText().toInt()].getMachine()->getId()));
-    durationSpin->setValue(currJob.getTaskList()[taskCombo->currentText().toInt()].getTime());
+        machineCombo->addItem(QString::number(currJob.getTaskList()[taskCombo->currentText().toInt()].getMachine()->getId()));
+        durationSpin->setValue(currJob.getTaskList()[taskCombo->currentText().toInt()].getTime());
 
-    for(int i=0; i<allMachines.size(); i++){
-        if( !currJob.isMachineUsed(allMachines[i]->getId()))
-            machineCombo->addItem(QString::number(allMachines[i]->getId()));
+        for(int i=0; i<allMachines.size(); i++){
+            if( !currJob.isMachineUsed(allMachines[i]->getId()))
+                machineCombo->addItem(QString::number(allMachines[i]->getId()));
+        }
+        machineCombo->setCurrentIndex(1);
     }
-    machineCombo->setCurrentIndex(1);
 }
 
 void EditingWidget::fillPositionCombo(){
     positionCombo->clear();
     positionCombo->addItem("Select...");
     int selected = 0;
-    vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
-    for(int i=0; i<tasks.size(); i++){
-        positionCombo->addItem(QString::number(i));
-        if(i==taskCombo->currentText().toInt())
-            selected = i+1;
+    if(jobCombo->currentIndex()>0){
+        vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
+        for(int i=0; i<tasks.size(); i++){
+            positionCombo->addItem(QString::number(i));
+            if(i==taskCombo->currentText().toInt())
+                selected = i+1;
+        }
+        positionCombo->setCurrentIndex(selected);
     }
-    positionCombo->setCurrentIndex(selected);
 }
 
 void EditingWidget::saveChanges(){
@@ -137,7 +143,7 @@ void EditingWidget::saveChanges(){
     int currPos = taskCombo->currentText().toInt();
     int newPos = positionCombo->currentText().toInt();
 
-    if(machineCombo->currentIndex()!=0 && machineCombo->currentIndex()!=1){
+    if(machineCombo->currentIndex()>1){
         selectedTask.setMachine(Chromosom::getJobDatabase().getMachine(machineCombo->currentText().toInt()));
         changed = true;
     }

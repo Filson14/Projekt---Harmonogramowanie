@@ -31,13 +31,13 @@ AddingWidget::AddingWidget(QWidget *parent) :
     QVBoxLayout *jobLay = new QVBoxLayout();
     QVBoxLayout *machineLay = new QVBoxLayout();
 
-    QGroupBox *jobGrp = new QGroupBox("JOB");
-    QGroupBox *machineGrp = new QGroupBox("MACHINE");
-    QGroupBox *taskGrp = new QGroupBox("TASK");
+    QGroupBox *jobGrp = new QGroupBox("Job");
+    QGroupBox *machineGrp = new QGroupBox("Machine");
+    QGroupBox *taskGrp = new QGroupBox("Task");
 
-    QPushButton *addJobBtn = new QPushButton("ADD");
-    QPushButton *addMachineBtn = new QPushButton("ADD");
-    QPushButton *addTaskBtn = new QPushButton("ADD");
+    QPushButton *addJobBtn = new QPushButton("Add");
+    QPushButton *addMachineBtn = new QPushButton("Add");
+    QPushButton *addTaskBtn = new QPushButton("Add");
 
     QObject::connect(addJobBtn, SIGNAL(clicked()), this, SLOT(addJob()));
     QObject::connect(addMachineBtn, SIGNAL(clicked()), this, SLOT(addMachine()));
@@ -102,7 +102,11 @@ void AddingWidget::addJob(){
 }
 
 void AddingWidget::addMachine(){
-    Chromosom::getJobDatabase().addMachine(Chromosom::getJobDatabase().getMachinesAmount());
+    vector <Machine*> machines = Chromosom::getJobDatabase().getMachines();
+    int i = 0;
+    while(i<machines.size() && Chromosom::getJobDatabase().machineExists(i))
+        i++;
+    Chromosom::getJobDatabase().addMachine(i);
     fillJobsCombo();
     fillMachinesCombo();
     emit dataChanged();

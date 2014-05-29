@@ -31,13 +31,13 @@ DeletingWidget::DeletingWidget(QWidget *parent) :
     QVBoxLayout *jobLay = new QVBoxLayout();
     QVBoxLayout *machineLay = new QVBoxLayout();
 
-    QGroupBox *jobGrp = new QGroupBox("JOB");
-    QGroupBox *machineGrp = new QGroupBox("MACHINE");
-    QGroupBox *taskGrp = new QGroupBox("TASK");
+    QGroupBox *jobGrp = new QGroupBox("Job");
+    QGroupBox *machineGrp = new QGroupBox("Machine");
+    QGroupBox *taskGrp = new QGroupBox("Task");
 
-    QPushButton *delJobBtn = new QPushButton("DELETE");
-    QPushButton *delMachineBtn = new QPushButton("DELETE");
-    QPushButton *delTaskBtn = new QPushButton("DELETE");
+    QPushButton *delJobBtn = new QPushButton("Delete");
+    QPushButton *delMachineBtn = new QPushButton("Delete");
+    QPushButton *delTaskBtn = new QPushButton("Delete");
 
     QObject::connect(delJobBtn, SIGNAL(clicked()), this, SLOT(deleteJob()));
     QObject::connect(delMachineBtn, SIGNAL(clicked()), this, SLOT(deleteMachine()));
