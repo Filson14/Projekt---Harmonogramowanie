@@ -155,6 +155,12 @@ public:
 	 * \return True - jesli wszystko siê zgadza; False - w przeciwnym wypadku.
 	 */
 	bool checkDatabase();
+
+	/**
+	 * Funkcja wyznaczaj¹ca najd³u¿szy czas trwania Joba w ca³ej bazie.
+	 * \return Czas wykonania wszystkich tasków w bazie danych.
+	 */
+	int getLongestJobDuration();
 };
 
 
