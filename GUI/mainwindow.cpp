@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
       ui(new Ui::MainWindow)
 {
       ui->setupUi(this);
+      ui->tabWidget->setCurrentIndex(0);
 }
 
 
@@ -12,4 +13,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 
+}
+
+
+void MainWindow::onRunAlgorithm()
+{
+    ui->tabWidget->setCurrentIndex(2);
 }
