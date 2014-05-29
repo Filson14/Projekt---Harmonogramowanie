@@ -82,7 +82,6 @@ void StatisticsWidget::updateStatistics(AlgorithmStatistics & statistics)
     printf("I got your signal. Updating.\n");
     fflush(NULL);
     epochEdit->setText(QString::number(statistics.epoch.back()));
-
     //meanCrossCountEdit->setText(QString::number(statistics.crossoverCount));
     //meanMutCountEdit->setText(QString::number(statistics.mutationCount));
     //meanInvalidSolutionsEdit->setText(QString::number(statistics.invalidSolutions));
@@ -92,8 +91,6 @@ void StatisticsWidget::updateStatistics(AlgorithmStatistics & statistics)
     statPlot->epoch = QVector<double>::fromStdVector(statistics.epoch);
     statPlot->bestFitness = QVector<double>::fromStdVector(statistics.bestFitness);
     statPlot->popFitness = QVector<double>::fromStdVector(statistics.populationFitness);
-    printf("Es: %d, Bs: %d, Ps: %d", statPlot->epoch.size(), statPlot->bestFitness.size(), statPlot->popFitness.size());
-    fflush(NULL);
     statPlot->updatePlot();
 
     QApplication::processEvents();
