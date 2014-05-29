@@ -84,11 +84,8 @@ void BlockPlot::onDataChanged(Database* mydt)
         {
             allSP.push_back(new ExtQCPStatisticalBox(yAxis,xAxis));
             QBrush boxBrush(cVect[(*tit).getMachine()->getId()]);
-<<<<<<< HEAD
             boxBrush.setStyle(Qt::Dense4Pattern);
-=======
-            boxBrush.setStyle(Qt::Dense4Pattern			);
->>>>>>> 02dd81fc949e98da6c0c4c797c647f470eb96c0a
+
             allSP.last()->setBrush(boxBrush);
             allSP.last()->setKey(jit-(mydt->getJobs().begin()));
             allSP.last()->setWhiskerWidth(0);

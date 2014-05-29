@@ -191,4 +191,17 @@ void Algorithm::updateSettings(struct AlgorithmSettings & newSettings)
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {
 	return A.getFitness() < B.getFitness();
 }
+/*
+int main(int argc, char *argv[])
+{
+    srand(time(NULL));
+    Chromosom::getJobDatabase().readFromFile("/Users/Wojtek/Documents/Projekty/Harmonogramowanie/TestData/test1.txt");
+    Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
+    Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
+    AlgorithmSettings set = {500, 400, 10, 10, true, 0.85, 0.15, new SelectionRoulette(), new MutationReverse(), new CrossoverOnePoint()};
+    Algorithm * alg = new Algorithm(set);
+    alg->runAlgorithm();
+}
+*/
+
 

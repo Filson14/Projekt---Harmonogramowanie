@@ -22,7 +22,7 @@ void Controller::runAlgorithm()
     this->settingsWidget->fetchSettings(settings);
     settings.crossoverOperator = new CrossoverTwoPoint();
     settings.mutationOperator = new MutationSwappingPoint();
-    settings.selectionOperator = new SelectionTournament(0.8, 5);
+    settings.selectionOperator = new SelectionRoulette();
 
     algorithm->updateSettings(settings);
     algorithm->runAlgorithm();

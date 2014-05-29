@@ -2,6 +2,7 @@
 #include "./GUI/mainwindow.h"
 #include "./Controller/controller.h"
 
+
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
