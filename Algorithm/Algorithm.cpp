@@ -34,6 +34,9 @@ Algorithm::~Algorithm() {
 
 void Algorithm::initializePopulation() {
 	Chromosom newChromosom;
+    population.clear();
+    newPopulation.clear();
+
     for(int i = 0; i < settings.populationSize; i++) {
 		newChromosom = Chromosom();
 		newChromosom.generateRandomGenotype();

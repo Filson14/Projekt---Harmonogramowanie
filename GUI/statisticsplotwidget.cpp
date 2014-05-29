@@ -4,22 +4,23 @@ StatisticsPlotWidget::StatisticsPlotWidget(QWidget *parent) : QCustomPlot(parent
 {
 
     this->xAxis->setLabel("Epoch");
+    this->xAxis->setRangeLower(0);
     this->yAxis->setLabel("Fitness");
-    //this->yAxis->setAutoTickLabels(false);
+    this->yAxis->setRangeLower(0);
 
     // create graph and assign data to it:
     this->addGraph();
     this->graph(0)->setPen(QPen(Qt::red));
-    //this->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
     this->graph(0)->setName("Population");
 
     this->addGraph();
     this->graph(1)->setName("Best");
 
-    this->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+    this->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
     this->replot();
     this->setFixedHeight(175);
     this->setFixedWidth(300);
+
 }
 
 void StatisticsPlotWidget::clearPlot() {
