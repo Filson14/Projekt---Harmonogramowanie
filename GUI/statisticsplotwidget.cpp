@@ -22,7 +22,7 @@ StatisticsPlotWidget::StatisticsPlotWidget(QWidget *parent) : QCustomPlot(parent
     this->setFixedWidth(300);
 }
 
-void clearPlot() {
+void StatisticsPlotWidget::clearPlot() {
     this->graph(0)->setData(epoch, popFitness);
     this->graph(0)->rescaleAxes();
     this->graph(1)->setData(epoch, bestFitness);

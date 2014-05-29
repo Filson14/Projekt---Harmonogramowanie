@@ -10,7 +10,7 @@
 #include <QGridLayout>
 #include "settingswidget.h"
 #include "statisticswidget.h"
-#include "../build-Projekt-Harmonogramowanie-Desktop_Qt_5_3_0_clang_64bit-Debug/ui_mainwindow.h"
+#include "../../build-Harmonogramowanie-Desktop_Qt_5_3_0_clang_64bit-Debug/ui_mainwindow.h"
 
 /*namespace Ui {
 class MainWindow;
