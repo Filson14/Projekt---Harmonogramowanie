@@ -12,15 +12,17 @@ class BlockPlot : public QCustomPlot
 {
     Q_OBJECT
 private:
-    void construct();
     QVector<QColor> cVect;
     QVector<ExtQCPStatisticalBox*> allSP;
+    void clearAllBoxes();
 public:
-    explicit BlockPlot(QWidget *parent = 0,Chromosom* best=0);
+    explicit BlockPlot(QWidget *parent = 0);
 
 signals:
 
 public slots:
+    void onDataChanged(Database* );
+
 
 };
 
