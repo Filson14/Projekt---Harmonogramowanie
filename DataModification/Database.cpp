@@ -258,3 +258,17 @@ bool Database::checkDatabase(){
 	}
 	return result;
 }
+
+int Database::getLongestJobDuration(){
+	int maxDuration = 0;
+	int jobDuration = 0;
+	for(int i=0; i<jobs.size(); i++){
+		vector <Task> &tasks = jobs[i].getTaskList();
+		if(tasks.size() > 0){
+			jobDuration = tasks[tasks.size()-1].getStart() + tasks[tasks.size()-1].getTime();
+			if(jobDuration > maxDuration)
+				maxDuration = jobDuration;
+		}
+	}
+	return maxDuration;
+}
