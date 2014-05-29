@@ -2,6 +2,7 @@
 
 ExtQCPStatisticalBox::ExtQCPStatisticalBox (QCPAxis *keyAxis, QCPAxis *valueAxis):QCPStatisticalBox(keyAxis,valueAxis)
 {
+
 }
 
 

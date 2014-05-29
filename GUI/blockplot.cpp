@@ -84,6 +84,7 @@ void BlockPlot::onDataChanged(Database* mydt)
         {
             allSP.push_back(new ExtQCPStatisticalBox(yAxis,xAxis));
             QBrush boxBrush(cVect[(*tit).getMachine()->getId()]);
+            boxBrush.setStyle(Qt::Dense4Pattern			);
             allSP.last()->setBrush(boxBrush);
             allSP.last()->setKey(jit-(mydt->getJobs().begin()));
             allSP.last()->setWhiskerWidth(0);
@@ -93,7 +94,8 @@ void BlockPlot::onDataChanged(Database* mydt)
             allSP.last()->setMaximum(tit->getStart()+tit->getTime());
             allSP.last()->setName("Machine "+QString::number((*tit).getMachine()->getId()));
             allSP.last()->setSelectable(true);
-            connect(allSP.last(),SIGNAL(selectionChanged (bool )),allSP.last(),SLOT(blockinfo(bool)));
+           // connect(allSP.last(),SIGNAL(selectionChanged (bool )),allSP.last(),SLOT(blockinfo(bool)));
+            connect(allSP.last(),SIGNAL(selectionChanged (bool )),this,SLOT(onBlockSelected(bool)));
             addPlottable(allSP.last());
             if(sbExamples[(*tit).getMachine()->getId()]==NULL)
             {
@@ -115,3 +117,15 @@ void BlockPlot::onDataChanged(Database* mydt)
     replot();
 
 }
+
+void BlockPlot::onBlockSelected(bool on)
+{
+    if(!on)
+        return;
+    ((ExtQCPStatisticalBox*)sender())->setSelected(false);
+    setToolTip("Task start: "+QString::number(((ExtQCPStatisticalBox*)sender())->minimum())+"\nTask time: "+QString::number(((ExtQCPStatisticalBox*)sender())->maximum()-((ExtQCPStatisticalBox*)sender())->minimum()));
+
+}
+
+
+
