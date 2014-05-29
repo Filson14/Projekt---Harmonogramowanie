@@ -7,6 +7,7 @@ Controller::Controller(Algorithm * algorithm, SettingsWidget * settingsWidget, S
     this->statisticsWidget = statisticsWidget;
 
     connect(settingsWidget, SIGNAL(runAlgorithm()), this, SLOT(runAlgorithm()));
+    connect(settingsWidget, SIGNAL(runAlgorithm()), statisticsWidget, SLOT(clearStatistics()));
     connect(algorithm, SIGNAL(newBestChromosom()), this, SLOT(updateBestChromosom()));
     connect(algorithm, SIGNAL(newStatistics(const AlgorithmStatistics &)), statisticsWidget, SLOT(updateStatistics(const AlgorithmStatistics &)));
 }
@@ -21,9 +22,6 @@ void Controller::runAlgorithm()
 
     algorithm->updateSettings(settings);
     algorithm->runAlgorithm();
-
-    printf("Yes child, I have recieved your signal. Muahuahua!\n");
-    fflush(NULL);
 }
 
 void Controller::updateBestChromosom()
