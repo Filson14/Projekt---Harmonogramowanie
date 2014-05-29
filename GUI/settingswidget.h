@@ -22,6 +22,10 @@
 #define SPIN_MIN 10
 #define SPIN_MAX 30000
 #define SPIN_STEP 25
+#define START_POPULATION_SIZE 100
+#define START_EPOCH_NUMBER 1000
+#define START_CROSS_PROBABILITY 0.85
+#define START_MUT_PROBABILITY 0.15
 
 class SettingsWidget : public QWidget
 {

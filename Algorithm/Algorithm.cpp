@@ -66,7 +66,7 @@ void Algorithm::selectNewPopulation() {
 
 void Algorithm::generateNewPopulation() {
 	Chromosom childA, childB;
-	int x = 0, s = 0;
+    int crossoverCount = 0, mutationCount = 0, invalidChromosomCount = 0, sameParentsCount = 0;
 
     settings.selectionOperator->prepareSelection(population);
     for(int index = 0; index < settings.newPopulationSize;)
@@ -78,14 +78,20 @@ void Algorithm::generateNewPopulation() {
         Chromosom& parentB = settings.selectionOperator->selectParent();
 
 		if (parentA.getGenotype() == parentB.getGenotype()) {
-			s++;
+            sameParentsCount++;
 			continue;
 		}
 
         if (((double) rand()) / (RAND_MAX) < settings.crossoverProbability) {
             settings.crossoverOperator->crossChromosoms(parentA, parentB, childA, childB);
-			if (!childA.isValid() && !childB.isValid()) {
-				x++;
+            crossoverCount++;
+            if (settings.repairChromosom) {
+                childA.repairChromosom();
+                childB.repairChromosom();
+            }
+
+            if (!childA.isValid() || !childB.isValid()) {
+                invalidChromosomCount++;
 				continue;
 			}
 		} else {
@@ -93,18 +99,20 @@ void Algorithm::generateNewPopulation() {
 			childB = parentB;
 		}
 
-        if ((double) rand() / (RAND_MAX) < settings.mutationProbability)
+        if ((double) rand() / (RAND_MAX) < settings.mutationProbability) {
             settings.mutationOperator->performMutation(childA);
+            mutationCount++;
+        }
 
-        if ((double) rand() / (RAND_MAX) < settings.mutationProbability)
+        if ((double) rand() / (RAND_MAX) < settings.mutationProbability) {
             settings.mutationOperator->performMutation(childB);
+            mutationCount++;
+        }
 
 		this->newPopulation.push_back(childA);
 		this->newPopulation.push_back(childB);
         index = index + 2;
-	}
-
-	cout << "(" << s << ", " << x << ") ";
+    }
 }
 
 void Algorithm::printPopulation(const vector<Chromosom> & population) {
@@ -137,8 +145,9 @@ void Algorithm::runAlgorithm() {
         cout << "OK" << endl;
         if(compareChromosoms(population[0], bestChromosom)) {
             bestChromosom = population[0];
+            bestChromosom.updateDatabaseWithStartTimes();
             lastImprovement = 0;
-            emit newBestChromosom();
+            emit newBestChromosom(bestChromosom);
 		}
 		else
             lastImprovement++;
@@ -151,7 +160,7 @@ void Algorithm::runAlgorithm() {
 
 
         if (currentEpoch % 10 == 0)
-            emit newStatistics();
+            emit newStatistics(statistics);
 
         cout << "Mean fitness: " << meanFitness << endl;
     } while ((currentEpoch++ < settings.maxEpochs));// && epochsWithoutChange < this->maxEpochsWithoutChange);

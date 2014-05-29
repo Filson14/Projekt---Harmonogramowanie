@@ -77,10 +77,12 @@ StatisticsWidget::~StatisticsWidget()
 
 }
 
-void StatisticsWidget::updateStatistics(AlgorithmStatistics & statistics)
+void StatisticsWidget::clearStatistics() {
+    statPlot->clearGraphs();
+}
+
+void StatisticsWidget::updateStatistics(const AlgorithmStatistics & statistics)
 {
-    printf("I got your signal. Updating.\n");
-    fflush(NULL);
     epochEdit->setText(QString::number(statistics.epoch.back()));
     //meanCrossCountEdit->setText(QString::number(statistics.crossoverCount));
     //meanMutCountEdit->setText(QString::number(statistics.mutationCount));

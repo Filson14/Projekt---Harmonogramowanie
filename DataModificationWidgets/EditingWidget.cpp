@@ -5,7 +5,7 @@
 #include <QGroupBox>
 #include <QPushButton>
 #include <QFormLayout>
-#include "../Chromosom.h"
+#include "../Algorithm/Chromosom.h"
 
 EditingWidget::EditingWidget(QWidget *parent) :
     QWidget(parent)

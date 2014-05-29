@@ -11,6 +11,7 @@ class StatisticsPlotWidget : public QCustomPlot
 public:
     explicit StatisticsPlotWidget(QWidget *parent = 0);
     QVector<double> epoch, popFitness, bestFitness;
+    void clearPlot();
     void updatePlot();
 
 signals:

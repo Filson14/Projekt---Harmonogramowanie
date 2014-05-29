@@ -50,12 +50,11 @@ private:
 public:
     explicit StatisticsWidget(QWidget *parent = 0);
     ~StatisticsWidget();
-    void updateStatistics(AlgorithmStatistics & statistics);
-
 signals:
 
 public slots:
-
+    void clearStatistics();
+    void updateStatistics(const AlgorithmStatistics & statistics);
 };
 
 #endif // STATISTICSWIDGET_H

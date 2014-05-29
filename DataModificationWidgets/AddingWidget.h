@@ -6,7 +6,7 @@
 #include <QSlider>
 #include <QSpinBox>
 #include "../DataModification/Database.h"
-#include "../Chromosom.h"
+#include "../Algorithm/Chromosom.h"
 
 class AddingWidget : public QWidget
 {

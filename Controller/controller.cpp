@@ -8,7 +8,7 @@ Controller::Controller(Algorithm * algorithm, SettingsWidget * settingsWidget, S
 
     connect(settingsWidget, SIGNAL(runAlgorithm()), this, SLOT(runAlgorithm()));
     connect(algorithm, SIGNAL(newBestChromosom()), this, SLOT(updateBestChromosom()));
-    connect(algorithm, SIGNAL(newStatistics()), this, SLOT(updateStatistics()));
+    connect(algorithm, SIGNAL(newStatistics(const AlgorithmStatistics &)), statisticsWidget, SLOT(updateStatistics(const AlgorithmStatistics &)));
 }
 
 void Controller::runAlgorithm()

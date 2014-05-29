@@ -25,28 +25,32 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent)
     this->epochCountEdit = new QSpinBox();
     epochCountEdit->setRange(SPIN_MIN, SPIN_MAX);
     epochCountEdit->setSingleStep(SPIN_STEP);
+    epochCountEdit->setValue(START_EPOCH_NUMBER);
 
     this->noImprovementEdit = new QSpinBox();
     noImprovementEdit->setRange(SPIN_MIN, SPIN_MAX);
     noImprovementEdit->setSingleStep(SPIN_STEP);
+    noImprovementEdit->setValue(START_EPOCH_NUMBER);
 
     this->crossProbabilityEdit = new QDoubleSpinBox();
     crossProbabilityEdit->setRange(DOUBLE_SPIN_MIN, DOUBLE_SPIN_MAX);
     crossProbabilityEdit->setSingleStep(DOUBLE_SPIN_STEP);
-    crossProbabilityEdit->setValue(0.75);
+    crossProbabilityEdit->setValue(START_CROSS_PROBABILITY);
 
     this->mutProbabilityEdit = new QDoubleSpinBox();
     mutProbabilityEdit->setRange(DOUBLE_SPIN_MIN, DOUBLE_SPIN_MAX);
     mutProbabilityEdit->setSingleStep(DOUBLE_SPIN_STEP);
-    mutProbabilityEdit->setValue(0.35);
+    mutProbabilityEdit->setValue(START_MUT_PROBABILITY);
 
     this->popSizeEdit = new QSpinBoxEnhenced();
     popSizeEdit->setRange(SPIN_MIN, SPIN_MAX);
     popSizeEdit->setSingleStep(SPIN_STEP);
+    popSizeEdit->setValue(START_POPULATION_SIZE);
 
     this->newPopSizeEdit = new QSpinBoxEnhenced();
     newPopSizeEdit->setRange(SPIN_MIN, SPIN_MAX);
     newPopSizeEdit->setSingleStep(SPIN_STEP);
+    newPopSizeEdit->setValue(START_POPULATION_SIZE);
     connect(popSizeEdit, SIGNAL(valueChanged(int)), newPopSizeEdit, SLOT(setNewMinimum(int)));
 
     this->crossOperatorBox = new QComboBox();
@@ -109,6 +113,7 @@ void SettingsWidget::fetchSettings(struct AlgorithmSettings & settings)
 {
     settings.maxEpochs = epochCountEdit->value();
     settings.maxEpochsWithoutChange = epochCountEdit->value();
+    settings.repairChromosom = (repairChromosomCheck->checkState() == 0) ? false : true;
     settings.populationSize = popSizeEdit->value();
     settings.newPopulationSize = newPopSizeEdit->value();
     settings.crossoverProbability = crossProbabilityEdit->value();

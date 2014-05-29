@@ -9,7 +9,7 @@ struct AlgorithmSettings {
 	int maxEpochsWithoutChange;	//!< Maksymalna liczba epok bez zmiany najlepszego osobnika.
 	int populationSize;	//!< Rozmiar populacji.
 	int newPopulationSize;	//!< Rozmiar populacji powstalej z krzyzowania.
-    //bool repairChromosom;   //!< Flaga czy algorytm ma próbować naprawiać niepoprawne chromosomy.
+    bool repairChromosom;   //!< Flaga czy algorytm ma próbować naprawiać niepoprawne chromosomy.
 	double mutationProbability;	//!< Prawdopodobienstwo mutacji osobnika.
 	double crossoverProbability;	//!< Prawdopodobienstwo krzyzowania.
 

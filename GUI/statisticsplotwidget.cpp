@@ -22,10 +22,18 @@ StatisticsPlotWidget::StatisticsPlotWidget(QWidget *parent) : QCustomPlot(parent
     this->setFixedWidth(300);
 }
 
-void StatisticsPlotWidget::updatePlot() {
+void clearPlot() {
     this->graph(0)->setData(epoch, popFitness);
     this->graph(0)->rescaleAxes();
     this->graph(1)->setData(epoch, bestFitness);
+    //this->graph(1)->rescaleAxes();
+    this->replot(QCustomPlot::rpImmediate);
+}
+
+void StatisticsPlotWidget::updatePlot() {
+    this->graph(0)->addData(epoch, popFitness);
+    this->graph(0)->rescaleAxes();
+    this->graph(1)->addData(epoch, bestFitness);
     //this->graph(1)->rescaleAxes();
     this->replot(QCustomPlot::rpImmediate);
 }

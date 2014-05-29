@@ -89,7 +89,9 @@ public:
 
 signals:
     void newBestChromosom();
+    void newBestChromosom(const Chromosom & best);
     void newStatistics();
+    void newStatistics(const AlgorithmStatistics & stats);
 
 public slots:
 };

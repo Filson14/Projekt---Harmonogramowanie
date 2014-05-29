@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QGroupBox>
 #include <QFormLayout>
-#include "../Chromosom.h"
+#include "../Algorithm/Chromosom.h"
 
 DeletingWidget::DeletingWidget(QWidget *parent) :
     QWidget(parent)

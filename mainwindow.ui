@@ -86,7 +86,6 @@
         <property name="midLineWidth">
          <number>0</number>
         </property>
-        <zorder>tabWidget</zorder>
        </widget>
       </widget>
      </item>
@@ -220,19 +219,19 @@
   <customwidget>
    <class>DataWidget</class>
    <extends>QWidget</extends>
-   <header>../DataModificationWidgets/datawidget.h</header>
+   <header>../Projekt-Harmonogramowanie/DataModificationWidgets/datawidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SettingsWidget</class>
    <extends>QWidget</extends>
-   <header>../GUI/settingswidget.h</header>
+   <header>../Projekt-Harmonogramowanie/GUI/settingswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>StatisticsWidget</class>
    <extends>QWidget</extends>
-   <header>../GUI/statisticswidget.h</header>
+   <header>../Projekt-Harmonogramowanie/GUI/statisticswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
