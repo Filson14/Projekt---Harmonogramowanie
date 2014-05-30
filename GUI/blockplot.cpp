@@ -68,8 +68,8 @@ void BlockPlot::onDataChanged(Database* mydt)
     //Setting X axis
      xAxis->setLabel("Time");
      xAxis->setAutoTicks(true);
-     xAxis->setRange(0,2000); //do wywalenia
-     // DOPIERO JAK FILIP NAPISZE xAxis->setRange(0,mydt->getcostam());
+     //xAxis->setRange(0,2000); //do wywalenia
+     xAxis->setRange(0,mydt->getLongestJobDuration()+XINT);
 
 
 

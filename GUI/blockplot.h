@@ -8,6 +8,8 @@
 #include <QVector>
 #include <QMessageBox>
 
+#define XINT 20
+
 class BlockPlot : public QCustomPlot
 {
     Q_OBJECT
