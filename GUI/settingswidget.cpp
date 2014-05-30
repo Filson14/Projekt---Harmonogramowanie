@@ -113,7 +113,7 @@ void SettingsWidget::runButtonClicked()
 void SettingsWidget::fetchSettings(struct AlgorithmSettings & settings)
 {
     settings.maxEpochs = epochCountEdit->value();
-    settings.maxEpochsWithoutChange = epochCountEdit->value();
+    settings.maxEpochsWithoutChange = noImprovementEdit->value();
     settings.repairChromosom = (repairChromosomCheck->checkState() == 0) ? false : true;
     settings.populationSize = popSizeEdit->value();
     settings.newPopulationSize = newPopSizeEdit->value();
