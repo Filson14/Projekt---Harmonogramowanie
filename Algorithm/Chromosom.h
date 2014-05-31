@@ -24,8 +24,6 @@ using namespace std;
 
 class Chromosom {
 private:
-	static int jobCount;	//!< Liczba zadan do wykonania.
-	static int machineCount;	//!< Liczba dostepnych maszyn.
     static Database jobDatabase; //!< baza danych
 	int fitness;	//!< Ocena chromosomu (jakosc rozwiazania).
 	vector<int> genotype;	//!< Genotyp chromosomu (przechowuje rozwiazanie).
@@ -41,30 +39,10 @@ public:
 	 * \param genotype genotyp chromosomu
 	 */
     Chromosom(vector<int> genotype);
-    /**
-	 * Konstruktor kt�ry pozwala na pocz�tkowe ustawienie bazy danych wej�ciowych, liczby zada� oraz liczby maszyn.
-	 * \param jobDatabase baza danych wej�ciowych.
-     * \param jobCount liczba zadan do wykoniania.
-     * \param machineCount liczba dostepnych maszyn.
-	 */
-    Chromosom(Database& jobDatabase,int jobCount, int machineCount);
 
 	virtual ~Chromosom();
 
-	/**
-	 * Funkcja ustawia zmienna statyczna jobCount.
-	 * \param jobCount liczba zadan do wykoniania
-	 */
-	static void setJobCount(int jobCount);
 
-	/**
-	 * Funkcja ustawia zmienna statyczna machineCount.
-	 * \param machineCount liczba dostepnych maszyn.
-	 */
-	static void setMachineCount(int machineCount);
-
-	static int getMachineCount() ;
-	static int getJobCount() ;
 	bool isValid();
 
 	/**

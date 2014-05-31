@@ -19,24 +19,10 @@ Chromosom::Chromosom(vector<int> genotype) {
 	fitness=std::numeric_limits<int>::max();
 }
 
-Chromosom::Chromosom(Database& jobDatabase,int jobCount, int machineCount ) {
-	Chromosom::jobDatabase=jobDatabase;
-	Chromosom::jobCount=jobCount;
-	Chromosom::machineCount=machineCount;
-	fitness=std::numeric_limits<int>::max();
-}
-
 Chromosom::~Chromosom() {
 	// TODO Auto-generated destructor stub
 }
 
-void Chromosom::setJobCount(int jobCount) {
-	Chromosom::jobCount=jobCount;
-}
-
-void Chromosom::setMachineCount(int machineCount) {
-	Chromosom::machineCount=machineCount;
-}
 
 void Chromosom::setJobDatabase(Database& jobDatabase)
 {
@@ -46,15 +32,6 @@ void Chromosom::setJobDatabase(Database& jobDatabase)
 int Chromosom::getFitness() const {
 	return this->fitness;
 }
-
-int Chromosom::getJobCount()  {
-	return Chromosom::jobCount;
-}
-
-int Chromosom::getMachineCount()  {
-	return Chromosom::machineCount;
-}
-
 
 const vector<int>& Chromosom::getGenotype() const{
 	return this->genotype;
@@ -70,8 +47,10 @@ void Chromosom::setGenotype(vector<int>& genotype) {
 }
 
 void Chromosom::generateRandomGenotype() {
+    int machineCount=jobDatabase.getMachinesAmount();
+    int jobCount=jobDatabase.getJobsAmount();
     this->genotype=vector <int> (machineCount*jobCount,0);
-	vector <int> taskScheduled (jobCount,0);
+    vector <int> taskScheduled (jobCount,0);
 	int jobID;
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
 	{
@@ -87,7 +66,8 @@ void Chromosom::generateRandomGenotype() {
 }
 
 int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w od 0 - do ustalenia
-
+    int machineCount=jobDatabase.getMachinesAmount();
+    int jobCount=jobDatabase.getJobsAmount();
     if(!isValid())
         return fitness;
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
@@ -148,6 +128,8 @@ void Chromosom::printChromosom() const
 
 void Chromosom::updateDatabaseWithStartTimes()
 {
+    int machineCount=jobDatabase.getMachinesAmount();
+    int jobCount=jobDatabase.getJobsAmount();
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
 	vector<int> jobSchedule(jobCount,0);	//!< Informacje o postepach prac.
 	vector<int> currentTaskCount(jobCount,0);
@@ -185,6 +167,8 @@ void Chromosom::setRandomFitness()
 
 bool Chromosom::isValid()
 {
+    int machineCount=jobDatabase.getMachinesAmount();
+    int jobCount=jobDatabase.getJobsAmount();
     vector<int> taskCount(jobCount,0);
     for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
     {
@@ -202,6 +186,7 @@ bool Chromosom::isValid()
 
 bool Chromosom::repairChromosom()
 {
+    int jobCount=jobDatabase.getJobsAmount();
     if (isValid())
         return false;
 
@@ -245,7 +230,4 @@ bool Chromosom::repairChromosom()
 
 }
 
-
-int Chromosom::jobCount=0;	//!< Liczba zadan do wykonania.
-int Chromosom::machineCount=0;
 Database Chromosom::jobDatabase;
