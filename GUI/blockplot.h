@@ -19,6 +19,7 @@ private:
     void clearAllBoxes();
 public:
     explicit BlockPlot(QWidget *parent = 0);
+    virtual ~BlockPlot();
 
 signals:
 

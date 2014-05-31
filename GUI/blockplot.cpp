@@ -31,6 +31,7 @@ void BlockPlot::clearAllBoxes()
     for(QVector<ExtQCPStatisticalBox*>::iterator it=allSP.begin();it!=allSP.end();it++)
         delete *it;
     allSP.clear();
+   // replot();
 }
 
 void BlockPlot::onDataChanged(Database* mydt)
@@ -128,5 +129,10 @@ void BlockPlot::onBlockSelected(bool on)
 
 }
 
+
+BlockPlot::~BlockPlot()
+{
+    clearAllBoxes();
+}
 
 
