@@ -26,18 +26,10 @@ BlockPlot::BlockPlot(QWidget *parent) :
 }
 
 
-void BlockPlot::clearAllBoxes()
-{
-    for(QVector<ExtQCPStatisticalBox*>::iterator it=allSP.begin();it!=allSP.end();it++)
-        delete *it;
-    allSP.clear();
-   // replot();
-}
-
 void BlockPlot::onDataChanged(Database* mydt)
 {
-    clearAllBoxes();
-    legend->clear();
+    this->clearPlottables();
+    this->clearGraphs();
 
     if(mydt->getMachinesAmount()>cVect.size())
     {
@@ -77,31 +69,32 @@ void BlockPlot::onDataChanged(Database* mydt)
 
     //Setting up the block widgets
 
-
+    ExtQCPStatisticalBox* lastPItem=NULL;
+    QBrush boxBrush;
     QVector<ExtQCPStatisticalBox*> sbExamples(mydt->getMachinesAmount(),NULL);
     for(vector<Job>::iterator jit=mydt->getJobs().begin();jit!=mydt->getJobs().end();jit++)
     {
         for(vector<Task>::iterator tit=(*jit).getTaskList().begin();tit!=(*jit).getTaskList().end();tit++)
         {
-            allSP.push_back(new ExtQCPStatisticalBox(yAxis,xAxis));
-            QBrush boxBrush(cVect[(*tit).getMachine()->getId()]);
+            lastPItem=new ExtQCPStatisticalBox(yAxis,xAxis);
+            boxBrush=QBrush(cVect[(*tit).getMachine()->getId()]);
             boxBrush.setStyle(Qt::Dense4Pattern);
 
-            allSP.last()->setBrush(boxBrush);
-            allSP.last()->setKey(jit-(mydt->getJobs().begin()));
-            allSP.last()->setWhiskerWidth(0);
-            allSP.last()->setMinimum(tit->getStart());
-            allSP.last()->setLowerQuartile(tit->getStart());
-            allSP.last()->setUpperQuartile(tit->getStart()+tit->getTime());
-            allSP.last()->setMaximum(tit->getStart()+tit->getTime());
-            allSP.last()->setName("Machine "+QString::number((*tit).getMachine()->getId()));
-            allSP.last()->setSelectable(true);
+            lastPItem->setBrush(boxBrush);
+            lastPItem->setKey(jit-(mydt->getJobs().begin()));
+            lastPItem->setWhiskerWidth(0);
+            lastPItem->setMinimum(tit->getStart());
+            lastPItem->setLowerQuartile(tit->getStart());
+            lastPItem->setUpperQuartile(tit->getStart()+tit->getTime());
+            lastPItem->setMaximum(tit->getStart()+tit->getTime());
+            lastPItem->setName("Machine "+QString::number((*tit).getMachine()->getId()));
+            lastPItem->setSelectable(true);
            // connect(allSP.last(),SIGNAL(selectionChanged (bool )),allSP.last(),SLOT(blockinfo(bool)));
-            connect(allSP.last(),SIGNAL(selectionChanged (bool )),this,SLOT(onBlockSelected(bool)));
-            addPlottable(allSP.last());
+            connect(lastPItem,SIGNAL(selectionChanged (bool )),this,SLOT(onBlockSelected(bool)));
+            addPlottable(lastPItem);
             if(sbExamples[(*tit).getMachine()->getId()]==NULL)
             {
-                sbExamples[(*tit).getMachine()->getId()]=allSP.last();
+                sbExamples[(*tit).getMachine()->getId()]=lastPItem;
             }
 
         }
@@ -132,7 +125,7 @@ void BlockPlot::onBlockSelected(bool on)
 
 BlockPlot::~BlockPlot()
 {
-    clearAllBoxes();
+
 }
 
 

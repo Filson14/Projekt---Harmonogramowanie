@@ -15,8 +15,6 @@ class BlockPlot : public QCustomPlot
     Q_OBJECT
 private:
     QVector<QColor> cVect;
-    QVector<ExtQCPStatisticalBox*> allSP;
-    void clearAllBoxes();
 public:
     explicit BlockPlot(QWidget *parent = 0);
     virtual ~BlockPlot();
