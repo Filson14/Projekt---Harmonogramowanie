@@ -22,11 +22,8 @@ struct AlgorithmStatistics {
         crossoverCount = 0;
         invalidSolutions = 0;
         epoch.clear();
-        //epoch.push_back(0);
         bestFitness.clear();
-        //bestFitness.push_back(0);
         populationFitness.clear();
-        //populationFitness.push_back(0);
     }
 
 };

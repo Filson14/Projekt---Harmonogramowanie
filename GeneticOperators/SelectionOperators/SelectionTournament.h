@@ -20,7 +20,7 @@ private:
 	double selectionProbability;
 
 public:
-	SelectionTournament(double selectionProbability, int competitorCount);
+    SelectionTournament(double selectionProbability = 0.8, int competitorCount = 5);
 	virtual ~SelectionTournament();
 
 	/**

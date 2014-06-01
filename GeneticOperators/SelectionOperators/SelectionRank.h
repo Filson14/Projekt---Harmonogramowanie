@@ -5,18 +5,18 @@
  *      Author: Wojtek
  */
 
-#ifndef SELECTIONROULETTE_H_
-#define SELECTIONROULETTE_H_
+#ifndef SELECTIONRANK_H_
+#define SELECTIONRANK_H_
 
 #include "SelectionOperator.h"
 
-class SelectionRoulette: public SelectionOperator {
+class SelectionRank: public SelectionOperator {
 private:
-	long totalFitness;
+    long totalRank;
 
 public:
-	SelectionRoulette();
-	virtual ~SelectionRoulette();
+    SelectionRank();
+    virtual ~SelectionRank();
 
 	/**
 	 * Funkcja przygotowuje klase do procesu selekcji.
@@ -31,4 +31,4 @@ public:
 	Chromosom & selectParent();
 };
 
-#endif /* SELECTIONROULETTE_H_ */
+#endif /* SELECTIONRANK_H_ */

@@ -18,8 +18,6 @@ public:
 signals:
 
 public slots:
-    void runAlgorithm();
-    void updateBestChromosom();
 
 private:
     Algorithm * algorithm;

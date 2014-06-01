@@ -12,9 +12,13 @@ int main(int argc, char *argv[])
     Chromosom::setJobDatabase(&dt);
     Algorithm * alg = new Algorithm();
     MainWindow * win = new MainWindow();
-    Controller controller(alg, win, &Chromosom::getJobDatabase());
+    win->setAttribute(Qt::WA_DeleteOnClose, true);
+    Controller * controller = new Controller(alg, win, &Chromosom::getJobDatabase());
     win->show();
+    a.exec();
 
-    return a.exec();
+    delete controller;
+    delete alg;
+    return 0;
 }
 

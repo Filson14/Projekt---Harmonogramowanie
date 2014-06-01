@@ -1,14 +1,14 @@
-#ifndef MUTATIONINVERSION_H
-#define MUTATIONINVERSION_H
+#ifndef MUTATIONDISPLACEMENT_H
+#define MUTATIONDISPLACEMENT_H
 
 #include <algorithm>
 #include "MutationOperator.h"
 
-class MutationInversion : public MutationOperator
+class MutationDisplacement : public MutationOperator
 {
 public:
-    MutationInversion();
-    virtual ~MutationInversion();
+    MutationDisplacement();
+    virtual ~MutationDisplacement();
 
     /**
      * Funkcja dokonuje mutacji chromosomu poprzez odwrócenie kolejności genotypu.
@@ -18,4 +18,4 @@ public:
     void performMutation(Chromosom & chromosom);
 };
 
-#endif // MUTATIONINVERSION_H
+#endif // MUTATIONDISPLACEMENT_H

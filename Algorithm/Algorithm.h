@@ -13,15 +13,8 @@
 #include "Chromosom.h"
 #include "SettingsStructures.h"
 #include "StatisticsStructure.h"
-#include "../GeneticOperators/SelectionOperators/SelectionTournament.h"
-#include "../GeneticOperators/SelectionOperators/SelectionRoulette.h"
-#include "../GeneticOperators/CrossoverOperators/CrossoverOnePoint.h"
-#include "../GeneticOperators/CrossoverOperators/CrossoverTwoPoint.h"
-#include "../GeneticOperators/MutationOperators/MutationSwappingPoint.h"
-#include "../GeneticOperators/MutationOperators/MutationSwappingSegment.h"
-#include "../GeneticOperators/MutationOperators/MutationReverse.h"
 
-
+#define UPDATE_FREQUENCY_PC 0.05
 
 class Algorithm : public QObject
 {
@@ -83,6 +76,7 @@ signals:
     void newStatistics(const AlgorithmStatistics & stats);
 
 public slots:
+    void onRunAlgorithm(const AlgorithmSettings & settings);
 };
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B);

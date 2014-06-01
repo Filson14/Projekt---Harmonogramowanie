@@ -5,8 +5,12 @@ StatisticsPlotWidget::StatisticsPlotWidget(QWidget *parent) : QCustomPlot(parent
 
     this->xAxis->setLabel("Epoch");
     this->xAxis->setRangeLower(0);
+    this->xAxis->setAutoTickCount(3);
+    this->xAxis->setAutoTickLabels(true);
     this->yAxis->setLabel("Fitness");
     this->yAxis->setRangeLower(0);
+    this->yAxis->setAutoTickCount(4);
+    this->yAxis->setAutoTickLabels(true);
 
     // create graph and assign data to it:
     this->addGraph();
