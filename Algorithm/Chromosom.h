@@ -24,7 +24,7 @@ using namespace std;
 
 class Chromosom {
 private:
-    static Database jobDatabase; //!< baza danych
+    static Database* jobDatabase; //!< baza danych
 	int fitness;	//!< Ocena chromosomu (jakosc rozwiazania).
 	vector<int> genotype;	//!< Genotyp chromosomu (przechowuje rozwiazanie).
 
@@ -55,7 +55,7 @@ public:
 	 * Funkcja ustawia baze danych wej�ciowych dla algorytmu.
 	 * \param jobDatabase Baza danych wej�ciowych
 	 */
-	static void setJobDatabase(Database& jobDatabase);
+    static void setJobDatabase(Database* jobDatabase);
 
 
 	/**

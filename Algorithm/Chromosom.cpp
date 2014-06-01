@@ -24,7 +24,7 @@ Chromosom::~Chromosom() {
 }
 
 
-void Chromosom::setJobDatabase(Database& jobDatabase)
+void Chromosom::setJobDatabase(Database* jobDatabase)
 {
     Chromosom::jobDatabase=jobDatabase;
 }
@@ -38,7 +38,7 @@ const vector<int>& Chromosom::getGenotype() const{
 }
 
 Database& Chromosom::getJobDatabase()  {
-	return Chromosom::jobDatabase;
+    return *(Chromosom::jobDatabase);
 }
 
 
@@ -47,8 +47,10 @@ void Chromosom::setGenotype(vector<int>& genotype) {
 }
 
 void Chromosom::generateRandomGenotype() {
-    int machineCount=jobDatabase.getMachinesAmount();
-    int jobCount=jobDatabase.getJobsAmount();
+    if(jobDatabase==NULL)
+        return;
+    int machineCount=jobDatabase->getMachinesAmount();
+    int jobCount=jobDatabase->getJobsAmount();
     this->genotype=vector <int> (machineCount*jobCount,0);
     vector <int> taskScheduled (jobCount,0);
 	int jobID;
@@ -66,8 +68,8 @@ void Chromosom::generateRandomGenotype() {
 }
 
 int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w od 0 - do ustalenia
-    int machineCount=jobDatabase.getMachinesAmount();
-    int jobCount=jobDatabase.getJobsAmount();
+    int machineCount=jobDatabase->getMachinesAmount();
+    int jobCount=jobDatabase->getJobsAmount();
     if(!isValid())
         return fitness;
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
@@ -82,22 +84,22 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 	    currentTasknum=currentTaskCount[*it];
        // cout<<"Przed current get machine ID cuurent task num: "<<currentTasknum<<" a job"<<*it<<endl;
         //cout<<flush;
-	    currentMachineId=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getMachine()->getId();
+        currentMachineId=jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getMachine()->getId();
 	   // cout<<"Current job num: "<<(*it)<<" current machined ID: "<<currentMachineId<<"task of the job: "<<currentTasknum<<"time of the task"<<jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime()<<endl;
 	    currentTaskCount[*it]++;
 
 	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
         {
             jobstarttime=machineSchedule[currentMachineId];
-            jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+            jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getTime();
         }
         else
         {
              jobstarttime=jobSchedule[*it];
-             jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+             jobSchedule[*it]+=jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getTime();
         }
 
-        machineSchedule[currentMachineId]=jobstarttime+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+        machineSchedule[currentMachineId]=jobstarttime+jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	}
 	for(vector<int>::iterator it=jobSchedule.begin();it!=jobSchedule.end();it++)
 	    if(*it>startingfit)
@@ -128,8 +130,10 @@ void Chromosom::printChromosom() const
 
 void Chromosom::updateDatabaseWithStartTimes()
 {
-    int machineCount=jobDatabase.getMachinesAmount();
-    int jobCount=jobDatabase.getJobsAmount();
+    if(jobDatabase==NULL)
+        return;
+    int machineCount=jobDatabase->getMachinesAmount();
+    int jobCount=jobDatabase->getJobsAmount();
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
 	vector<int> jobSchedule(jobCount,0);	//!< Informacje o postepach prac.
 	vector<int> currentTaskCount(jobCount,0);
@@ -139,22 +143,22 @@ void Chromosom::updateDatabaseWithStartTimes()
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
 	{
 	    currentTasknum=currentTaskCount[*it];
-	    currentMachineId=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getMachine()->getId();
+        currentMachineId=jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getMachine()->getId();
 	    currentTaskCount[*it]++;
 
 	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
 	    {
             jobstarttime=machineSchedule[currentMachineId];
-	        jobDatabase.getJobs()[*it].changeTaskStart(currentMachineId,machineSchedule[currentMachineId]);
-	        jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+            jobDatabase->getJobs()[*it].changeTaskStart(currentMachineId,machineSchedule[currentMachineId]);
+            jobSchedule[*it]=machineSchedule[currentMachineId]+jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	    }
 	    else
 	    {
             jobstarttime=jobSchedule[*it];
-	        jobDatabase.getJobs()[*it].changeTaskStart(currentMachineId,jobSchedule[*it]);
-	        jobSchedule[*it]+=jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+            jobDatabase->getJobs()[*it].changeTaskStart(currentMachineId,jobSchedule[*it]);
+            jobSchedule[*it]+=jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	    }
-        machineSchedule[currentMachineId]=jobstarttime+jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime();
+        machineSchedule[currentMachineId]=jobstarttime+jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	}
 
 }
@@ -167,8 +171,10 @@ void Chromosom::setRandomFitness()
 
 bool Chromosom::isValid()
 {
-    int machineCount=jobDatabase.getMachinesAmount();
-    int jobCount=jobDatabase.getJobsAmount();
+    if(jobDatabase==NULL)
+        return false;
+    int machineCount=jobDatabase->getMachinesAmount();
+    int jobCount=jobDatabase->getJobsAmount();
     vector<int> taskCount(jobCount,0);
     for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
     {
@@ -186,7 +192,9 @@ bool Chromosom::isValid()
 
 bool Chromosom::repairChromosom()
 {
-    int jobCount=jobDatabase.getJobsAmount();
+    if(jobDatabase==NULL)
+        return false;
+    int jobCount=jobDatabase->getJobsAmount();
     if (isValid())
         return false;
 
@@ -230,4 +238,4 @@ bool Chromosom::repairChromosom()
 
 }
 
-Database Chromosom::jobDatabase;
+Database* Chromosom::jobDatabase=NULL;

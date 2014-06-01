@@ -7,9 +7,9 @@ int main(int argc, char *argv[])
 {
     srand(time(NULL));
     QApplication a(argc, argv);
-    Chromosom::getJobDatabase().readFromFile("/Users/Wojtek/Documents/Projekty/Projekt-Harmonogramowanie/TestData/test1.txt");
-    Chromosom::setJobCount(Chromosom::getJobDatabase().getJobsAmount());
-    Chromosom::setMachineCount(Chromosom::getJobDatabase().getMachinesAmount());
+    Database dt;
+    dt.readFromFile("test1.txt");
+    Chromosom::setJobDatabase(&dt);
     Algorithm * alg = new Algorithm();
     MainWindow * win = new MainWindow();
     Controller controller(alg, win, &Chromosom::getJobDatabase());
