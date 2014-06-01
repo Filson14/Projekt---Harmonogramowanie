@@ -20,7 +20,7 @@ public:
     explicit EditingWidget(QWidget *parent = 0);
 
 signals:
-    void dataChanged();
+    void editChangeSig(int,int,int,int,int,int);
 
 public slots:
     void fillJobCombo();

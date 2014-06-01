@@ -88,7 +88,7 @@ void DeletingWidget::fillMachineCombo(){
     machineCombo->addItem("Select...");
 
     vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
-    for(int i=0; i<allMachines.size(); i++)
+    for(unsigned int i=0; i<allMachines.size(); i++)
         machineCombo->addItem(QString::number(allMachines[i]->getId()));
 }
 
@@ -98,7 +98,7 @@ void DeletingWidget::fillTaskMachineCombo(){
     if(taskJobCombo->currentIndex()>0){
         Job &currJob = Chromosom::getJobDatabase().getJobs()[taskJobCombo->currentText().toInt()];
         vector <Task> &allTasks = currJob.getTaskList();
-        for(int i=0; i<allTasks.size(); i++){
+        for(unsigned int i=0; i<allTasks.size(); i++){
            taskMachineCombo->addItem( QString::number(allTasks[i].getMachine()->getId()) );
         }
     }
@@ -106,26 +106,23 @@ void DeletingWidget::fillTaskMachineCombo(){
 
 void DeletingWidget::deleteJob(){
     if(jobCombo->currentIndex()!=0){
-        Chromosom::getJobDatabase().deleteJob(jobCombo->currentText().toInt());
+        emit deleteJobSig(jobCombo->currentText().toInt());
         fillJobsCombos();
-        emit dataChanged();
     }
 
 }
 
 void DeletingWidget::deleteMachine(){
     if(machineCombo->currentIndex()!=0){
-        Chromosom::getJobDatabase().deleteMachine(machineCombo->currentText().toInt());
+        emit deleteMachineSig(machineCombo->currentText().toInt());
         fillMachineCombo();
         fillTaskMachineCombo();
-        emit dataChanged();
     }
 }
 
 void DeletingWidget::deleteTask(){
     if(taskJobCombo->currentIndex()!=0 && taskMachineCombo->currentIndex()!=0){
-        Chromosom::getJobDatabase().getJobs()[taskJobCombo->currentText().toInt()].deleteTask(taskMachineCombo->currentText().toInt());
+        emit deleteTaskSig(taskJobCombo->currentText().toInt(),taskMachineCombo->currentText().toInt());
         fillTaskMachineCombo();
-        emit dataChanged();
     }
 }

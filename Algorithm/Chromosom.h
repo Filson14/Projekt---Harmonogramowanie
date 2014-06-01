@@ -55,7 +55,7 @@ public:
 	 * Funkcja ustawia baze danych wej�ciowych dla algorytmu.
 	 * \param jobDatabase Baza danych wej�ciowych
 	 */
-    static void setJobDatabase(Database* jobDatabase);
+    static void setJobDatabase(Database& jobDatabase);
 
 
 	/**
@@ -106,6 +106,7 @@ public:
 
     bool repairChromosom();
 
+    static void setJobDatabase(Database* jobDatabase);
 
 
 };

@@ -18,7 +18,10 @@ public:
     explicit DeletingWidget(QWidget *parent = 0);
 
 signals:
-    void dataChanged();
+    void deleteJobSig(int);
+    void deleteMachineSig(int);
+    void deleteTaskSig(int,int);
+
 
 public slots:
     void fillJobsCombos();

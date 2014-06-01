@@ -20,7 +20,10 @@ public:
     explicit AddingWidget(QWidget *parent = 0);
 
 signals:
-    void dataChanged();
+    void addJobSig();
+    void addMachineSig();
+    void addTaskSig(int,int,int);
+
 public slots:
     void fillMachinesCombo();
     void fillJobsCombo();

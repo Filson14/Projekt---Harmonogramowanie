@@ -17,18 +17,19 @@ DataWidget::DataWidget(QWidget *parent) :
     this->editWidget = new EditingWidget();
     this->delWidget = new DeletingWidget();
 
-    QObject::connect(addWidget, SIGNAL(dataChanged()), this, SLOT(emitChangeSignal()));
-    QObject::connect(addWidget, SIGNAL(dataChanged()), delWidget, SLOT(fillJobsCombos()));
-    QObject::connect(addWidget, SIGNAL(dataChanged()), delWidget, SLOT(fillMachineCombo()));
-    QObject::connect(addWidget, SIGNAL(dataChanged()), editWidget, SLOT(fillJobCombo()));
+    // nowe connecty
+    QObject::connect(addWidget, SIGNAL(addJobSig()), this, SLOT(onAddJob()));
+    QObject::connect(addWidget, SIGNAL(addMachineSig()), this, SLOT(onAddMachine()));
+    QObject::connect(addWidget, SIGNAL(addTaskSig(int,int,int)), this, SLOT(onAddTask(int,int,int)));
 
-    QObject::connect(delWidget, SIGNAL(dataChanged()), this, SLOT(emitChangeSignal()));
-    QObject::connect(delWidget, SIGNAL(dataChanged()), addWidget, SLOT(fillJobsCombo()));
-    QObject::connect(delWidget, SIGNAL(dataChanged()), editWidget, SLOT(fillJobCombo()));
 
-    QObject::connect(editWidget, SIGNAL(dataChanged()), this, SLOT(emitChangeSignal()));
-    QObject::connect(editWidget, SIGNAL(dataChanged()), addWidget, SLOT(fillJobsCombo()));
-    QObject::connect(editWidget, SIGNAL(dataChanged()), delWidget, SLOT(fillJobsCombos()));
+    QObject::connect(delWidget, SIGNAL(deleteJobSig(int)), this, SLOT(onDeleteJob(int)));
+    QObject::connect(delWidget, SIGNAL(deleteMachineSig(int)), this, SLOT(onDeleteMachine(int)));
+    QObject::connect(delWidget, SIGNAL(deleteTaskSig(int,int)), this, SLOT(onDeleteTask(int,int)));
+
+    QObject::connect(editWidget, SIGNAL(editChangeSig(int,int,int,int,int,int)), this, SLOT(onEditChange(int,int,int,int,int,int)));
+
+
 
     QStackedLayout *pageLayout = new QStackedLayout();
     pageLayout->addWidget(addWidget);
@@ -99,41 +100,45 @@ DataWidget::DataWidget(QWidget *parent) :
 void DataWidget::loadDataFromFile(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"C://", tr("Text File (*.txt)"));
     if(fileName!=""){
-        Chromosom::getJobDatabase().readFromFile(fileName.toStdString().c_str());
+        DataStructure* dt=new DataStructure;
+        dt->opType=dt->DB_FILE_LOAD;
+        dt->dtfile=fileName.toStdString();
+        emit newDataStructure(dt);
         updateWidgets();
-        emit dataChanged();
     }
 }
 
 void DataWidget::saveDataToFile(){
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),"C://", tr("Text File (*.txt)"));
     if(fileName!=""){
-        Chromosom::getJobDatabase().saveToFile(fileName.toStdString().c_str());
-        emit dataChanged();
+        DataStructure* dt=new DataStructure;
+        dt->opType=dt->DB_FILE_SAVE;
+        dt->dtfile=fileName.toStdString();
+        emit newDataStructure(dt);
     }
 }
 
 void DataWidget::generateRandomData(){
-    Chromosom::getJobDatabase().generateRandomData(5, 5);
+
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_GEN_RND;
+    emit newDataStructure(dt);
     updateWidgets();
-    emit dataChanged();
 }
 
 void DataWidget::resetDatabase(){
-    Chromosom::getJobDatabase().resetDatabase();
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_RESET;
+    emit newDataStructure(dt);
     updateWidgets();
-    emit dataChanged();
 
 }
 
 void DataWidget::clearDatabase(){
-    Chromosom::getJobDatabase().clearDatabase();
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_CLEAR;
+    emit newDataStructure(dt);
     updateWidgets();
-    emit dataChanged();
-}
-
-void DataWidget::emitChangeSignal(){
-    emit dataChanged();
 }
 
 void DataWidget::updateWidgets(){
@@ -141,4 +146,71 @@ void DataWidget::updateWidgets(){
     delWidget->fillJobsCombos();
     delWidget->fillMachineCombo();
     editWidget->fillJobCombo();
+}
+
+
+void DataWidget::onAddJob()
+{
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_JOB_ADD;
+    emit newDataStructure(dt);
+    updateWidgets();
+}
+
+void DataWidget::onAddMachine()
+{
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_MACHINE_ADD;
+    emit newDataStructure(dt);
+    updateWidgets();
+}
+
+void DataWidget::onAddTask(int jobID,int machineID,int duration)
+{
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_TASK_ADD;
+    dt->jobID=jobID;
+    dt->machineID=machineID;
+    dt->tasktime=duration;
+    emit newDataStructure(dt);
+
+}
+
+void DataWidget::onDeleteJob(int jobID)
+{
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_DELETE_JOB;
+    dt->jobID=jobID;
+    emit newDataStructure(dt);
+}
+
+void DataWidget::onDeleteMachine(int machineID)
+{
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_DELETE_MACHINE;
+    dt->machineID=machineID;
+    emit newDataStructure(dt);
+}
+
+void DataWidget::onDeleteTask(int jobID,int machineID)
+{
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_DELETE_TASK;
+    dt->jobID=jobID;
+    dt->machineID=machineID;
+    emit newDataStructure(dt);
+}
+
+void DataWidget::onEditChange(int jobID,int taskID,int curPos,int newPos,int machineID,int duration)
+{
+
+    DataStructure* dt=new DataStructure;
+    dt->opType=dt->DB_EDIT;
+    dt->jobID=jobID;
+    dt->taskID=taskID;
+    dt->oldpos=curPos;
+    dt->newpos=newPos;
+    dt->machineID=machineID;
+    dt->tasktime=duration;
+    emit newDataStructure(dt);
 }

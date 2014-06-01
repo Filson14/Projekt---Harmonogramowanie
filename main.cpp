@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     QApplication a(argc, argv);
     Database dt;
-    dt.readFromFile("test1.txt");
+    //dt.readFromFile("test1.txt");
     Chromosom::setJobDatabase(&dt);
     Algorithm * alg = new Algorithm();
     MainWindow * win = new MainWindow();

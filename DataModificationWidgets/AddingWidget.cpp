@@ -76,7 +76,7 @@ void AddingWidget::fillMachinesCombo(){
     if(jobCombo->currentIndex()>0){
         Job &currJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
         vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
-        for(int i=0; i<allMachines.size(); i++){
+        for(unsigned int i=0; i<allMachines.size(); i++){
             if( !currJob.isMachineUsed(allMachines[i]->getId()) )
                 machineCombo->addItem(QString::number(allMachines[i]->getId()));
         }
@@ -95,32 +95,18 @@ void AddingWidget::fillJobsCombo(){
 }
 
 void AddingWidget::addJob(){
-    Chromosom::getJobDatabase().addJob();
+    emit addJobSig();
     fillJobsCombo();
     fillMachinesCombo();
-    emit dataChanged();
 }
 
 void AddingWidget::addMachine(){
-    vector <Machine*> machines = Chromosom::getJobDatabase().getMachines();
-    int i = 0;
-    while(i<machines.size() && Chromosom::getJobDatabase().machineExists(i))
-        i++;
-    Chromosom::getJobDatabase().addMachine(i);
+    emit addMachineSig();
     fillJobsCombo();
     fillMachinesCombo();
-    emit dataChanged();
 }
 
 void AddingWidget::addTask(){
-    if(jobCombo->currentIndex()!=0 && machineCombo->currentIndex()!=0){
-        Job &selectedJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
-        Machine* selectedMachine = Chromosom::getJobDatabase().getMachine(machineCombo->currentText().toInt());
-        int duration = durationSpin->value();
-
-        selectedJob.addTask(selectedMachine, 0, duration);
-
-        fillMachinesCombo();
-        emit dataChanged();
-    }
+    emit addTaskSig(jobCombo->currentText().toInt(),machineCombo->currentText().toInt(),durationSpin->value());
+    fillMachinesCombo();
 }

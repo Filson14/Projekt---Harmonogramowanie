@@ -80,7 +80,7 @@ void EditingWidget::fillJobCombo(){
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
     vector <Job> &jobs = Chromosom::getJobDatabase().getJobs();
-    for(int i=0; i<jobs.size(); i++)
+    for(unsigned int i=0; i<jobs.size(); i++)
         jobCombo->addItem(QString::number(i));
 }
 
@@ -94,7 +94,7 @@ void EditingWidget::fillTaskCombo(){
     durationSpin->setValue(0);
     if(jobCombo->currentIndex()>0){
         vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
-        for(int i=0; i<tasks.size(); i++)
+        for(unsigned int i=0; i<tasks.size(); i++)
             taskCombo->addItem(QString::number(i));
     }
 }
@@ -112,7 +112,7 @@ void EditingWidget::fillMachineCombo(){
         machineCombo->addItem(QString::number(currJob.getTaskList()[taskCombo->currentText().toInt()].getMachine()->getId()));
         durationSpin->setValue(currJob.getTaskList()[taskCombo->currentText().toInt()].getTime());
 
-        for(int i=0; i<allMachines.size(); i++){
+        for(unsigned int i=0; i<allMachines.size(); i++){
             if( !currJob.isMachineUsed(allMachines[i]->getId()))
                 machineCombo->addItem(QString::number(allMachines[i]->getId()));
         }
@@ -126,7 +126,7 @@ void EditingWidget::fillPositionCombo(){
     int selected = 0;
     if(jobCombo->currentIndex()>0){
         vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
-        for(int i=0; i<tasks.size(); i++){
+        for(unsigned int i=0; i<tasks.size(); i++){
             positionCombo->addItem(QString::number(i));
             if(i==taskCombo->currentText().toInt())
                 selected = i+1;
@@ -136,7 +136,7 @@ void EditingWidget::fillPositionCombo(){
 }
 
 void EditingWidget::saveChanges(){
-    Job &selectedJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
+    /*Job &selectedJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
     Task &selectedTask = selectedJob.getTaskList()[taskCombo->currentText().toInt()];
     bool changed = false;
 
@@ -155,5 +155,11 @@ void EditingWidget::saveChanges(){
         changed = true;
     }
     if(changed)
-        emit dataChanged();
+        emit dataChanged();*/
+
+    if(machineCombo->currentIndex()>1)
+        emit editChangeSig(jobCombo->currentText().toInt(),taskCombo->currentText().toInt(),taskCombo->currentText().toInt(),positionCombo->currentText().toInt(),machineCombo->currentText().toInt(),durationSpin->value());
+    else
+        emit editChangeSig(jobCombo->currentText().toInt(),taskCombo->currentText().toInt(),taskCombo->currentText().toInt(),positionCombo->currentText().toInt(),-1,durationSpin->value());
+    fillTaskCombo();
 }

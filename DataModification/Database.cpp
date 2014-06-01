@@ -42,7 +42,7 @@ bool Database::readFromFile(const char* filename){
 		int lineCounter = 0;
 		while(getline(inputFile,data)){
 			pos = 0;
-			for(int i=0; i<data.length(); i++){
+            for(unsigned int i=0; i<data.length(); i++){
 				if(data[i] == ' '){
 					istringstream(data.substr(pos, i-pos)) >> tmp;
 					pos = i+1;
@@ -101,10 +101,10 @@ bool Database::saveToFile(const char* filename){
 	outputFile.open(filename, ios::out | ios::trunc);
 	if(outputFile.is_open()){
 		outputFile << jobs.size() << "x" << machines.size();
-		for(int i=0; i<jobs.size(); i++){
+        for(unsigned int i=0; i<jobs.size(); i++){
 			outputFile << endl;
 			vector<Task> tasks = jobs[i].getTaskList();
-			for(int j=0; j<tasks.size(); j++){
+            for(unsigned int j=0; j<tasks.size(); j++){
 				if(j != 0)
 					outputFile << " ";
 				outputFile << tasks[j].getMachine()->getId() << " ";
@@ -120,7 +120,7 @@ bool Database::saveToFile(const char* filename){
 
 Machine* Database::getMachine(int id){
 	Machine *result = NULL;
-	for(int i=0; i<machines.size(); i++){
+    for(unsigned int i=0; i<machines.size(); i++){
 		if(machines[i]->getId() == id){
 			result = machines[i];
 			break;
@@ -156,7 +156,7 @@ Job* Database::addJob(){
 }
 
 void Database::deleteMachine(int id){
-	int i = 0;
+    unsigned int i = 0;
 	if(machineExists(id)){
 		for(i=0; i<jobs.size(); i++){
 			jobs[i].deleteTask(id);
@@ -173,14 +173,14 @@ void Database::deleteMachine(int id){
 	}
 }
 
-void Database::deleteJob(int num){
+void Database::deleteJob(unsigned int num){
 	if(jobs.size()>0 && num < jobs.size()){
 		jobs.erase(jobs.begin()+num);
 	}
 }
 
 Database* Database::generateRandomData(int jobCount, int machinesCount){
-	int randMachine, randElem, timeSummary, randTime;
+    int randMachine,timeSummary, randTime;
 	//Job *newJob;
 	vector<int> tempVector;
 	if(jobCount>0 && machinesCount>0){
@@ -223,13 +223,13 @@ Database* Database::generateRandomData(int jobCount, int machinesCount){
 
 void Database::clearDatabase(){
 	jobs.clear();
-	for(int i=0; i<machines.size(); i++)
+    for(unsigned int i=0; i<machines.size(); i++)
 		delete machines[i];
 	machines.clear();
 }
 
 void Database::resetDatabase(){
-	for(int i=0; i<jobs.size(); i++){
+    for(unsigned int i=0; i<jobs.size(); i++){
 		jobs[i].resetTimetable();
 	}
 }
@@ -237,9 +237,9 @@ void Database::resetDatabase(){
 void Database::presentData(){
 	cout << endl << "Prezentujê dane:" << endl;
 	cout <<  "<maszyna>(<d³ugosc>/<start>)" << endl << endl;
-	for(int i=0; i<jobs.size(); i++){
+    for(unsigned int i=0; i<jobs.size(); i++){
 		vector<Task> tasks = jobs[i].getTaskList();
-		for(int j=0; j<tasks.size(); j++){
+        for(unsigned int j=0; j<tasks.size(); j++){
 			cout << jobs[i].getTaskList()[j].getMachine()->getId() << "(";
 			cout << jobs[i].getTaskList()[j].getTime() << "/";
 			cout << jobs[i].getTaskList()[j].getStart() << ")  ";
@@ -252,7 +252,7 @@ void Database::presentData(){
 bool Database::checkDatabase(){
 	bool result = true;
 	int machinesCount = machines.size();
-	for(int i=0; i<jobs.size(); i++){
+    for(unsigned int i=0; i<jobs.size(); i++){
 		if( jobs[i].getTaskList().size() != machinesCount )
 			result = false;
 	}
@@ -262,7 +262,7 @@ bool Database::checkDatabase(){
 int Database::getLongestJobDuration(){
 	int maxDuration = 0;
 	int jobDuration = 0;
-	for(int i=0; i<jobs.size(); i++){
+    for(unsigned int i=0; i<jobs.size(); i++){
 		vector <Task> &tasks = jobs[i].getTaskList();
 		if(tasks.size() > 0){
 			jobDuration = tasks[tasks.size()-1].getStart() + tasks[tasks.size()-1].getTime();
@@ -271,4 +271,79 @@ int Database::getLongestJobDuration(){
 		}
 	}
 	return maxDuration;
+}
+
+void Database::onNewDataStructure(DataStructure* dtStructure)
+{
+    switch(dtStructure->opType)
+    {
+    case dtStructure->DB_FILE_LOAD:
+        this->readFromFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_FILE_SAVE:
+        this->saveToFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
+        break;
+    case dtStructure->DB_GEN_RND:
+        this->generateRandomData(5,5);
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_RESET:
+        this->resetDatabase();
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_CLEAR:
+        this->clearDatabase();
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_JOB_ADD:
+        this->addJob();
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_MACHINE_ADD:
+    {
+        vector <Machine*> machines = this->getMachines();
+        unsigned int i= 0;
+        while(i<machines.size() && this->machineExists(i))
+            i++;
+        this->addMachine(i);
+        emit databaseChanged(this);
+    }
+        break;
+    case dtStructure->DB_TASK_ADD:
+    {
+        Job &selectedJob = this->getJobs()[dtStructure->jobID];
+        Machine* selectedMachine = this->getMachine(dtStructure->machineID);
+        selectedJob.addTask(selectedMachine,0,dtStructure->tasktime);
+        emit databaseChanged(this);
+    }
+        break;
+    case dtStructure->DB_DELETE_JOB:
+        this->deleteJob(dtStructure->jobID);
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_DELETE_MACHINE:
+        this->deleteMachine(dtStructure->machineID);
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_DELETE_TASK:
+        this->getJobs()[dtStructure->jobID].deleteTask(dtStructure->machineID);
+        emit databaseChanged(this);
+        break;
+    case dtStructure->DB_EDIT:
+    {
+        Job &selectedJob = this->getJobs()[dtStructure->jobID];
+        Task &selectedTask = selectedJob.getTaskList()[dtStructure->taskID];
+        if((dtStructure->machineID)!=-1)
+        selectedTask.setMachine(this->getMachine(dtStructure->machineID));
+        selectedTask.setTime(dtStructure->tasktime);
+        if(dtStructure->oldpos!=dtStructure->newpos)
+        {
+            selectedJob.changeTaskPosition(dtStructure->oldpos, dtStructure->newpos);
+        }
+        emit databaseChanged(this);
+    }
+        break;
+    }
+    delete dtStructure;
 }

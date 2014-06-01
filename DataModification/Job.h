@@ -86,7 +86,7 @@ public:
 	 * \param currPos Task, którego miejsce wykonania zmieniamy.
 	 * \param newPos Miejsce wykonania jakie chcemy ustawiæ.
 	 */
-	void changeTaskPosition(int currPos, int newPos);
+    void changeTaskPosition(unsigned int currPos,unsigned  int newPos);
 
 	/**
 	 * Metoda zeruj¹ca czasy rozpoczêcia tasków (Wszystkie taski wykonywane w sposób ci¹g³y.

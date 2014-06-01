@@ -16,14 +16,18 @@
 #include <cstdlib>
 #include <time.h>
 #include "Job.h"
+#include <QObject>
 #include "Machine.h"
+#include "../DataModificationWidgets/DataStructure.h"
 #include <iomanip>
 
 using namespace std;
 /**
  * Klasa obiektu reprezentuj¹cego dane wejsciowe programu.
  */
-class Database{
+class Database: public QObject{
+    Q_OBJECT
+
 private:
 	vector<Job> jobs;			//!< Lista prac, dla których jest generowany harmonogram.
 	vector<Machine*> machines;	//!< Lista wskaŸników do dostêpnych maszyn.
@@ -124,7 +128,7 @@ public:
 	 * Metoda usuwaj¹ca sekwencjê Joba.
 	 * \param num Numer Joba do usuniêcia.
 	 */
-	void deleteJob(int num);
+    void deleteJob(unsigned int num);
 
 	/**
 	 * Funkcja generuj¹ca losowe dane wejsciowe do programu.
@@ -161,6 +165,11 @@ public:
 	 * \return Czas wykonania wszystkich tasków w bazie danych.
 	 */
 	int getLongestJobDuration();
+
+signals:
+    void databaseChanged(Database *);
+public slots:
+    void onNewDataStructure(DataStructure*);
 };
 
 
