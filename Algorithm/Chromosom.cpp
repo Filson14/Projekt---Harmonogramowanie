@@ -68,7 +68,7 @@ void Chromosom::generateRandomGenotype() {
 }
 
 int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w od 0 - do ustalenia
-    int machineCount=jobDatabase->getMachinesAmount();
+    int machineCount=jobDatabase->getMaxMachineID()+1;
     int jobCount=jobDatabase->getJobsAmount();
     if(!isValid())
         return fitness;
@@ -132,7 +132,7 @@ void Chromosom::updateDatabaseWithStartTimes()
 {
     if(jobDatabase==NULL)
         return;
-    int machineCount=jobDatabase->getMachinesAmount();
+    int machineCount=jobDatabase->getMaxMachineID()+1;
     int jobCount=jobDatabase->getJobsAmount();
     vector<int> machineSchedule(machineCount,0);	//!< Informacje o zajetosci maszyn.
 	vector<int> jobSchedule(jobCount,0);	//!< Informacje o postepach prac.
