@@ -24,6 +24,7 @@ public slots:
 private:
     Algorithm * algorithm;
     Database * database;
+    DataWidget* dataWidget;
     SettingsWidget * settingsWidget;
     StatisticsWidget * statisticsWidget;
     BlockPlot * blockPlotWidget;

@@ -7,11 +7,17 @@ Controller::Controller(Algorithm * algorithm, MainWindow * window, Database * da
     this->settingsWidget = window->ui->mAlgorithmWidget;
     this->statisticsWidget = window->ui->mStatisticWidget;
     this->blockPlotWidget = window->ui->mBlockPlot;
+    this->dataWidget=window->ui->mDataWidget;
 
 
+
+    connect(this->dataWidget,SIGNAL(newDataStructure(DataStructure*)),this->database,SLOT(onNewDataStructure(DataStructure*)));
+    connect(this->database,SIGNAL(databaseChanged(Database*)),this->blockPlotWidget,SLOT(onDataChanged(Database*)));
     connect(settingsWidget, SIGNAL(runAlgorithm()), statisticsWidget, SLOT(clearStatistics()));
     connect(settingsWidget, SIGNAL(runAlgorithm()), window, SLOT(onRunAlgorithm()));
     connect(settingsWidget, SIGNAL(runAlgorithm()), this, SLOT(runAlgorithm()));
+    connect(algorithm, SIGNAL(newBestChromosom(Database*)), blockPlotWidget, SLOT(onDataChanged(Database*)));
+
     connect(algorithm, SIGNAL(newBestChromosom(Database*)), blockPlotWidget, SLOT(onDataChanged(Database*)));
     connect(algorithm, SIGNAL(newStatistics(const AlgorithmStatistics &)), statisticsWidget, SLOT(updateStatistics(const AlgorithmStatistics &)));
 }

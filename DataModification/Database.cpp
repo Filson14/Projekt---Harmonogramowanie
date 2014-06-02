@@ -277,30 +277,30 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
 {
     switch(dtStructure->opType)
     {
-    case dtStructure->DB_FILE_LOAD:
+    case DataStructure::DB_FILE_LOAD:
         this->readFromFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_FILE_SAVE:
+    case DataStructure::DB_FILE_SAVE:
         this->saveToFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
         break;
-    case dtStructure->DB_GEN_RND:
+    case DataStructure::DB_GEN_RND:
         this->generateRandomData(5,5);
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_RESET:
+    case DataStructure::DB_RESET:
         this->resetDatabase();
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_CLEAR:
+    case DataStructure::DB_CLEAR:
         this->clearDatabase();
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_JOB_ADD:
+    case DataStructure::DB_JOB_ADD:
         this->addJob();
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_MACHINE_ADD:
+    case DataStructure::DB_MACHINE_ADD:
     {
         vector <Machine*> machines = this->getMachines();
         unsigned int i= 0;
@@ -310,7 +310,7 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
         emit databaseChanged(this);
     }
         break;
-    case dtStructure->DB_TASK_ADD:
+    case DataStructure::DB_TASK_ADD:
     {
         Job &selectedJob = this->getJobs()[dtStructure->jobID];
         Machine* selectedMachine = this->getMachine(dtStructure->machineID);
@@ -318,19 +318,19 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
         emit databaseChanged(this);
     }
         break;
-    case dtStructure->DB_DELETE_JOB:
+    case DataStructure::DB_DELETE_JOB:
         this->deleteJob(dtStructure->jobID);
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_DELETE_MACHINE:
+    case DataStructure::DB_DELETE_MACHINE:
         this->deleteMachine(dtStructure->machineID);
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_DELETE_TASK:
+    case DataStructure::DB_DELETE_TASK:
         this->getJobs()[dtStructure->jobID].deleteTask(dtStructure->machineID);
         emit databaseChanged(this);
         break;
-    case dtStructure->DB_EDIT:
+    case DataStructure::DB_EDIT:
     {
         Job &selectedJob = this->getJobs()[dtStructure->jobID];
         Task &selectedTask = selectedJob.getTaskList()[dtStructure->taskID];
