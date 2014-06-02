@@ -13,14 +13,24 @@
 #include <QDoubleSpinBox>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QVariant>
 #include "qspinboxenhenced.h"
 #include "../Algorithm/SettingsStructures.h"
+#include "../GeneticOperators/CrossoverOperators/CrossoverOnePoint.h"
+#include "../GeneticOperators/CrossoverOperators/CrossoverTwoPoint.h"
+#include "../GeneticOperators/MutationOperators/MutationSwappingPoint.h"
+#include "../GeneticOperators/MutationOperators/MutationSwappingSegment.h"
+#include "../GeneticOperators/MutationOperators/MutationReverse.h"
+#include "../GeneticOperators/MutationOperators/MutationInversion.h"
+#include "../GeneticOperators/MutationOperators/MutationDisplacement.h"
+#include "../GeneticOperators/SelectionOperators/SelectionRank.h"
+#include "../GeneticOperators/SelectionOperators/SelectionTournament.h"
 
 #define DOUBLE_SPIN_MIN 0.0
 #define DOUBLE_SPIN_MAX 1.0
 #define DOUBLE_SPIN_STEP 0.05
-#define SPIN_MIN 10
-#define SPIN_MAX 30000
+#define SPIN_MIN 50
+#define SPIN_MAX 100000
 #define SPIN_STEP 25
 #define START_POPULATION_SIZE 100
 #define START_EPOCH_NUMBER 1000
@@ -33,6 +43,7 @@ class SettingsWidget : public QWidget
 
 signals:
     void runAlgorithm();
+    void runAlgorithm(const AlgorithmSettings & settings);
 
 private slots:
     void runButtonClicked();
@@ -71,7 +82,6 @@ private:
 public:
     explicit SettingsWidget(QWidget *parent = 0);
     ~SettingsWidget();
-    void fetchSettings(struct AlgorithmSettings & settings);
 
 };
 

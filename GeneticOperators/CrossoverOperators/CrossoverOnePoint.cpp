@@ -23,8 +23,7 @@ void CrossoverOnePoint::crossChromosoms(const Chromosom & parentA, const Chromos
 	vector<int> childAGenotype = parentA.getGenotype();
 	vector<int> childBGenotype = parentB.getGenotype();
 
-	crossoverPoint = (rand() % (parentAGenotype.size() - 2)) + 1;
-	cout << "Crossover Point: " << crossoverPoint << endl;
+    crossoverPoint = (rand() % (parentAGenotype.size() - 2)) + 1;
 
 	for(int i = 0; i < crossoverPoint; i++) {
 		childAGenotype[i] = parentBGenotype[i];

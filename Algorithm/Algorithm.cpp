@@ -6,6 +6,7 @@
  */
 
 #include "Algorithm.h"
+#include <QtConcurrent/QtConcurrent>
 
 Algorithm::Algorithm() : QObject() {
 
@@ -116,6 +117,11 @@ void Algorithm::generateNewPopulation() {
 		this->newPopulation.push_back(childB);
         index = index + 2;
     }
+
+    statistics.crossoverCount += crossoverCount;
+    statistics.mutationCount += mutationCount;
+    statistics.invalidSolutions += invalidChromosomCount;
+    statistics.sameParents += sameParentsCount;
 }
 
 void Algorithm::printPopulation(const vector<Chromosom> & population) {
@@ -126,26 +132,27 @@ void Algorithm::printPopulation(const vector<Chromosom> & population) {
 void Algorithm::runAlgorithm() {
     int currentEpoch = 0;
     int lastImprovement = 0;
+    int updateFrequency = UPDATE_FREQUENCY_PC * settings.maxEpochs;
     statistics.clearStatistics();
 
-    cout << "Initializing population... ";
+    //cout << "Initializing population... ";
     this->initializePopulation();
-	cout << "OK" << endl;
+    //cout << "OK" << endl;
 	this->bestChromosom = this->population[0];
 	do {
 
-        cout << "Epoche: " << currentEpoch << " ====================== "<< endl;
-        cout << "Generating new population... ";
+        //cout << "Epoche: " << currentEpoch << " ====================== "<< endl;
+        //cout << "Generating new population... ";
 		this->generateNewPopulation();
-		cout << "OK" << endl;
+        //cout << "OK" << endl;
 
-		cout << "Evaluate population...";
+        //cout << "Evaluate population...";
         double meanFitness = this->evaluatePopulation();
-		cout << "OK" << endl;
+        //cout << "OK" << endl;
 
-		cout << "Select new population... ";
+        //cout << "Select new population... ";
 		this->selectNewPopulation();
-        cout << "OK" << endl;
+        //cout << "OK" << endl;
         if(compareChromosoms(population[0], bestChromosom)) {
             bestChromosom = population[0];
             bestChromosom.updateDatabaseWithStartTimes();
@@ -162,18 +169,20 @@ void Algorithm::runAlgorithm() {
         statistics.populationFitness.push_back(meanFitness);
 
 
-        if (currentEpoch % 10 == 0)
+        if (currentEpoch % updateFrequency == 0)
             emit newStatistics(statistics);
 
-        cout << "Mean fitness: " << meanFitness << endl;
+        //cout << "Mean fitness: " << meanFitness << endl;
     } while ((currentEpoch++ < settings.maxEpochs) && (lastImprovement < settings.maxEpochsWithoutChange));
 
-	cout << "AND THE WINNER IS... *drum roll*" << endl;
+    emit newStatistics(statistics);
+
+    cout << "AND THE WINNER IS... *drum roll*" << endl;
     bestChromosom.printChromosom();
     bestChromosom.updateDatabaseWithStartTimes();
 }
 
-void Algorithm::updateSettings(struct AlgorithmSettings & newSettings)
+void Algorithm::onRunAlgorithm(const AlgorithmSettings & newSettings)
 {
     this->settings.maxEpochs = newSettings.maxEpochs;
     this->settings.maxEpochsWithoutChange = newSettings.maxEpochsWithoutChange;
@@ -186,6 +195,8 @@ void Algorithm::updateSettings(struct AlgorithmSettings & newSettings)
     this->settings.selectionOperator = newSettings.selectionOperator;
     this->settings.mutationOperator = newSettings.mutationOperator;
     this->settings.crossoverOperator = newSettings.crossoverOperator;
+
+    this->runAlgorithm();
 }
 
 bool compareChromosoms(const Chromosom & A, const Chromosom & B) {

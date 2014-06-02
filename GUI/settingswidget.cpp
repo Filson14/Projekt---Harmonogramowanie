@@ -55,21 +55,33 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent)
     connect(popSizeEdit, SIGNAL(valueChanged(int)), newPopSizeEdit, SLOT(setNewMinimum(int)));
 
     this->crossOperatorBox = new QComboBox();
-    crossOperatorBox->addItem("OnePoint");
-    crossOperatorBox->addItem("TwoPoint");
+    QVariant crossOption1 = qVariantFromValue((void *) new CrossoverOnePoint());
+    crossOperatorBox->addItem("One Point", crossOption1);
+    QVariant crossOption2 = qVariantFromValue((void *) new CrossoverTwoPoint());
+    crossOperatorBox->addItem("Two Point", crossOption2);
 
     this->mutOperatorBox = new QComboBox();
-    mutOperatorBox->addItem("Point Inversion");
-    mutOperatorBox->addItem("Segment Inversion");
+    QVariant mutOption1 = qVariantFromValue((void *) new MutationSwappingPoint());
+    mutOperatorBox->addItem("Point Swap", mutOption1);
+    QVariant mutOption2 = qVariantFromValue((void *) new MutationSwappingSegment());
+    mutOperatorBox->addItem("Segment Swap", mutOption2);
+    QVariant mutOption3 = qVariantFromValue((void *) new MutationReverse());
+    mutOperatorBox->addItem("Reverse", mutOption3);
+    QVariant mutOption4 = qVariantFromValue((void *) new MutationInversion());
+    mutOperatorBox->addItem("Inversion", mutOption4);
+    QVariant mutOption5 = qVariantFromValue((void *) new MutationDisplacement());
+    mutOperatorBox->addItem("Displacement", mutOption5);
 
     this->selOperatorBox = new QComboBox();
-    selOperatorBox->addItem("Tournament");
-    selOperatorBox->addItem("Roulette");
+    QVariant selOption1 = qVariantFromValue((void *) new SelectionTournament());
+    selOperatorBox->addItem("Tournament", selOption1);
+    QVariant selOption2 = qVariantFromValue((void *) new SelectionRank());
+    selOperatorBox->addItem("Rank", selOption2);
 
     this->repairChromosomCheck = new QCheckBox();
 
     this->runButton = new QPushButton("Run algorithm");
-    connect(this->runButton, SIGNAL(released()), this, SLOT(runButtonClicked()));
+    connect(this->runButton, SIGNAL(clicked()), this, SLOT(runButtonClicked()));
 
     algorithmGroupLayout->addRow(epochCountLabel, epochCountEdit);
     algorithmGroupLayout->addRow(noImprovementLabel, noImprovementEdit);
@@ -101,17 +113,38 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent)
 
 SettingsWidget::~SettingsWidget()
 {
+    QVariant option;
+    CrossoverOperator * crossOperator;
+    MutationOperator * mutOperator;
+    SelectionOperator * selOperator;
+    int selOperatorCount = selOperatorBox->count();
+    int mutOperatorCount = mutOperatorBox->count();
+    int crossOperatorCount = crossOperatorBox->count();
+
+    for (int i = 0; i < selOperatorCount; i++) {
+        option = selOperatorBox->itemData(i);
+        selOperator = (SelectionOperator *)option.value<void *>();
+        delete selOperator;
+    }
+
+    for (int i = 0; i < mutOperatorCount; i++) {
+        option = mutOperatorBox->itemData(i);
+        mutOperator = (MutationOperator *)option.value<void *>();
+        delete mutOperator;
+    }
+
+    for (int i = 0; i < crossOperatorCount; i++) {
+        option = crossOperatorBox->itemData(i);
+        crossOperator = (CrossoverOperator *)option.value<void *>();
+        delete crossOperator;
+    }
+    printf("Destruktor called.");
+    fflush(NULL);
 }
 
 void SettingsWidget::runButtonClicked()
 {
-    printf("Holly shit it works.\n");
-    fflush(NULL);
-    emit runAlgorithm();
-}
-
-void SettingsWidget::fetchSettings(struct AlgorithmSettings & settings)
-{
+    AlgorithmSettings settings;
     settings.maxEpochs = epochCountEdit->value();
     settings.maxEpochsWithoutChange = noImprovementEdit->value();
     settings.repairChromosom = (repairChromosomCheck->checkState() == 0) ? false : true;
@@ -120,5 +153,15 @@ void SettingsWidget::fetchSettings(struct AlgorithmSettings & settings)
     settings.crossoverProbability = crossProbabilityEdit->value();
     settings.mutationProbability = mutProbabilityEdit->value();
 
-    /* USTAWIENIA OPERATORÓW */
+    QVariant crossOperator = crossOperatorBox->currentData();
+    settings.crossoverOperator = (CrossoverOperator *) crossOperator.value<void *>();
+
+    QVariant mutOperator = mutOperatorBox->currentData();
+    settings.mutationOperator = (MutationOperator *) mutOperator.value<void *>();
+
+    QVariant selOperator = selOperatorBox->currentData();
+    settings.selectionOperator = (SelectionOperator *) selOperator.value<void *>();
+
+    emit runAlgorithm();
+    emit runAlgorithm(settings);
 }
