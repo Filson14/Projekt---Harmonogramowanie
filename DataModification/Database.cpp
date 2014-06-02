@@ -8,11 +8,11 @@ Database::~Database(){
 	this->clearDatabase();
 }
 
-int Database::getJobsAmount(){
+int Database::getJobsAmount()const{
 	return jobs.size();
 }
 
-int Database::getMachinesAmount(){
+int Database::getMachinesAmount()const{
 	return machines.size();
 }
 

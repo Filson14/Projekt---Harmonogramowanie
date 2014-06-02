@@ -7,18 +7,32 @@
 #include "EditingWidget.h"
 #include "DeletingWidget.h"
 #include "DataStructure.h"
+#include <QGroupBox>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QStackedLayout>
+#include <QButtonGroup>
+#include <QFileDialog>
+#include "../DataModification/Database.h"
+
+class AddingWidget;
+class DeletingWidget;
+class EditingWidget;
 
 class DataWidget : public QWidget
 {
     Q_OBJECT
 private:
-
+    const Database* mydt;
     AddingWidget *addWidget;
     EditingWidget *editWidget;
     DeletingWidget *delWidget;
 
 public:
     explicit DataWidget(QWidget *parent = 0);
+    void setDatabase(Database *);
+    const Database* getDatabase();
 
 signals:
     void newDataStructure(DataStructure* );

@@ -47,13 +47,13 @@ public:
 	 * Funkcja zwracaj¹ca ilosæ prac.
 	 * \return Ilosæ obiektów Job w bazie.
 	 */
-	int getJobsAmount();
+    int getJobsAmount() const;
 
 	/**
 	 * Funkcja zwracaj¹ca ilosæ maszyn.
 	 * \return Ilosæ obiektów Machine w bazie.
 	 */
-	int getMachinesAmount();
+    int getMachinesAmount() const;
 	/**
 	 * Getter listy prac.
 	 * \return Referencja listy prac.
@@ -62,6 +62,10 @@ public:
 		return jobs;
 	}
 
+    const vector<Job>& getConstJobs() const{
+        return jobs;
+    }
+
 	/**
 	 * Getter listy maszyn.
 	 * \return Referencja listy maszyn.
@@ -69,6 +73,10 @@ public:
 	vector<Machine*>& getMachines(){
 		return machines;
 	}
+
+    const vector<Machine*>& getConstMachines()const{
+        return machines;
+    }
 
 	/**
 	 * Funkcja odczytuj¹ca plik tekstowy z danymi wejsciowymi do programu.

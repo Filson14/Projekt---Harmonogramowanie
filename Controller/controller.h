@@ -2,11 +2,11 @@
 #define CONTROLLER_H
 
 #include <QObject>
-#include "./Algorithm/Algorithm.h"
-#include "./Algorithm/SettingsStructures.h"
-#include "./GUI/mainwindow.h"
-#include "./GUI/blockplot.h"
-#include "./DataModification/Database.h"
+#include "../Algorithm/Algorithm.h"
+#include "../Algorithm/SettingsStructures.h"
+#include "../GUI/mainwindow.h"
+#include "../GUI/blockplot.h"
+#include "../DataModification/Database.h"
 
 
 class Controller : public QObject

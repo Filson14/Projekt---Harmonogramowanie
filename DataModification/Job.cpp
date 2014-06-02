@@ -74,7 +74,7 @@ void Job::changeTaskStart(int machineId, int time){
 	}
 }
 
-bool Job::isMachineUsed(int machineId){
+bool Job::isMachineUsed(int machineId)const {
 	bool result = false;
     for(unsigned int i=0; i<taskList.size(); i++){
 		if(taskList[i].getMachine()->getId()==machineId){

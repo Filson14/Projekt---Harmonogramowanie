@@ -1,21 +1,16 @@
 #include "DataWidget.h"
-#include <QGroupBox>
-#include <QPushButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QStackedLayout>
-#include <QButtonGroup>
-#include <QFileDialog>
-#include "../DataModification/Database.h"
 
 DataWidget::DataWidget(QWidget *parent) :
     QWidget(parent)
 {
+    this->mydt=NULL;
     this->resize(600, 200);
 
-    this->addWidget = new AddingWidget();
-    this->editWidget = new EditingWidget();
-    this->delWidget = new DeletingWidget();
+    this->addWidget = new AddingWidget(this);
+    this->editWidget = new EditingWidget(this);
+    this->delWidget = new DeletingWidget(this);
+
+
 
     // nowe connecty
     QObject::connect(addWidget, SIGNAL(addJobSig()), this, SLOT(onAddJob()));
@@ -213,4 +208,14 @@ void DataWidget::onEditChange(int jobID,int taskID,int curPos,int newPos,int mac
     dt->machineID=machineID;
     dt->tasktime=duration;
     emit newDataStructure(dt);
+}
+
+void DataWidget::setDatabase(Database * dt)
+{
+    this->mydt=dt;
+}
+
+const Database* DataWidget::getDatabase()
+{
+    return mydt;
 }

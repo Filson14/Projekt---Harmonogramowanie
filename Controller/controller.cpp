@@ -8,6 +8,7 @@ Controller::Controller(Algorithm * algorithm, MainWindow * window, Database * da
     this->statisticsWidget = window->ui->mStatisticWidget;
     this->blockPlotWidget = window->ui->mBlockPlot;
     this->dataWidget=window->ui->mDataWidget;
+    this->dataWidget->setDatabase(this->database);
 
 
 

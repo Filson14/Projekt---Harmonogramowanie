@@ -5,8 +5,18 @@
 #include <QComboBox>
 #include <QSlider>
 #include <QSpinBox>
-#include "../DataModification/Database.h"
-#include "../Algorithm/Chromosom.h"
+
+#include <QGroupBox>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include "DataWidget.h"
+#include <QVBoxLayout>
+#include <QComboBox>
+#include <QFormLayout>
+#include <QFileDialog>
+
+
+class DataWidget;
 
 class AddingWidget : public QWidget
 {

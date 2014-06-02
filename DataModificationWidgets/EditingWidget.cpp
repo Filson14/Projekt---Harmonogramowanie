@@ -1,11 +1,5 @@
 #include "EditingWidget.h"
-#include <QFileDialog>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QGroupBox>
-#include <QPushButton>
-#include <QFormLayout>
-#include "../Algorithm/Chromosom.h"
+
 
 EditingWidget::EditingWidget(QWidget *parent) :
     QWidget(parent)
@@ -70,6 +64,8 @@ EditingWidget::EditingWidget(QWidget *parent) :
 }
 
 void EditingWidget::fillJobCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     jobCombo->clear();
     jobCombo->addItem("Select...");
     taskCombo->clear();
@@ -79,12 +75,14 @@ void EditingWidget::fillJobCombo(){
     positionCombo->clear();
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
-    vector <Job> &jobs = Chromosom::getJobDatabase().getJobs();
+    const vector <Job> &jobs = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs();
     for(unsigned int i=0; i<jobs.size(); i++)
         jobCombo->addItem(QString::number(i));
 }
 
 void EditingWidget::fillTaskCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     taskCombo->clear();
     taskCombo->addItem("Select...");
     machineCombo->clear();
@@ -93,24 +91,26 @@ void EditingWidget::fillTaskCombo(){
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
     if(jobCombo->currentIndex()>0){
-        vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
+        const vector <Task> &tasks = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()].getConstTaskList();
         for(unsigned int i=0; i<tasks.size(); i++)
             taskCombo->addItem(QString::number(i));
     }
 }
 
 void EditingWidget::fillMachineCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     machineCombo->clear();
     machineCombo->addItem("Select...");
     positionCombo->clear();
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
     if(jobCombo->currentIndex()>0 && taskCombo->currentIndex()>0){
-        Job &currJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
-        vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
+        const Job &currJob = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()];
+        const vector <Machine*> &allMachines = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstMachines();
 
-        machineCombo->addItem(QString::number(currJob.getTaskList()[taskCombo->currentText().toInt()].getMachine()->getId()));
-        durationSpin->setValue(currJob.getTaskList()[taskCombo->currentText().toInt()].getTime());
+        machineCombo->addItem(QString::number(currJob.getConstTaskList()[taskCombo->currentText().toInt()].getMachine()->getId()));
+        durationSpin->setValue(currJob.getConstTaskList()[taskCombo->currentText().toInt()].getTime());
 
         for(unsigned int i=0; i<allMachines.size(); i++){
             if( !currJob.isMachineUsed(allMachines[i]->getId()))
@@ -121,11 +121,13 @@ void EditingWidget::fillMachineCombo(){
 }
 
 void EditingWidget::fillPositionCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     positionCombo->clear();
     positionCombo->addItem("Select...");
     int selected = 0;
     if(jobCombo->currentIndex()>0){
-        vector <Task> &tasks = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()].getTaskList();
+        const vector <Task> &tasks = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()].getConstTaskList();
         for(unsigned int i=0; i<tasks.size(); i++){
             positionCombo->addItem(QString::number(i));
             if(i==taskCombo->currentText().toInt())
@@ -136,26 +138,6 @@ void EditingWidget::fillPositionCombo(){
 }
 
 void EditingWidget::saveChanges(){
-    /*Job &selectedJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
-    Task &selectedTask = selectedJob.getTaskList()[taskCombo->currentText().toInt()];
-    bool changed = false;
-
-    int currPos = taskCombo->currentText().toInt();
-    int newPos = positionCombo->currentText().toInt();
-
-    if(machineCombo->currentIndex()>1){
-        selectedTask.setMachine(Chromosom::getJobDatabase().getMachine(machineCombo->currentText().toInt()));
-        changed = true;
-    }
-    selectedTask.setTime(durationSpin->value());
-
-    if( currPos!=newPos ){
-        selectedJob.changeTaskPosition(currPos, newPos);
-        fillTaskCombo();
-        changed = true;
-    }
-    if(changed)
-        emit dataChanged();*/
 
     if(machineCombo->currentIndex()>1)
         emit editChangeSig(jobCombo->currentText().toInt(),taskCombo->currentText().toInt(),taskCombo->currentText().toInt(),positionCombo->currentText().toInt(),machineCombo->currentText().toInt(),durationSpin->value());

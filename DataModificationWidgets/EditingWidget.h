@@ -4,6 +4,15 @@
 #include <QWidget>
 #include <QComboBox>
 #include <QSpinBox>
+#include <QFileDialog>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGroupBox>
+#include <QPushButton>
+#include <QFormLayout>
+#include "DataWidget.h"
+
+class DataWidget;
 
 class EditingWidget : public QWidget
 {

@@ -1,19 +1,12 @@
 #include "DeletingWidget.h"
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QFileDialog>
-#include <QGroupBox>
-#include <QFormLayout>
-#include "../Algorithm/Chromosom.h"
 
 DeletingWidget::DeletingWidget(QWidget *parent) :
     QWidget(parent)
 {
-    jobCombo = new QComboBox();
-    machineCombo = new QComboBox();
-    taskJobCombo = new QComboBox();
-    taskMachineCombo = new QComboBox();
+    jobCombo = new QComboBox(this);
+    machineCombo = new QComboBox(this);
+    taskJobCombo = new QComboBox(this);
+    taskMachineCombo = new QComboBox(this);
 
     this->setGeometry(0, 0, 500, 200);
 
@@ -71,12 +64,13 @@ DeletingWidget::DeletingWidget(QWidget *parent) :
 }
 
 void DeletingWidget::fillJobsCombos(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     jobCombo->clear();
     taskJobCombo->clear();
-
     jobCombo->addItem("Select...");
     taskJobCombo->addItem("Select...");
-    int jobCount = Chromosom::getJobDatabase().getJobsAmount();
+    int jobCount = ((DataWidget*)(this->parentWidget()))->getDatabase()->getJobsAmount();
     for(int i=0; i<jobCount; i++){
         jobCombo->addItem(QString::number(i));
         taskJobCombo->addItem(QString::number(i));
@@ -84,20 +78,24 @@ void DeletingWidget::fillJobsCombos(){
 }
 
 void DeletingWidget::fillMachineCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     machineCombo->clear();
     machineCombo->addItem("Select...");
 
-    vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
+    const vector <Machine*> &allMachines = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstMachines();
     for(unsigned int i=0; i<allMachines.size(); i++)
         machineCombo->addItem(QString::number(allMachines[i]->getId()));
 }
 
 void DeletingWidget::fillTaskMachineCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     taskMachineCombo->clear();
     taskMachineCombo->addItem("Select...");
     if(taskJobCombo->currentIndex()>0){
-        Job &currJob = Chromosom::getJobDatabase().getJobs()[taskJobCombo->currentText().toInt()];
-        vector <Task> &allTasks = currJob.getTaskList();
+        const Job &currJob = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[taskJobCombo->currentText().toInt()];
+        const vector <Task> &allTasks = currJob.getConstTaskList();
         for(unsigned int i=0; i<allTasks.size(); i++){
            taskMachineCombo->addItem( QString::number(allTasks[i].getMachine()->getId()) );
         }

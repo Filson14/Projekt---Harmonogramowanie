@@ -1,11 +1,4 @@
 #include "AddingWidget.h"
-#include <QGroupBox>
-#include <QPushButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QComboBox>
-#include <QFormLayout>
-#include <QFileDialog>
 
 AddingWidget::AddingWidget(QWidget *parent) :
     QWidget(parent)
@@ -70,12 +63,15 @@ AddingWidget::AddingWidget(QWidget *parent) :
 }
 
 void AddingWidget::fillMachinesCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     machineCombo->clear();
     machineCombo->addItem("Select...");
     durationSpin->setValue(0);
     if(jobCombo->currentIndex()>0){
-        Job &currJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
-        vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
+
+        const Job &currJob = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()];
+        const vector <Machine*> &allMachines = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstMachines();
         for(unsigned int i=0; i<allMachines.size(); i++){
             if( !currJob.isMachineUsed(allMachines[i]->getId()) )
                 machineCombo->addItem(QString::number(allMachines[i]->getId()));
@@ -84,12 +80,14 @@ void AddingWidget::fillMachinesCombo(){
 }
 
 void AddingWidget::fillJobsCombo(){
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
     jobCombo->clear();
     machineCombo->clear();
     jobCombo->addItem("Select...");
     machineCombo->addItem("Select...");
     durationSpin->setValue(0);
-    int jobCount = Chromosom::getJobDatabase().getJobsAmount();
+    int jobCount = ((DataWidget*)(this->parentWidget()))->getDatabase()->getJobsAmount();
     for(int i=0; i<jobCount; i++)
         jobCombo->addItem(QString::number(i));
 }

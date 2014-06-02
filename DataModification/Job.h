@@ -39,6 +39,9 @@ public:
 	vector<Task>& getTaskList(){
 		return taskList;
 	}
+    const vector<Task>& getConstTaskList()const {
+        return taskList;
+    }
 
 	/**
 	 * Metoda dodaj¹ca task do listy.
@@ -79,7 +82,7 @@ public:
 	 * \param machineId Id maszyny, któr¹ sprawdzamy.
 	 * \return True - jesli maszyna zosta³a ju¿ u¿yta; False - w przeciwnym wypadku.
 	 */
-	bool isMachineUsed(int machineId);
+    bool isMachineUsed(int machineId)const ;
 
 	/**
 	 * Metoda zmieniaj¹ca kolejnosæ tasków

@@ -2,7 +2,16 @@
 #define DELETINGWIDGET_H
 
 #include <QWidget>
+#include "DataWidget.h"
 #include <QComboBox>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QFormLayout>
+
+class DataWidget;
 
 class DeletingWidget : public QWidget
 {

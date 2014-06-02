@@ -39,7 +39,7 @@ public:
 	 * Getter maszyny.
 	 * \return WskaŸnik do maszyny.
 	 */
-	Machine* getMachine() const {
+    Machine* getMachine() const {
 	  	return machine;
 	}
 
