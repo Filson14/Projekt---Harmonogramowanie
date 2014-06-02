@@ -84,9 +84,9 @@ void StatisticsWidget::clearStatistics() {
 void StatisticsWidget::updateStatistics(const AlgorithmStatistics & statistics)
 {
     epochEdit->setText(QString::number(statistics.epoch.back()));
-    //meanCrossCountEdit->setText(QString::number(statistics.crossoverCount));
-    //meanMutCountEdit->setText(QString::number(statistics.mutationCount));
-    //meanInvalidSolutionsEdit->setText(QString::number(statistics.invalidSolutions));
+    meanCrossCountEdit->setText(QString::number((double)statistics.crossoverCount / statistics.epoch.back()));
+    meanMutCountEdit->setText(QString::number((double)statistics.mutationCount / statistics.epoch.back()));
+    meanInvalidSolutionsEdit->setText(QString::number((double)statistics.invalidSolutions / statistics.epoch.back()));
     popFitnessEdit->setText(QString::number(statistics.populationFitness.back()));
     bestFitnessEdit->setText(QString::number(statistics.bestFitness.back()));
     lastImprovementEdit->setText(QString::number(statistics.lastImprovement));

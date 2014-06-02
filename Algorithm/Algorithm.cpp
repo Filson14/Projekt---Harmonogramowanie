@@ -117,6 +117,11 @@ void Algorithm::generateNewPopulation() {
 		this->newPopulation.push_back(childB);
         index = index + 2;
     }
+
+    statistics.crossoverCount += crossoverCount;
+    statistics.mutationCount += mutationCount;
+    statistics.invalidSolutions += invalidChromosomCount;
+    statistics.sameParents += sameParentsCount;
 }
 
 void Algorithm::printPopulation(const vector<Chromosom> & population) {
