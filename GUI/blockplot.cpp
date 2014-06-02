@@ -76,6 +76,8 @@ void BlockPlot::onDataChanged(Database* mydt)
     {
         for(vector<Task>::iterator tit=(*jit).getTaskList().begin();tit!=(*jit).getTaskList().end();tit++)
         {
+            if(tit->getTime()==0)
+                continue;
             lastPItem=new ExtQCPStatisticalBox(yAxis,xAxis);
             boxBrush=QBrush(cVect[(*tit).getMachine()->getId()]);
             boxBrush.setStyle(Qt::Dense4Pattern);
