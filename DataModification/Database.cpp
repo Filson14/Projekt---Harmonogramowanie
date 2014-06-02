@@ -358,3 +358,15 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
     }
     delete dtStructure;
 }
+
+void Database::completeJobs(){
+    for(int i=0; i<jobs.size(); i++){
+        Job &currJob = jobs[i];
+        for(int j=0; j<machines.size(); j++){
+            Machine *checkMachine = machines[j];
+            if(!currJob.isMachineUsed(checkMachine->getId())){
+                currJob.addTask(checkMachine, 0, 0);
+            }
+        }
+    }
+}

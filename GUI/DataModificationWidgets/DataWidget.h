@@ -14,7 +14,7 @@
 #include <QStackedLayout>
 #include <QButtonGroup>
 #include <QFileDialog>
-#include "../DataModification/Database.h"
+#include "../../DataModification/Database.h"
 
 class AddingWidget;
 class DeletingWidget;

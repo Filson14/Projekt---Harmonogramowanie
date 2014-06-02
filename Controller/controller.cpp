@@ -14,6 +14,7 @@ Controller::Controller(Algorithm * algorithm, MainWindow * window, Database * da
 
     connect(this->dataWidget,SIGNAL(newDataStructure(DataStructure*)),this->database,SLOT(onNewDataStructure(DataStructure*)));
     connect(this->database,SIGNAL(databaseChanged(Database*)),this->blockPlotWidget,SLOT(onDataChanged(Database*)));
+    connect(settingsWidget, SIGNAL(runAlgorithm()), this->database, SLOT(completeJobs()));
     connect(settingsWidget, SIGNAL(runAlgorithm()), statisticsWidget, SLOT(clearStatistics()));
     connect(settingsWidget, SIGNAL(runAlgorithm()), window, SLOT(onRunAlgorithm()));
     connect(settingsWidget, SIGNAL(runAlgorithm(const AlgorithmSettings &)), algorithm, SLOT(onRunAlgorithm(const AlgorithmSettings &)));

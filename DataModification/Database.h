@@ -18,7 +18,7 @@
 #include "Job.h"
 #include <QObject>
 #include "Machine.h"
-#include "../DataModificationWidgets/DataStructure.h"
+#include "../GUI/DataModificationWidgets/DataStructure.h"
 #include <iomanip>
 
 using namespace std;
@@ -164,11 +164,11 @@ public:
 	void presentData();
 
 
-	/**
-	 * Funkcja sprawdza czy w sekwencjach wszystkich Job'ów u¿ytko wszystkich maszyn w bazie.
-	 * \return True - jesli wszystko siê zgadza; False - w przeciwnym wypadku.
-	 */
-	bool checkDatabase();
+    /**
+     * Funkcja sprawdza czy w sekwencjach wszystkich Job'ów u¿ytko wszystkich maszyn w bazie.
+     * \return True - jesli wszystko siê zgadza; False - w przeciwnym wypadku.
+     */
+    bool checkDatabase();
 
 	/**
 	 * Funkcja wyznaczaj¹ca najd³u¿szy czas trwania Joba w ca³ej bazie.
@@ -180,6 +180,11 @@ signals:
     void databaseChanged(Database *);
 public slots:
     void onNewDataStructure(DataStructure*);
+
+    /**
+     * Metoda uzupe³niaj±ca Joby o Taski zawieraj±ce nieu¿yte maszyny (z zerowym czasem trwania
+     */
+    void completeJobs();
 };
 
 
