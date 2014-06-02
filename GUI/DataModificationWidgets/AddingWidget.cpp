@@ -63,11 +63,13 @@ AddingWidget::AddingWidget(QWidget *parent) :
 }
 
 void AddingWidget::fillMachinesCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     machineCombo->clear();
     machineCombo->addItem("Select...");
     durationSpin->setValue(0);
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     if(jobCombo->currentIndex()>0){
 
         const Job &currJob = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()];
@@ -80,13 +82,15 @@ void AddingWidget::fillMachinesCombo(){
 }
 
 void AddingWidget::fillJobsCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     jobCombo->clear();
     machineCombo->clear();
     jobCombo->addItem("Select...");
     machineCombo->addItem("Select...");
     durationSpin->setValue(0);
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     int jobCount = ((DataWidget*)(this->parentWidget()))->getDatabase()->getJobsAmount();
     for(int i=0; i<jobCount; i++)
         jobCombo->addItem(QString::number(i));

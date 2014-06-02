@@ -64,12 +64,14 @@ DeletingWidget::DeletingWidget(QWidget *parent) :
 }
 
 void DeletingWidget::fillJobsCombos(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     jobCombo->clear();
     taskJobCombo->clear();
     jobCombo->addItem("Select...");
     taskJobCombo->addItem("Select...");
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     int jobCount = ((DataWidget*)(this->parentWidget()))->getDatabase()->getJobsAmount();
     for(int i=0; i<jobCount; i++){
         jobCombo->addItem(QString::number(i));
@@ -78,10 +80,11 @@ void DeletingWidget::fillJobsCombos(){
 }
 
 void DeletingWidget::fillMachineCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     machineCombo->clear();
     machineCombo->addItem("Select...");
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
 
     const vector <Machine*> &allMachines = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstMachines();
     for(unsigned int i=0; i<allMachines.size(); i++)
@@ -89,10 +92,12 @@ void DeletingWidget::fillMachineCombo(){
 }
 
 void DeletingWidget::fillTaskMachineCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     taskMachineCombo->clear();
     taskMachineCombo->addItem("Select...");
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     if(taskJobCombo->currentIndex()>0){
         const Job &currJob = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[taskJobCombo->currentText().toInt()];
         const vector <Task> &allTasks = currJob.getConstTaskList();

@@ -296,7 +296,7 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
         this->saveToFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
         break;
     case DataStructure::DB_GEN_RND:
-        this->generateRandomData(5,5);
+        this->generateRandomData((rand()%50+1), (rand()%50+1));
         emit databaseChanged(this);
         break;
     case DataStructure::DB_RESET:

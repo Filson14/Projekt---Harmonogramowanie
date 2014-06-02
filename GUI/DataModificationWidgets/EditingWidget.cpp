@@ -64,8 +64,6 @@ EditingWidget::EditingWidget(QWidget *parent) :
 }
 
 void EditingWidget::fillJobCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     jobCombo->clear();
     jobCombo->addItem("Select...");
     taskCombo->clear();
@@ -75,14 +73,16 @@ void EditingWidget::fillJobCombo(){
     positionCombo->clear();
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     const vector <Job> &jobs = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs();
     for(unsigned int i=0; i<jobs.size(); i++)
         jobCombo->addItem(QString::number(i));
 }
 
 void EditingWidget::fillTaskCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     taskCombo->clear();
     taskCombo->addItem("Select...");
     machineCombo->clear();
@@ -90,6 +90,10 @@ void EditingWidget::fillTaskCombo(){
     positionCombo->clear();
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     if(jobCombo->currentIndex()>0){
         const vector <Task> &tasks = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()].getConstTaskList();
         for(unsigned int i=0; i<tasks.size(); i++)
@@ -98,13 +102,15 @@ void EditingWidget::fillTaskCombo(){
 }
 
 void EditingWidget::fillMachineCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     machineCombo->clear();
     machineCombo->addItem("Select...");
     positionCombo->clear();
     positionCombo->addItem("Select...");
     durationSpin->setValue(0);
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     if(jobCombo->currentIndex()>0 && taskCombo->currentIndex()>0){
         const Job &currJob = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()];
         const vector <Machine*> &allMachines = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstMachines();
@@ -121,10 +127,12 @@ void EditingWidget::fillMachineCombo(){
 }
 
 void EditingWidget::fillPositionCombo(){
-    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
-        return;
     positionCombo->clear();
     positionCombo->addItem("Select...");
+
+    if(((DataWidget*)(this->parentWidget()))->getDatabase()==NULL)
+        return;
+
     int selected = 0;
     if(jobCombo->currentIndex()>0){
         const vector <Task> &tasks = ((DataWidget*)(this->parentWidget()))->getDatabase()->getConstJobs()[jobCombo->currentText().toInt()].getConstTaskList();

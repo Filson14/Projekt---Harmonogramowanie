@@ -219,7 +219,7 @@
   <customwidget>
    <class>DataWidget</class>
    <extends>QWidget</extends>
-   <header>../Projekt-Harmonogramowanie/DataModificationWidgets/datawidget.h</header>
+   <header>../Projekt-Harmonogramowanie/GUI/DataModificationWidgets/DataWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
