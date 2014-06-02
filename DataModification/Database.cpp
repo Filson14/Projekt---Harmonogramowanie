@@ -273,6 +273,17 @@ int Database::getLongestJobDuration(){
 	return maxDuration;
 }
 
+int Database::getMaxMachineID()
+{
+    int maxid=-1;
+    for(vector<Machine*>::iterator it=machines.begin();it!=machines.end();it++)
+    {
+        if((*it)->getId()>maxid)
+            maxid=(*it)->getId();
+    }
+    return maxid;
+}
+
 void Database::onNewDataStructure(DataStructure* dtStructure)
 {
     switch(dtStructure->opType)

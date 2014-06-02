@@ -30,10 +30,11 @@ void BlockPlot::onDataChanged(Database* mydt)
 {
     this->clearPlottables();
     this->clearGraphs();
+    int maxid=mydt->getMaxMachineID();
 
-    if(mydt->getMachinesAmount()>cVect.size())
+    if(maxid+1>cVect.size())
     {
-        for(int i=cVect.size();i<mydt->getMachinesAmount()+1;i++)
+        for(int i=cVect.size();i<maxid+2;i++)
         {
             QColor cq;
             cq.setCmyk(qrand()%255,qrand()%255,qrand()%255,qrand()%255);
@@ -71,7 +72,7 @@ void BlockPlot::onDataChanged(Database* mydt)
 
     ExtQCPStatisticalBox* lastPItem=NULL;
     QBrush boxBrush;
-    QVector<ExtQCPStatisticalBox*> sbExamples(mydt->getMachinesAmount(),NULL);
+    QVector<ExtQCPStatisticalBox*> sbExamples(maxid+1,NULL);
     for(vector<Job>::iterator jit=mydt->getJobs().begin();jit!=mydt->getJobs().end();jit++)
     {
         for(vector<Task>::iterator tit=(*jit).getTaskList().begin();tit!=(*jit).getTaskList().end();tit++)
@@ -105,9 +106,10 @@ void BlockPlot::onDataChanged(Database* mydt)
 
 
     //Setting up the legend
-    for(int i=0;i<mydt->getMachinesAmount();i++)
+    for(int i=0;i<maxid+1;i++)
     {
-        legend->addItem(new QCPPlottableLegendItem(legend,( QCPAbstractPlottable *)sbExamples[i]));
+        if(sbExamples[i]!=NULL)
+            legend->addItem(new QCPPlottableLegendItem(legend,( QCPAbstractPlottable *)sbExamples[i]));
     }
     legend->setVisible(true);
 

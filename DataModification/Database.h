@@ -66,6 +66,8 @@ public:
         return jobs;
     }
 
+    int getMaxMachineID();
+
 	/**
 	 * Getter listy maszyn.
 	 * \return Referencja listy maszyn.
