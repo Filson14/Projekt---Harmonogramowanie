@@ -24,7 +24,6 @@ bool Database::readFromFile(const char* filename){
 	string data;
 	vector<string> fields;
 	vector<int> newMachines, times;
-	//Job *newJob;
 
 	inputFile.open(filename, ios::in);
 	if(inputFile.good()){
@@ -67,21 +66,17 @@ bool Database::readFromFile(const char* filename){
 		}
 		if(lineCounter == jobCount && newMachines.size() == jobCount*machinesCount && times.size() == jobCount*machinesCount){
 			for(int i=0; i<jobCount; i++){
-				//newJob = new Job();
 				this->addJob();
 				int timeSummary=0;
 				for(int j=0; j<machinesCount; j++){
 					int number = i*machinesCount+j;
 					if(machineExists(newMachines[number])){
-						//newJob->addTask(this->getMachine(newMachines[number]), timeSummary, times[number]);
 						jobs.back().addTask(this->getMachine(newMachines[number]), timeSummary, times[number]);
 					}else{
-						//newJob->addTask(this->addMachine(newMachines[number]), timeSummary, times[number]);
 						jobs.back().addTask(this->addMachine(newMachines[number]), timeSummary, times[number]);
 					}
 					timeSummary += times[number];
 				}
-				//this->addJob(*newJob);
 			}
 			result = true;
 		}else{
@@ -148,8 +143,6 @@ Job* Database::addJob(Job newJob){
 }
 
 Job* Database::addJob(){
-	/*Job *newJob = new Job();
-	this->jobs.push_back(*newJob);*/
 	Job newJob;
 	this->jobs.push_back(newJob);
 	return &(jobs.back());
@@ -181,7 +174,6 @@ void Database::deleteJob(unsigned int num){
 
 Database* Database::generateRandomData(int jobCount, int machinesCount){
     int randMachine,timeSummary, randTime;
-	//Job *newJob;
 	vector<int> tempVector;
 	if(jobCount>0 && machinesCount>0){
 		clearDatabase();
@@ -191,30 +183,17 @@ Database* Database::generateRandomData(int jobCount, int machinesCount){
 		}
 
 		for(int i=0; i<jobCount; i++){
-			//newJob = new Job();
 			this->addJob();
 			timeSummary = 0;
 
 			for(int j=0; j<machinesCount; j++){
-				/*randElem = rand() % tempVector.size();
-				//while dla bezpieczenstwa - ponowne losowanie nie powinno byc konieczne
-				while(newJob->isMachineUsed(tempVector[randElem]))
-					randElem = rand() % tempVector.size();
-				randMachine = tempVector[randElem];
-				*/
 				randMachine = rand() % machinesCount;
 				while(jobs.back().isMachineUsed(randMachine))
 					randMachine = rand() % machinesCount;
-				/*while(newJob->isMachineUsed(randMachine))
-					randMachine = rand() % machinesCount;
-				randTime = rand() % 20;
-				newJob->addTask(this->getMachine(randMachine), timeSummary, randTime);*/
 				randTime = rand() % 20;
 				jobs.back().addTask(this->getMachine(randMachine), timeSummary, randTime);
 				timeSummary += randTime;
 			}
-			//cout << endl;
-			//this->addJob(*newJob);
 		}
 	}
 

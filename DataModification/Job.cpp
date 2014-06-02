@@ -35,13 +35,8 @@ void Job::deleteTask(int machineId){
 		i++;
 	}
 	if(i < taskList.size()){
-		//int timeToDelete = taskList[i].getTime();
 		taskList.erase(taskList.begin()+i);
 		resetTimetable();
-		/*for(int j=i; j<taskList.size(); j++){
-			int currentStart = taskList[j].getStart();
-			taskList[j].setStart(currentStart - timeToDelete);
-		}*/
 	}
 }
 
@@ -52,13 +47,8 @@ void Job::changeTaskDuration(int machineId, int duration){
 			i++;
 		}
 		if(i < taskList.size()){
-			//int diff = duration - taskList[i].getTime();
 			taskList[i].setTime(duration);
 			resetTimetable();
-			/*for(int j=i+1; j<taskList.size(); j++){
-				int currentStart = taskList[j].getStart();
-				taskList[j].setStart(currentStart + diff);
-			}*/
 		}
 	}
 }
