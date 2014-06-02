@@ -280,6 +280,7 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
     case dtStructure->DB_FILE_LOAD:
         this->readFromFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
         emit databaseChanged(this);
+        emit dWrepaint(this);
         break;
     case dtStructure->DB_FILE_SAVE:
         this->saveToFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
@@ -287,18 +288,22 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
     case dtStructure->DB_GEN_RND:
         this->generateRandomData(5,5);
         emit databaseChanged(this);
+        emit dWrepaint(this);
         break;
     case dtStructure->DB_RESET:
         this->resetDatabase();
         emit databaseChanged(this);
+        emit dWrepaint(this);
         break;
     case dtStructure->DB_CLEAR:
         this->clearDatabase();
         emit databaseChanged(this);
+        emit dWrepaint(this);
         break;
     case dtStructure->DB_JOB_ADD:
         this->addJob();
         emit databaseChanged(this);
+        emit dWrepaint(this);
         break;
     case dtStructure->DB_MACHINE_ADD:
     {
@@ -308,6 +313,7 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
             i++;
         this->addMachine(i);
         emit databaseChanged(this);
+        emit dWrepaint(this);
     }
         break;
     case dtStructure->DB_TASK_ADD:
@@ -316,6 +322,7 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
         Machine* selectedMachine = this->getMachine(dtStructure->machineID);
         selectedJob.addTask(selectedMachine,0,dtStructure->tasktime);
         emit databaseChanged(this);
+        emit dWrepaint(this);
     }
         break;
     case dtStructure->DB_DELETE_JOB:
@@ -346,4 +353,11 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
         break;
     }
     delete dtStructure;
+}
+
+
+
+void Database::onDWrepaintRequest()
+{
+    emit dWrepaint(this);
 }

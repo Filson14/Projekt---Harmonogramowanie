@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Projekt-Harmonogramowanie" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\Projekt-Harmonogramowanie" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++0x" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\Projekt-Harmonogramowanie" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Algorithm.cpp" />
+		<Unit filename="Algorithm.h" />
+		<Unit filename="Chromosom.cpp" />
+		<Unit filename="Chromosom.h" />
+		<Unit filename="CrossoverOperators\CrossoverOnePoint.cpp" />
+		<Unit filename="CrossoverOperators\CrossoverOnePoint.h" />
+		<Unit filename="CrossoverOperators\CrossoverOperator.cpp" />
+		<Unit filename="CrossoverOperators\CrossoverOperator.h" />
+		<Unit filename="CrossoverOperators\CrossoverTwoPoint.cpp" />
+		<Unit filename="CrossoverOperators\CrossoverTwoPoint.h" />
+		<Unit filename="DataModification\Database.cpp" />
+		<Unit filename="DataModification\Database.h" />
+		<Unit filename="DataModification\Job.cpp" />
+		<Unit filename="DataModification\Job.h" />
+		<Unit filename="DataModification\Machine.cpp" />
+		<Unit filename="DataModification\Machine.h" />
+		<Unit filename="DataModification\Task.cpp" />
+		<Unit filename="DataModification\Task.h" />
+		<Unit filename="Main.cpp" />
+		<Unit filename="MutationOperators\MutationInversion.cpp" />
+		<Unit filename="MutationOperators\MutationInversion.h" />
+		<Unit filename="MutationOperators\MutationOperator.cpp" />
+		<Unit filename="MutationOperators\MutationOperator.h" />
+		<Unit filename="MutationOperators\MutationSwapping.cpp" />
+		<Unit filename="MutationOperators\MutationSwapping.h" />
+		<Unit filename="SelectionOperators\SelectionOperator.cpp" />
+		<Unit filename="SelectionOperators\SelectionOperator.h" />
+		<Unit filename="SelectionOperators\SelectionRoulette.cpp" />
+		<Unit filename="SelectionOperators\SelectionRoulette.h" />
+		<Unit filename="SelectionOperators\SelectionTournament.cpp" />
+		<Unit filename="SelectionOperators\SelectionTournament.h" />
+		<Unit filename="SettingsStructures.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -22,6 +22,12 @@ DataWidget::DataWidget(QWidget *parent) :
     QObject::connect(addWidget, SIGNAL(addMachineSig()), this, SLOT(onAddMachine()));
     QObject::connect(addWidget, SIGNAL(addTaskSig(int,int,int)), this, SLOT(onAddTask(int,int,int)));
 
+    QObject::connect(this,SIGNAL(subwidgetsRepaint(Database*)),addWidget,SLOT(fillJobsCombo(Database*)));
+    QObject::connect(this,SIGNAL(subwidgetsRepaint(Database*)),addWidget,SLOT(fillMachinesCombo(Database*)));
+    QObject::connect(addWidget,SIGNAL(subwidgetRepaintRequest()),this,SLOT(onSubwidgetRepaintRequest()));
+
+
+
 
     QObject::connect(delWidget, SIGNAL(deleteJobSig(int)), this, SLOT(onDeleteJob(int)));
     QObject::connect(delWidget, SIGNAL(deleteMachineSig(int)), this, SLOT(onDeleteMachine(int)));
@@ -104,7 +110,6 @@ void DataWidget::loadDataFromFile(){
         dt->opType=dt->DB_FILE_LOAD;
         dt->dtfile=fileName.toStdString();
         emit newDataStructure(dt);
-        updateWidgets();
     }
 }
 
@@ -119,18 +124,16 @@ void DataWidget::saveDataToFile(){
 }
 
 void DataWidget::generateRandomData(){
-
     DataStructure* dt=new DataStructure;
     dt->opType=dt->DB_GEN_RND;
     emit newDataStructure(dt);
-    updateWidgets();
+    //emit databaseMainRequest();
 }
 
 void DataWidget::resetDatabase(){
     DataStructure* dt=new DataStructure;
     dt->opType=dt->DB_RESET;
     emit newDataStructure(dt);
-    updateWidgets();
 
 }
 
@@ -138,23 +141,14 @@ void DataWidget::clearDatabase(){
     DataStructure* dt=new DataStructure;
     dt->opType=dt->DB_CLEAR;
     emit newDataStructure(dt);
-    updateWidgets();
-}
 
-void DataWidget::updateWidgets(){
-    addWidget->fillJobsCombo();
-    delWidget->fillJobsCombos();
-    delWidget->fillMachineCombo();
-    editWidget->fillJobCombo();
 }
-
 
 void DataWidget::onAddJob()
 {
     DataStructure* dt=new DataStructure;
     dt->opType=dt->DB_JOB_ADD;
     emit newDataStructure(dt);
-    updateWidgets();
 }
 
 void DataWidget::onAddMachine()
@@ -162,7 +156,7 @@ void DataWidget::onAddMachine()
     DataStructure* dt=new DataStructure;
     dt->opType=dt->DB_MACHINE_ADD;
     emit newDataStructure(dt);
-    updateWidgets();
+
 }
 
 void DataWidget::onAddTask(int jobID,int machineID,int duration)
@@ -213,4 +207,14 @@ void DataWidget::onEditChange(int jobID,int taskID,int curPos,int newPos,int mac
     dt->machineID=machineID;
     dt->tasktime=duration;
     emit newDataStructure(dt);
+}
+
+void DataWidget::onDWrepaint(Database * mydt)
+{
+    emit subwidgetsRepaint(mydt);
+}
+
+void DataWidget::onSubwidgetRepaintRequest()
+{
+    emit dWRepaintRequest();
 }

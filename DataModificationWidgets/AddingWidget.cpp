@@ -6,6 +6,7 @@
 #include <QComboBox>
 #include <QFormLayout>
 #include <QFileDialog>
+#include <QMessageBox>
 
 AddingWidget::AddingWidget(QWidget *parent) :
     QWidget(parent)
@@ -16,12 +17,12 @@ AddingWidget::AddingWidget(QWidget *parent) :
 
     this->setGeometry(0, 0, 500, 200);
 
-    fillJobsCombo();
+    //emit databaseRequest();
 
     durationSpin->setMinimum(0);
     durationSpin->setMaximum(300);
 
-    QObject::connect(jobCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(fillMachinesCombo()));
+    QObject::connect(jobCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(emitDTRequest()));
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
 
@@ -69,13 +70,13 @@ AddingWidget::AddingWidget(QWidget *parent) :
 
 }
 
-void AddingWidget::fillMachinesCombo(){
+void AddingWidget::fillMachinesCombo(Database* mydt){
     machineCombo->clear();
     machineCombo->addItem("Select...");
     durationSpin->setValue(0);
     if(jobCombo->currentIndex()>0){
-        Job &currJob = Chromosom::getJobDatabase().getJobs()[jobCombo->currentText().toInt()];
-        vector <Machine*> &allMachines = Chromosom::getJobDatabase().getMachines();
+        Job &currJob = mydt->getJobs()[jobCombo->currentText().toInt()];
+        vector <Machine*> &allMachines = mydt->getMachines();
         for(unsigned int i=0; i<allMachines.size(); i++){
             if( !currJob.isMachineUsed(allMachines[i]->getId()) )
                 machineCombo->addItem(QString::number(allMachines[i]->getId()));
@@ -83,30 +84,34 @@ void AddingWidget::fillMachinesCombo(){
     }
 }
 
-void AddingWidget::fillJobsCombo(){
+void AddingWidget::fillJobsCombo(Database* mydt){
     jobCombo->clear();
     machineCombo->clear();
     jobCombo->addItem("Select...");
     machineCombo->addItem("Select...");
     durationSpin->setValue(0);
-    int jobCount = Chromosom::getJobDatabase().getJobsAmount();
+    int jobCount = mydt->getJobsAmount();
     for(int i=0; i<jobCount; i++)
         jobCombo->addItem(QString::number(i));
 }
 
 void AddingWidget::addJob(){
     emit addJobSig();
-    fillJobsCombo();
-    fillMachinesCombo();
 }
 
 void AddingWidget::addMachine(){
     emit addMachineSig();
-    fillJobsCombo();
-    fillMachinesCombo();
 }
 
 void AddingWidget::addTask(){
     emit addTaskSig(jobCombo->currentText().toInt(),machineCombo->currentText().toInt(),durationSpin->value());
-    fillMachinesCombo();
+}
+
+void AddingWidget::emitDTRequest()
+{
+    printf("newBestChromosom signal recieved, I'm on it.\n");
+    fflush(NULL);
+    if(jobCombo->currentIndex()==0)
+        return;
+    emit subwidgetRepaintRequest();
 }

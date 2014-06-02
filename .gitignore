@@ -1,0 +1,4 @@
+Main.cpp
+*.o
+GUI/ui_mainwindow.h
+GUI/ui_mainwindow.h

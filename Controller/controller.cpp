@@ -7,7 +7,13 @@ Controller::Controller(Algorithm * algorithm, MainWindow * window, Database * da
     this->settingsWidget = window->ui->mAlgorithmWidget;
     this->statisticsWidget = window->ui->mStatisticWidget;
     this->blockPlotWidget = window->ui->mBlockPlot;
+    this->dataWidget=window->ui->mDataWidget;
 
+    connect(this->database,SIGNAL(dWrepaint(Database*)),dataWidget,SLOT(onDWrepaint(Database*)));
+    connect(dataWidget,SIGNAL(dWRepaintRequest()),this->database,SLOT(onDWrepaintRequest()));
+
+    connect(dataWidget,SIGNAL(newDataStructure(DataStructure*)),this->database,SLOT(onNewDataStructure(DataStructure*)));
+    connect(this->database,SIGNAL(databaseChanged(Database*)),this->blockPlotWidget,SLOT(onDataChanged(Database*)));
 
     connect(settingsWidget, SIGNAL(runAlgorithm()), statisticsWidget, SLOT(clearStatistics()));
     connect(settingsWidget, SIGNAL(runAlgorithm()), window, SLOT(onRunAlgorithm()));

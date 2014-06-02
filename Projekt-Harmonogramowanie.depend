@@ -1,0 +1,177 @@
+# depslib dependency file v1.0
+1399826761 source:c:\users\olek\documents\github\projekt-harmonogramowanie\chromosom.cpp
+	"Chromosom.h"
+	<ctime>
+	<limits>
+	<cstdlib>
+
+1399825887 c:\users\olek\documents\github\projekt-harmonogramowanie\chromosom.h
+	<iostream>
+	<algorithm>
+	<iomanip>
+	<vector>
+	"DataModification/Database.h"
+
+1398672010 source:c:\users\olek\documents\github\projekt-harmonogramowanie\operators.cpp
+	"Operators.h"
+
+1398672010 c:\users\olek\documents\github\projekt-harmonogramowanie\operators.h
+	<vector>
+	"Chromosom.h"
+
+1399372151 source:c:\users\olek\documents\github\projekt-harmonogramowanie\algorithm.cpp
+	"Algorithm.h"
+
+1399372151 c:\users\olek\documents\github\projekt-harmonogramowanie\algorithm.h
+	<vector>
+	<algorithm>
+	"Chromosom.h"
+	"SettingsStructures.h"
+	"SelectionOperators/SelectionTournament.h"
+	"SelectionOperators/SelectionRoulette.h"
+	"CrossoverOperators/CrossoverOnePoint.h"
+	"CrossoverOperators/CrossoverTwoPoint.h"
+	"MutationOperators/MutationSwapping.h"
+	"MutationOperators/MutationInversion.h"
+
+1398942399 c:\users\olek\documents\github\projekt-harmonogramowanie\database.h
+	<vector>
+	<iostream>
+	<fstream>
+	<string>
+	<sstream>
+	"Job.h"
+	"Machine.h"
+
+1398942399 c:\users\olek\documents\github\projekt-harmonogramowanie\job.h
+	<vector>
+	<iostream>
+	"Task.h"
+	"Machine.h"
+
+1398944434 c:\users\olek\documents\github\projekt-harmonogramowanie\task.h
+	"Machine.h"
+
+1398942399 c:\users\olek\documents\github\projekt-harmonogramowanie\machine.h
+
+1398959679 source:c:\users\olek\documents\github\projekt-harmonogramowanie\database.cpp
+	"Database.h"
+
+1398942399 source:c:\users\olek\documents\github\projekt-harmonogramowanie\job.cpp
+	"Job.h"
+
+1398942399 source:c:\users\olek\documents\github\projekt-harmonogramowanie\machine.cpp
+	"Machine.h"
+
+1398942399 source:c:\users\olek\documents\github\projekt-harmonogramowanie\task.cpp
+	"Task.h"
+
+1399819488 c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\database.h
+	<vector>
+	<iostream>
+	<fstream>
+	<string>
+	<sstream>
+	<cstdlib>
+	<time.h>
+	"Job.h"
+	"Machine.h"
+	<iomanip>
+
+1399819488 c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\job.h
+	<vector>
+	<iostream>
+	"Task.h"
+	"Machine.h"
+
+1399819488 c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\task.h
+	"Machine.h"
+
+1399028000 c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\machine.h
+
+1398970106 source:c:\users\olek\documents\github\projekt-harmonogramowanie\crossoveroperators\crossoveroperator.cpp
+	"CrossoverOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\crossoveroperators\crossoveroperator.h
+	"../Chromosom.h"
+
+1399819488 source:c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\database.cpp
+	"Database.h"
+
+1400588764 source:c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\job.cpp
+	"Job.h"
+
+1398970106 source:c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\machine.cpp
+	"Machine.h"
+
+1398970106 source:c:\users\olek\documents\github\projekt-harmonogramowanie\datamodification\task.cpp
+	"Task.h"
+
+1398970106 source:c:\users\olek\documents\github\projekt-harmonogramowanie\mutationoperators\mutationoperator.cpp
+	"MutationOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\mutationoperators\mutationoperator.h
+	"../Chromosom.h"
+
+1398970106 source:c:\users\olek\documents\github\projekt-harmonogramowanie\selectionoperators\selectionoperator.cpp
+	"SelectionOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\selectionoperators\selectionoperator.h
+	<vector>
+	"../Chromosom.h"
+
+1399315835 source:c:\users\olek\documents\github\projekt-harmonogramowanie\selectionoperators\selectiontournament.cpp
+	"SelectionTournament.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\selectionoperators\selectiontournament.h
+	<ctime>
+	<cstdlib>
+	<set>
+	<algorithm>
+	"../Algorithm.h"
+	"SelectionOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\settingsstructures.h
+	"./SelectionOperators/SelectionOperator.h"
+	"./MutationOperators/MutationOperator.h"
+	"./CrossoverOperators/CrossoverOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\selectionoperators\selectionroulette.h
+	"SelectionOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\crossoveroperators\crossoveronepoint.h
+	"CrossoverOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\crossoveroperators\crossovertwopoint.h
+	"CrossoverOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\mutationoperators\mutationswapping.h
+	"MutationOperator.h"
+
+1399222819 c:\users\olek\documents\github\projekt-harmonogramowanie\mutationoperators\mutationinversion.h
+	"MutationOperator.h"
+
+1399222819 source:c:\users\olek\documents\github\projekt-harmonogramowanie\crossoveroperators\crossoveronepoint.cpp
+	"CrossoverOnePoint.h"
+
+1399315835 source:c:\users\olek\documents\github\projekt-harmonogramowanie\mutationoperators\mutationswapping.cpp
+	"MutationSwapping.h"
+
+1399222819 source:c:\users\olek\documents\github\projekt-harmonogramowanie\selectionoperators\selectionroulette.cpp
+	"../Algorithm.h"
+	"SelectionRoulette.h"
+
+1399304285 source:c:\users\olek\documents\github\projekt-harmonogramowanie\crossoveroperators\crossovertwopoint.cpp
+	"CrossoverTwoPoint.h"
+
+1399315835 source:c:\users\olek\documents\github\projekt-harmonogramowanie\mutationoperators\mutationinversion.cpp
+	"MutationInversion.h"
+
+1399826571 source:c:\users\olek\documents\github\projekt-harmonogramowanie\main.cpp
+	<iostream>
+	"./Algorithm.h"
+	"./DataModification/Database.h"
+	"./DataModification/Job.h"
+	"./DataModification/Machine.h"
+	"./DataModification/Task.h"
+

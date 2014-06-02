@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="Algorithm.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="1696" topLine="9" />
+	</File>
+	<File name="Algorithm.h" open="0" top="0" tabpos="3">
+		<Cursor position="1690" topLine="0" />
+	</File>
+	<File name="Chromosom.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="5637" topLine="182" />
+	</File>
+	<File name="Chromosom.h" open="1" top="0" tabpos="2">
+		<Cursor position="211" topLine="0" />
+	</File>
+	<File name="DataModification\Database.cpp" open="0" top="0" tabpos="9">
+		<Cursor position="5507" topLine="185" />
+	</File>
+	<File name="DataModification\Database.h" open="0" top="0" tabpos="4">
+		<Cursor position="682" topLine="12" />
+	</File>
+	<File name="DataModification\Job.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="475" topLine="0" />
+	</File>
+	<File name="DataModification\Job.h" open="0" top="0" tabpos="12">
+		<Cursor position="1725" topLine="41" />
+	</File>
+	<File name="DataModification\Machine.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="DataModification\Machine.h" open="0" top="0" tabpos="11">
+		<Cursor position="412" topLine="0" />
+	</File>
+	<File name="DataModification\Task.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="186" topLine="0" />
+	</File>
+	<File name="DataModification\Task.h" open="0" top="0" tabpos="10">
+		<Cursor position="652" topLine="10" />
+	</File>
+	<File name="Main.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="156" topLine="0" />
+	</File>
+	<File name="SelectionOperators\SelectionTournament.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="578" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

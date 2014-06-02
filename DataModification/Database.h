@@ -168,8 +168,11 @@ public:
 
 signals:
     void databaseChanged(Database *);
+    void dWrepaint(Database *);
+
 public slots:
     void onNewDataStructure(DataStructure*);
+    void onDWrepaintRequest();
 };
 
 

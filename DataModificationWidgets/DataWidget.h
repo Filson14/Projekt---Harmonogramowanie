@@ -22,13 +22,14 @@ public:
 
 signals:
     void newDataStructure(DataStructure* );
+    void subwidgetsRepaint(Database *);
+    void dWRepaintRequest();
 private slots:
     void loadDataFromFile();
     void saveDataToFile();
     void generateRandomData();
     void resetDatabase();
     void clearDatabase();
-    void updateWidgets();
     void onAddJob();
     void onAddMachine();
     void onAddTask(int,int,int);
@@ -36,6 +37,8 @@ private slots:
     void onDeleteMachine(int);
     void onDeleteTask(int,int);
     void onEditChange(int,int,int,int,int,int);
+    void onDWrepaint(Database*);
+    void onSubwidgetRepaintRequest();
 
 };
 

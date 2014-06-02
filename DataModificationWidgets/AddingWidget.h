@@ -6,7 +6,6 @@
 #include <QSlider>
 #include <QSpinBox>
 #include "../DataModification/Database.h"
-#include "../Algorithm/Chromosom.h"
 
 class AddingWidget : public QWidget
 {
@@ -23,13 +22,15 @@ signals:
     void addJobSig();
     void addMachineSig();
     void addTaskSig(int,int,int);
+    void subwidgetRepaintRequest();
 
 public slots:
-    void fillMachinesCombo();
-    void fillJobsCombo();
+    void fillMachinesCombo(Database*);
+    void fillJobsCombo(Database *);
     void addJob();
     void addMachine();
     void addTask();
+    void emitDTRequest();
 };
 
 #endif // ADDINGWIDGET_H
