@@ -108,7 +108,7 @@ void DeletingWidget::fillTaskMachineCombo(){
 }
 
 void DeletingWidget::deleteJob(){
-    if(jobCombo->currentIndex()!=0){
+    if(jobCombo->currentIndex()>0){
         emit deleteJobSig(jobCombo->currentText().toInt());
         fillJobsCombos();
     }
@@ -116,7 +116,7 @@ void DeletingWidget::deleteJob(){
 }
 
 void DeletingWidget::deleteMachine(){
-    if(machineCombo->currentIndex()!=0){
+    if(machineCombo->currentIndex()>0){
         emit deleteMachineSig(machineCombo->currentText().toInt());
         fillMachineCombo();
         fillTaskMachineCombo();
@@ -124,7 +124,7 @@ void DeletingWidget::deleteMachine(){
 }
 
 void DeletingWidget::deleteTask(){
-    if(taskJobCombo->currentIndex()!=0 && taskMachineCombo->currentIndex()!=0){
+    if(taskJobCombo->currentIndex()>0 && taskMachineCombo->currentIndex()>0){
         emit deleteTaskSig(taskJobCombo->currentText().toInt(),taskMachineCombo->currentText().toInt());
         fillTaskMachineCombo();
     }
