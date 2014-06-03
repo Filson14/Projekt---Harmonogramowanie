@@ -109,6 +109,8 @@ void AddingWidget::addMachine(){
 }
 
 void AddingWidget::addTask(){
-    emit addTaskSig(jobCombo->currentText().toInt(),machineCombo->currentText().toInt(),durationSpin->value());
-    fillMachinesCombo();
+    if(jobCombo->currentIndex()>0 && machineCombo->currentIndex()>0){
+        emit addTaskSig(jobCombo->currentText().toInt(),machineCombo->currentText().toInt(),durationSpin->value());
+        fillMachinesCombo();
+    }
 }
