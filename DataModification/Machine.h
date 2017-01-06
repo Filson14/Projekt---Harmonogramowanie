@@ -8,6 +8,9 @@
 #ifndef MACHINE_H_
 #define MACHINE_H_
 
+#include <string>
+#include <iostream>
+
 using namespace std;
 
 /**
@@ -16,13 +19,21 @@ using namespace std;
 class Machine{
 private:
 	int id; //!< ID maszyny.
+    string label; //!< Opis maszyny
 
 public:
 	/**
 	 * Konstruktor klasy.
 	 * \param id Id maszyny
 	 */
-	Machine(int id);
+    Machine(int id);
+
+    /**
+     * Konstruktor klasy.
+     * \param id Id maszyny
+     * \param label Etykieta maszyny
+     */
+    Machine(int id, string label);
 
 	/**
 	 * Destruktor klasy.
@@ -44,6 +55,22 @@ public:
 	void setId(int id) {
 		this->id = id;
 	}
+
+    /**
+     * Getter dla etykiety maszyny.
+     * \return Etykieta maszyny.
+     */
+    string getLabel() const {
+        return label;
+    }
+
+    /**
+     * Setter dla etykiety maszyny.
+     * \param label Etykieta do ustawienia
+     */
+    void setLabel(string label) {
+        this->label = label;
+    }
 };
 
 

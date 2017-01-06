@@ -90,7 +90,7 @@ void BlockPlot::onDataChanged(Database* mydt)
             lastPItem->setLowerQuartile(tit->getStart());
             lastPItem->setUpperQuartile(tit->getStart()+tit->getTime());
             lastPItem->setMaximum(tit->getStart()+tit->getTime());
-            lastPItem->setName("Machine "+QString::number((*tit).getMachine()->getId()));
+            lastPItem->setName(QString::fromStdString((*tit).getMachine()->getLabel()));
             lastPItem->setSelectable(true);
            // connect(allSP.last(),SIGNAL(selectionChanged (bool )),allSP.last(),SLOT(blockinfo(bool)));
             connect(lastPItem,SIGNAL(selectionChanged (bool )),this,SLOT(onBlockSelected(bool)));

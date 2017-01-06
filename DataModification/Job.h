@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <iostream>
+#include <string>
 #include "Task.h"
 #include "Machine.h"
 
@@ -20,12 +21,15 @@ using namespace std;
 class Job{
 private:
 	vector<Task> taskList;	//!< Wektor zadañ dla danej pracy.
+    string label;
+    int deadline = 0;
+    int minStartTime = 0;
 
 public:
 	/**
 	 * Konstruktor klasy.
 	 */
-	Job();
+    Job(string label = "Job",int minStartTime = 0, int deadline = 0);
 
 	/**
 	 * Destruktor klasy.
@@ -41,6 +45,30 @@ public:
 	}
     const vector<Task>& getConstTaskList()const {
         return taskList;
+    }
+
+    string getLabel() {
+        return this->label;
+    }
+
+    void setLabel(string label) {
+        this->label = label;
+    }
+
+    int getMinStartTime() {
+        return this->minStartTime;
+    }
+
+    void setMinStartTime(int minStartTime) {
+        this->minStartTime = minStartTime;
+    }
+
+    int getDeadline() {
+        return this->deadline;
+    }
+
+    void setDeadline(int deadline) {
+        this->deadline = deadline;
     }
 
 	/**

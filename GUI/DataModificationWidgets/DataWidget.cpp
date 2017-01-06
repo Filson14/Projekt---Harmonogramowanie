@@ -93,7 +93,7 @@ DataWidget::DataWidget(QWidget *parent) :
 }
 
 void DataWidget::loadDataFromFile(){
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"C://", tr("Text File (*.txt)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"C://", tr("JSON File (*.json)"));
     if(fileName!=""){
         DataStructure* dt=new DataStructure;
         dt->opType=dt->DB_FILE_LOAD;

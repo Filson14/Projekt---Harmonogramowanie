@@ -12,7 +12,8 @@ TARGET = Projekt-Harmonogramowanie
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
+SOURCES += JsonCpp/jsoncpp.cpp \
+    main.cpp \
     Algorithm/Algorithm.cpp \
     Algorithm/Chromosom.cpp \
     Controller/controller.cpp \
@@ -45,7 +46,9 @@ SOURCES += main.cpp \
     GUI/DataModificationWidgets/DeletingWidget.cpp \
     GUI/DataModificationWidgets/EditingWidget.cpp
 
-HEADERS  += Algorithm/Algorithm.h \
+HEADERS  += JsonCpp/json/json.h \
+    JsonCpp/json/json-forwards.h \
+    Algorithm/Algorithm.h \
     Algorithm/Chromosom.h \
     Algorithm/SettingsStructures.h \
     Algorithm/StatisticsStructure.h \

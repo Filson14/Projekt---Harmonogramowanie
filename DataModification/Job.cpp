@@ -1,7 +1,9 @@
 #include "Job.h"
 
-Job::Job(){
-
+Job::Job(string label, int minStartTime, int deadline){
+    this->label = label;
+    this->minStartTime = minStartTime;
+    this->deadline = deadline;
 }
 
 Job::~Job(){
@@ -10,11 +12,11 @@ Job::~Job(){
 
 void Job::addTask(Machine* machine, int startTime, int duration){
 	if( !isMachineUsed(machine->getId()) ){
-		int minStartTime = 0;
+        int taskMinStartTime = this->minStartTime;
 		if(taskList.size()!=0)
-			minStartTime = taskList.back().getStart() + taskList.back().getTime();
-		if( startTime < minStartTime )
-			startTime = minStartTime;
+            taskMinStartTime = taskList.back().getStart() + taskList.back().getTime();
+        if( startTime < taskMinStartTime )
+            startTime = taskMinStartTime;
 		Task newTask(machine, startTime, duration);
 		this->taskList.push_back(newTask);
 	}

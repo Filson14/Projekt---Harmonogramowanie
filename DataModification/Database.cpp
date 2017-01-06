@@ -16,6 +16,55 @@ int Database::getMachinesAmount()const{
 	return machines.size();
 }
 
+bool Database::readFromJson(const char *filename) {
+    clearDatabase();
+    bool result = false;
+    ifstream inputFile(filename, ifstream::binary);
+    Json::Value root;
+    inputFile >> root;
+    cout << root.get("my-encoding", "UTF-32" ).asString() << endl;
+    cout << root["my-indent"]["length"].asInt() << endl;
+
+    const Json::Value productionPoints = root["machines"];
+    const Json::Value products = root["products"];
+    const Json::Value orders = root["orders"];
+
+    for ( int index = 0; index < productionPoints.size(); ++index )
+        this->addMachine(index, productionPoints[index].asString());
+
+    vector<Machine*> machines = this->getMachines();
+    int machinesCount = machines.size();
+
+    for ( int index = 0; index < orders.size(); ++index ) {
+       cout <<  orders[index]["product"].asString() << " " << orders[index]["amount"] << " szt." << endl;
+       int productCount = orders[index]["amount"].asInt();
+       const char * productId = orders[index]["product"].asString().c_str();
+       int timeOffset = products[productId]["supply"].asInt();
+
+       for(int i = productCount; i--;) {
+           const char * productId = orders[index]["product"].asString().c_str();
+           stringstream labelStringstream;
+
+           labelStringstream << products[productId]["label"].asString() << " " << i;
+           string jobLabel = labelStringstream.str();
+
+           Job newJob(jobLabel, timeOffset, orders[index]["deadline"].asInt());
+           cout << newJob.getLabel() << "  " << newJob.getDeadline() << endl;
+           int time = 0;
+           for(int j = 0; j < machinesCount; j++) {
+               const char * productId = orders[index]["product"].asString().c_str();
+               int duration = products[productId]["productionTimes"][j].asInt();
+               if(duration > 0) {
+                   newJob.addTask(machines.at(j), time, duration);
+                   time += duration;
+               }
+           }
+           this->addJob(newJob);
+       }
+
+    }
+}
+
 bool Database::readFromFile(const char* filename){
 	clearDatabase();
 	bool result = false;
@@ -133,8 +182,12 @@ bool Database::machineExists(int id){
 
 Machine* Database::addMachine(int id){
 	Machine *newMachine = new Machine(id);
-	this->machines.push_back(newMachine);
-	return newMachine;
+    return this->_addMachine(newMachine);
+}
+
+Machine* Database::addMachine(int id, string label){
+    Machine *newMachine = new Machine(id, label);
+    return this->_addMachine(newMachine);
 }
 
 Job* Database::addJob(Job newJob){
@@ -268,7 +321,8 @@ void Database::onNewDataStructure(DataStructure* dtStructure)
     switch(dtStructure->opType)
     {
     case DataStructure::DB_FILE_LOAD:
-        this->readFromFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
+//        this->readFromFile((dtStructure->dtfile).c_str());  //TODO kontrola bledu
+        this->readFromJson((dtStructure->dtfile).c_str());  //TODO kontrola bledu
         emit databaseChanged(this);
         break;
     case DataStructure::DB_FILE_SAVE:

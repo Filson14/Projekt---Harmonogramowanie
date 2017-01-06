@@ -20,6 +20,7 @@
 #include "Machine.h"
 #include "../GUI/DataModificationWidgets/DataStructure.h"
 #include <iomanip>
+#include <../JsonCpp/json/json.h>
 
 using namespace std;
 /**
@@ -31,6 +32,11 @@ class Database: public QObject{
 private:
 	vector<Job> jobs;			//!< Lista prac, dla których jest generowany harmonogram.
 	vector<Machine*> machines;	//!< Lista wskaŸników do dostêpnych maszyn.
+
+    Machine* _addMachine(Machine* machine) {
+        machines.push_back(machine);
+        return machine;
+    }
 
 public:
 	/**
@@ -80,6 +86,13 @@ public:
         return machines;
     }
 
+    /**
+     * Funkcja odczytuj¹ca plik typu JSON z danymi wejsciowymi do programu.
+     * \param filename Sciezka do pliku.
+     * \return True - jesli odczyt przebiegnie pomyslnie; False - w przeciwnym wypadku.
+     */
+    bool readFromJson(const char* filename);
+
 	/**
 	 * Funkcja odczytuj¹ca plik tekstowy z danymi wejsciowymi do programu.
 	 * \param filename Sciezka do pliku.
@@ -127,6 +140,8 @@ public:
 	 * \return WskaŸnik do nowododanej maszyny.
 	 */
 	Machine* addMachine(int id);
+
+    Machine* addMachine(int id, string label);
 
 	/**
 	 * Metoda usuwaj¹ca maszynê z bazy.
