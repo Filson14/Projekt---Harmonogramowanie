@@ -57,7 +57,7 @@ void Job::changeTaskDuration(int machineId, int duration){
 
 void Job::changeTaskStart(int machineId, int time){
     unsigned int i=0;
-	if(time >= 0){
+    if(time >= 0){
 		while(i<=taskList.size()-1 && taskList[i].getMachine()->getId()!=machineId){
 			i++;
 		}

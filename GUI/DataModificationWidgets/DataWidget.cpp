@@ -6,34 +6,34 @@ DataWidget::DataWidget(QWidget *parent) :
     this->mydt=NULL;
     this->resize(600, 200);
 
-    this->addWidget = new AddingWidget(this);
-    this->editWidget = new EditingWidget(this);
-    this->delWidget = new DeletingWidget(this);
+//    this->addWidget = new AddingWidget(this);
+//    this->editWidget = new EditingWidget(this);
+//    this->delWidget = new DeletingWidget(this);
 
 
 
     // nowe connecty
-    QObject::connect(addWidget, SIGNAL(addJobSig()), this, SLOT(onAddJob()));
-    QObject::connect(addWidget, SIGNAL(addMachineSig()), this, SLOT(onAddMachine()));
-    QObject::connect(addWidget, SIGNAL(addTaskSig(int,int,int)), this, SLOT(onAddTask(int,int,int)));
+//    QObject::connect(addWidget, SIGNAL(addJobSig()), this, SLOT(onAddJob()));
+//    QObject::connect(addWidget, SIGNAL(addMachineSig()), this, SLOT(onAddMachine()));
+//    QObject::connect(addWidget, SIGNAL(addTaskSig(int,int,int)), this, SLOT(onAddTask(int,int,int)));
 
 
-    QObject::connect(delWidget, SIGNAL(deleteJobSig(int)), this, SLOT(onDeleteJob(int)));
-    QObject::connect(delWidget, SIGNAL(deleteMachineSig(int)), this, SLOT(onDeleteMachine(int)));
-    QObject::connect(delWidget, SIGNAL(deleteTaskSig(int,int)), this, SLOT(onDeleteTask(int,int)));
+//    QObject::connect(delWidget, SIGNAL(deleteJobSig(int)), this, SLOT(onDeleteJob(int)));
+//    QObject::connect(delWidget, SIGNAL(deleteMachineSig(int)), this, SLOT(onDeleteMachine(int)));
+//    QObject::connect(delWidget, SIGNAL(deleteTaskSig(int,int)), this, SLOT(onDeleteTask(int,int)));
 
-    QObject::connect(editWidget, SIGNAL(editChangeSig(int,int,int,int,int,int)), this, SLOT(onEditChange(int,int,int,int,int,int)));
+//    QObject::connect(editWidget, SIGNAL(editChangeSig(int,int,int,int,int,int)), this, SLOT(onEditChange(int,int,int,int,int,int)));
 
 
 
     QStackedLayout *pageLayout = new QStackedLayout();
-    pageLayout->addWidget(addWidget);
-    pageLayout->addWidget(delWidget);
-    pageLayout->addWidget(editWidget);
+//    pageLayout->addWidget(addWidget);
+//    pageLayout->addWidget(delWidget);
+//    pageLayout->addWidget(editWidget);
 
-    QGroupBox *dataGrp = new QGroupBox("Mode", this);
+//    QGroupBox *dataGrp = new QGroupBox("Mode", this);
     QGroupBox *fileGrp = new QGroupBox("File", this);
-    QGroupBox *dbGrp = new QGroupBox("Database", this);
+//    QGroupBox *dbGrp = new QGroupBox("Database", this);
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
 
@@ -52,9 +52,9 @@ DataWidget::DataWidget(QWidget *parent) :
     
     QObject::connect(btnGroup, SIGNAL(buttonClicked(int)), pageLayout, SLOT(setCurrentIndex(int)));
 
-    dataLayout->addWidget(addBtn);
-    dataLayout->addWidget(delBtn);
-    dataLayout->addWidget(editBtn);
+//    dataLayout->addWidget(addBtn);
+//    dataLayout->addWidget(delBtn);
+//    dataLayout->addWidget(editBtn);
 
     QPushButton *loadBtn = new QPushButton("Load");
     QPushButton *saveBtn = new QPushButton("Save");
@@ -63,7 +63,7 @@ DataWidget::DataWidget(QWidget *parent) :
     QObject::connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveDataToFile()));
 
     fileLayout->addWidget(loadBtn);
-    fileLayout->addWidget(saveBtn);
+//    fileLayout->addWidget(saveBtn);
 
     QPushButton *generateDataBtn = new QPushButton("Generate");
     QPushButton *resetBtn = new QPushButton("Reset");
@@ -73,17 +73,17 @@ DataWidget::DataWidget(QWidget *parent) :
     QObject::connect(resetBtn, SIGNAL(clicked()), this, SLOT(resetDatabase()));
     QObject::connect(clearBtn, SIGNAL(clicked()), this, SLOT(clearDatabase()));
 
-    dbLayout->addWidget(generateDataBtn);
-    dbLayout->addWidget(resetBtn);
-    dbLayout->addWidget(clearBtn);
+//    dbLayout->addWidget(generateDataBtn);
+//    dbLayout->addWidget(resetBtn);
+//    dbLayout->addWidget(clearBtn);
 
-    dataGrp->setLayout(dataLayout);
+//    dataGrp->setLayout(dataLayout);
     fileGrp->setLayout(fileLayout);
-    dbGrp->setLayout(dbLayout);
+//    dbGrp->setLayout(dbLayout);
 
-    mainLayout->addWidget(dataGrp);
+//    mainLayout->addWidget(dataGrp);
     mainLayout->addWidget(fileGrp);
-    mainLayout->addWidget(dbGrp);
+//    mainLayout->addWidget(dbGrp);
     mainLayout->addLayout(pageLayout);
 
     this->setLayout(mainLayout);
@@ -93,7 +93,7 @@ DataWidget::DataWidget(QWidget *parent) :
 }
 
 void DataWidget::loadDataFromFile(){
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"C://", tr("JSON File (*.json)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"/home/filson/Problemowe/Projekt-Harmonogramowanie/TestData/", tr("JSON File (*.json)"));
     if(fileName!=""){
         DataStructure* dt=new DataStructure;
         dt->opType=dt->DB_FILE_LOAD;
@@ -137,10 +137,10 @@ void DataWidget::clearDatabase(){
 }
 
 void DataWidget::updateWidgets(){
-    addWidget->fillJobsCombo();
-    delWidget->fillJobsCombos();
-    delWidget->fillMachineCombo();
-    editWidget->fillJobCombo();
+//    addWidget->fillJobsCombo();
+//    delWidget->fillJobsCombos();
+//    delWidget->fillMachineCombo();
+//    editWidget->fillJobCombo();
 }
 
 

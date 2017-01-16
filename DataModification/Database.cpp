@@ -22,8 +22,6 @@ bool Database::readFromJson(const char *filename) {
     ifstream inputFile(filename, ifstream::binary);
     Json::Value root;
     inputFile >> root;
-    cout << root.get("my-encoding", "UTF-32" ).asString() << endl;
-    cout << root["my-indent"]["length"].asInt() << endl;
 
     const Json::Value productionPoints = root["machines"];
     const Json::Value products = root["products"];
@@ -49,7 +47,7 @@ bool Database::readFromJson(const char *filename) {
            string jobLabel = labelStringstream.str();
 
            Job newJob(jobLabel, timeOffset, orders[index]["deadline"].asInt());
-           cout << newJob.getLabel() << "  " << newJob.getDeadline() << endl;
+           cout << newJob.getLabel() << "  " << newJob.getMinStartTime() << newJob.getDeadline() << endl;
            int time = 0;
            for(int j = 0; j < machinesCount; j++) {
                const char * productId = orders[index]["product"].asString().c_str();

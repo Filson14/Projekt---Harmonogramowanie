@@ -57,6 +57,13 @@ void BlockPlot::onDataChanged(Database* mydt)
      yAxis->setTickVector(qticks);
      yAxis->setLabel("Jobs");
 
+//     QSharedPointer<QCPAxisTicker> textTicker(new QCPAxisTicker);
+//     vector<Job> jobs = mydt->getJobs();
+
+//     for(int i=0;i<jobs->size();i++) {
+//         textTicker->addTick(i, jobs->at(i).getLabel());
+//     }
+//     yAxis->setTicker(textTicker);
 
 
     //Setting X axis
@@ -69,7 +76,7 @@ void BlockPlot::onDataChanged(Database* mydt)
 
 
     //Setting up the block widgets
-
+    legend->clearItems();
     ExtQCPStatisticalBox* lastPItem=NULL;
     QBrush boxBrush;
     QVector<ExtQCPStatisticalBox*> sbExamples(maxid+1,NULL);
@@ -90,14 +97,19 @@ void BlockPlot::onDataChanged(Database* mydt)
             lastPItem->setLowerQuartile(tit->getStart());
             lastPItem->setUpperQuartile(tit->getStart()+tit->getTime());
             lastPItem->setMaximum(tit->getStart()+tit->getTime());
-            lastPItem->setName(QString::fromStdString((*tit).getMachine()->getLabel()));
+            lastPItem->setName(QString::fromStdString((*jit).getLabel()) + " - " + QString::fromStdString((*tit).getMachine()->getLabel()));
             lastPItem->setSelectable(true);
            // connect(allSP.last(),SIGNAL(selectionChanged (bool )),allSP.last(),SLOT(blockinfo(bool)));
             connect(lastPItem,SIGNAL(selectionChanged (bool )),this,SLOT(onBlockSelected(bool)));
             addPlottable(lastPItem);
-            if(sbExamples[(*tit).getMachine()->getId()]==NULL)
-            {
-                sbExamples[(*tit).getMachine()->getId()]=lastPItem;
+            if(sbExamples[(*tit).getMachine()->getId()]==NULL) {
+                ExtQCPStatisticalBox *legendBox = new ExtQCPStatisticalBox(yAxis, xAxis);
+                legendBox->setBrush(boxBrush);
+                legendBox->setName(QString::fromStdString((*tit).getMachine()->getLabel()));
+                legendBox->setBrush(boxBrush);
+                legendBox->setWhiskerWidth(0);
+                sbExamples[(*tit).getMachine()->getId()] = legendBox;
+//                sbExamples[(*tit).getMachine()->getId()] = lastPItem;
             }
 
         }
@@ -122,7 +134,7 @@ void BlockPlot::onBlockSelected(bool on)
     if(!on)
         return;
     ((ExtQCPStatisticalBox*)sender())->setSelected(false);
-    setToolTip("Task start: "+QString::number(((ExtQCPStatisticalBox*)sender())->minimum())+"\nTask time: "+QString::number(((ExtQCPStatisticalBox*)sender())->maximum()-((ExtQCPStatisticalBox*)sender())->minimum()));
+    setToolTip(((ExtQCPStatisticalBox*)sender())->name() + "\nTask start: "+QString::number(((ExtQCPStatisticalBox*)sender())->minimum())+"\nTask time: "+QString::number(((ExtQCPStatisticalBox*)sender())->maximum()-((ExtQCPStatisticalBox*)sender())->minimum()));
 
 }
 

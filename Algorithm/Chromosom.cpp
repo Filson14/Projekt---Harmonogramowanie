@@ -79,6 +79,7 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 	int currentTasknum;
 	int currentMachineId;
     int jobstarttime;
+
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
 	{
 	    currentTasknum=currentTaskCount[*it];
@@ -101,9 +102,23 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 
         machineSchedule[currentMachineId]=jobstarttime+jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getTime();
 	}
-	for(vector<int>::iterator it=jobSchedule.begin();it!=jobSchedule.end();it++)
-	    if(*it>startingfit)
+
+    for(int i = 0; i < jobSchedule.size(); i++) {
+        Job job = jobDatabase->getJobs()[i];
+        //cout << jobDatabase->getJobs()[i].getDeadline() << "  " << jobSchedule[i] << endl;
+        int jobDuration = jobSchedule[i];
+        if(job.getDeadline() != 0 && job.getDeadline() < jobDuration) {
+            //cout << "deadline passed..." << endl;
+            startingfit = 10000;
+        } else if(jobDuration > startingfit) {
+                startingfit = jobDuration;
+        }
+    }
+
+    for(vector<int>::iterator it=jobSchedule.begin();it!=jobSchedule.end();it++) {
+        if(*it>startingfit)
             startingfit=*it;
+    }
 
     this->fitness=startingfit;
     machineSchedule.clear();
