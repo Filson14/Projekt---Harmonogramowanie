@@ -31,7 +31,7 @@ DataWidget::DataWidget(QWidget *parent) :
 //    pageLayout->addWidget(delWidget);
 //    pageLayout->addWidget(editWidget);
 
-    QGroupBox *dataGrp = new QGroupBox("Mode", this);
+//    QGroupBox *dataGrp = new QGroupBox("Mode", this);
     QGroupBox *fileGrp = new QGroupBox("File", this);
 //    QGroupBox *dbGrp = new QGroupBox("Database", this);
 
@@ -77,11 +77,11 @@ DataWidget::DataWidget(QWidget *parent) :
 //    dbLayout->addWidget(resetBtn);
 //    dbLayout->addWidget(clearBtn);
 
-    dataGrp->setLayout(dataLayout);
+//    dataGrp->setLayout(dataLayout);
     fileGrp->setLayout(fileLayout);
 //    dbGrp->setLayout(dbLayout);
 
-    mainLayout->addWidget(dataGrp);
+//    mainLayout->addWidget(dataGrp);
     mainLayout->addWidget(fileGrp);
 //    mainLayout->addWidget(dbGrp);
     mainLayout->addLayout(pageLayout);

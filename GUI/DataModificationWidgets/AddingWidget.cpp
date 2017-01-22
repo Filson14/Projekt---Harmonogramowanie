@@ -25,16 +25,18 @@ AddingWidget::AddingWidget(QWidget *parent) :
     QVBoxLayout *machineLay = new QVBoxLayout();
 
     QGroupBox *jobGrp = new QGroupBox("Job");
-    QGroupBox *machineGrp = new QGroupBox("Machine");
+//    QGroupBox *machineGrp = new QGroupBox("Machine");
+    QGroupBox *machineGrp = new QGroupBox("Utils");
     QGroupBox *taskGrp = new QGroupBox("Task");
 
     QPushButton *addJobBtn = new QPushButton("Add");
-    QPushButton *addMachineBtn = new QPushButton("Add");
+//    QPushButton *addMachineBtn = new QPushButton("Add");
+    QPushButton *addMachineBtn = new QPushButton("Refresh");
     QPushButton *addTaskBtn = new QPushButton("Add");
 
-    QObject::connect(addJobBtn, SIGNAL(clicked()), this, SLOT(addJob()));
+//    QObject::connect(addJobBtn, SIGNAL(clicked()), this, SLOT(addJob()));
     QObject::connect(addMachineBtn, SIGNAL(clicked()), this, SLOT(addMachine()));
-    QObject::connect(addTaskBtn, SIGNAL(clicked()), this, SLOT(addTask()));
+//    QObject::connect(addTaskBtn, SIGNAL(clicked()), this, SLOT(addTask()));
 
     QFormLayout *taskLay = new QFormLayout;
     taskLay->addRow(tr("&Job:"), jobCombo);
@@ -50,13 +52,13 @@ AddingWidget::AddingWidget(QWidget *parent) :
     jobGrp->setLayout(jobLay);
     machineGrp->setLayout(machineLay);
 
-    leftSide->addWidget(jobGrp);
+//    leftSide->addWidget(jobGrp);
     leftSide->addWidget(machineGrp);
 
     rightSide->addWidget(taskGrp);
 
     mainLayout->addLayout(leftSide);
-    mainLayout->addLayout(rightSide);
+//    mainLayout->addLayout(rightSide);
 
     this->setLayout(mainLayout);
 
