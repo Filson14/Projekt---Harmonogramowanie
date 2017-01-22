@@ -83,10 +83,7 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 	for(vector<int>::iterator it=genotype.begin();it!=genotype.end();it++)
 	{
 	    currentTasknum=currentTaskCount[*it];
-       // cout<<"Przed current get machine ID cuurent task num: "<<currentTasknum<<" a job"<<*it<<endl;
-        //cout<<flush;
         currentMachineId=jobDatabase->getJobs()[*it].getTaskList()[currentTasknum].getMachine()->getId();
-	   // cout<<"Current job num: "<<(*it)<<" current machined ID: "<<currentMachineId<<"task of the job: "<<currentTasknum<<"time of the task"<<jobDatabase.getJobs()[*it].getTaskList()[currentTasknum].getTime()<<endl;
 	    currentTaskCount[*it]++;
 
 	    if(machineSchedule[currentMachineId]>jobSchedule[*it])
@@ -105,19 +102,12 @@ int Chromosom::countFitness() { //dzia��a przy numeracji maszyn i job��w
 
     for(int i = 0; i < jobSchedule.size(); i++) {
         Job job = jobDatabase->getJobs()[i];
-        //cout << jobDatabase->getJobs()[i].getDeadline() << "  " << jobSchedule[i] << endl;
         int jobDuration = jobSchedule[i];
         if(job.getDeadline() != 0 && job.getDeadline() < jobDuration) {
-            //cout << "deadline passed..." << endl;
             startingfit = 10000;
         } else if(jobDuration > startingfit) {
                 startingfit = jobDuration;
         }
-    }
-
-    for(vector<int>::iterator it=jobSchedule.begin();it!=jobSchedule.end();it++) {
-        if(*it>startingfit)
-            startingfit=*it;
     }
 
     this->fitness=startingfit;
