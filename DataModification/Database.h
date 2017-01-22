@@ -32,6 +32,7 @@ class Database: public QObject{
 private:
 	vector<Job> jobs;			//!< Lista prac, dla których jest generowany harmonogram.
 	vector<Machine*> machines;	//!< Lista wskaŸników do dostêpnych maszyn.
+    int productionMachinesCount = 0;
 
     Machine* _addMachine(Machine* machine) {
         machines.push_back(machine);
@@ -84,6 +85,10 @@ public:
 
     const vector<Machine*>& getConstMachines()const{
         return machines;
+    }
+
+    int getProductionMachinesCount() {
+        return productionMachinesCount;
     }
 
     /**

@@ -23,13 +23,12 @@ private:
 	vector<Task> taskList;	//!< Wektor zadañ dla danej pracy.
     string label;
     int deadline = 0;
-    int minStartTime = 0;
 
 public:
 	/**
 	 * Konstruktor klasy.
 	 */
-    Job(string label = "Job",int minStartTime = 0, int deadline = 0);
+    Job(string label = "Job", int deadline = 0);
 
 	/**
 	 * Destruktor klasy.
@@ -53,14 +52,6 @@ public:
 
     void setLabel(string label) {
         this->label = label;
-    }
-
-    int getMinStartTime() {
-        return this->minStartTime;
-    }
-
-    void setMinStartTime(int minStartTime) {
-        this->minStartTime = minStartTime;
     }
 
     int getDeadline() {

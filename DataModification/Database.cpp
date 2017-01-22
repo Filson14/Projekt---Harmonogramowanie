@@ -26,18 +26,21 @@ bool Database::readFromJson(const char *filename) {
     const Json::Value productionPoints = root["machines"];
     const Json::Value products = root["products"];
     const Json::Value orders = root["orders"];
+    int supplyMachineId = productionPoints.size();
 
     for ( int index = 0; index < productionPoints.size(); ++index )
         this->addMachine(index, productionPoints[index].asString());
 
     vector<Machine*> machines = this->getMachines();
-    int machinesCount = machines.size();
+    const int machinesCount = productionPoints.size();
+
+    this->productionMachinesCount = machinesCount;
 
     for ( int index = 0; index < orders.size(); ++index ) {
        cout <<  orders[index]["product"].asString() << " " << orders[index]["amount"] << " szt." << endl;
        int productCount = orders[index]["amount"].asInt();
        const char * productId = orders[index]["product"].asString().c_str();
-       int timeOffset = products[productId]["supply"].asInt();
+       int supplyTime = products[productId]["supply"].asInt();
 
        for(int i = productCount; i--;) {
            const char * productId = orders[index]["product"].asString().c_str();
@@ -46,9 +49,14 @@ bool Database::readFromJson(const char *filename) {
            labelStringstream << products[productId]["label"].asString() << " " << i;
            string jobLabel = labelStringstream.str();
 
-           Job newJob(jobLabel, timeOffset, orders[index]["deadline"].asInt());
-           cout << newJob.getLabel() << "  " << newJob.getMinStartTime() << newJob.getDeadline() << endl;
-           int time = 0;
+           Job newJob(jobLabel, orders[index]["deadline"].asInt());
+
+           if(supplyTime > 0) {
+               Machine *supplyMachine = this->addMachine(supplyMachineId++, "Dostawa surowców");
+               newJob.addTask(supplyMachine, 0, supplyTime);
+           }
+
+           int time = supplyTime;
            for(int j = 0; j < machinesCount; j++) {
                const char * productId = orders[index]["product"].asString().c_str();
                int duration = products[productId]["productionTimes"][j].asInt();
@@ -59,7 +67,6 @@ bool Database::readFromJson(const char *filename) {
            }
            this->addJob(newJob);
        }
-
     }
 }
 

@@ -6,16 +6,16 @@ DataWidget::DataWidget(QWidget *parent) :
     this->mydt=NULL;
     this->resize(600, 200);
 
-//    this->addWidget = new AddingWidget(this);
+    this->addWidget = new AddingWidget(this);
 //    this->editWidget = new EditingWidget(this);
 //    this->delWidget = new DeletingWidget(this);
 
 
 
     // nowe connecty
-//    QObject::connect(addWidget, SIGNAL(addJobSig()), this, SLOT(onAddJob()));
-//    QObject::connect(addWidget, SIGNAL(addMachineSig()), this, SLOT(onAddMachine()));
-//    QObject::connect(addWidget, SIGNAL(addTaskSig(int,int,int)), this, SLOT(onAddTask(int,int,int)));
+    QObject::connect(addWidget, SIGNAL(addJobSig()), this, SLOT(onAddJob()));
+    QObject::connect(addWidget, SIGNAL(addMachineSig()), this, SLOT(onAddMachine()));
+    QObject::connect(addWidget, SIGNAL(addTaskSig(int,int,int)), this, SLOT(onAddTask(int,int,int)));
 
 
 //    QObject::connect(delWidget, SIGNAL(deleteJobSig(int)), this, SLOT(onDeleteJob(int)));
@@ -27,11 +27,11 @@ DataWidget::DataWidget(QWidget *parent) :
 
 
     QStackedLayout *pageLayout = new QStackedLayout();
-//    pageLayout->addWidget(addWidget);
+    pageLayout->addWidget(addWidget);
 //    pageLayout->addWidget(delWidget);
 //    pageLayout->addWidget(editWidget);
 
-//    QGroupBox *dataGrp = new QGroupBox("Mode", this);
+    QGroupBox *dataGrp = new QGroupBox("Mode", this);
     QGroupBox *fileGrp = new QGroupBox("File", this);
 //    QGroupBox *dbGrp = new QGroupBox("Database", this);
 
@@ -52,7 +52,7 @@ DataWidget::DataWidget(QWidget *parent) :
     
     QObject::connect(btnGroup, SIGNAL(buttonClicked(int)), pageLayout, SLOT(setCurrentIndex(int)));
 
-//    dataLayout->addWidget(addBtn);
+    dataLayout->addWidget(addBtn);
 //    dataLayout->addWidget(delBtn);
 //    dataLayout->addWidget(editBtn);
 
@@ -77,11 +77,11 @@ DataWidget::DataWidget(QWidget *parent) :
 //    dbLayout->addWidget(resetBtn);
 //    dbLayout->addWidget(clearBtn);
 
-//    dataGrp->setLayout(dataLayout);
+    dataGrp->setLayout(dataLayout);
     fileGrp->setLayout(fileLayout);
 //    dbGrp->setLayout(dbLayout);
 
-//    mainLayout->addWidget(dataGrp);
+    mainLayout->addWidget(dataGrp);
     mainLayout->addWidget(fileGrp);
 //    mainLayout->addWidget(dbGrp);
     mainLayout->addLayout(pageLayout);

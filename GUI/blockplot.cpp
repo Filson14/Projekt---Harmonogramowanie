@@ -22,7 +22,6 @@ BlockPlot::BlockPlot(QWidget *parent) :
     cVect.push_back(Qt::darkBlue);
     cVect.push_back(Qt::black);
     cVect.push_back(Qt::darkYellow);
-
 }
 
 
@@ -87,7 +86,13 @@ void BlockPlot::onDataChanged(Database* mydt)
             if(tit->getTime()==0)
                 continue;
             lastPItem=new ExtQCPStatisticalBox(yAxis,xAxis);
-            boxBrush=QBrush(cVect[(*tit).getMachine()->getId()]);
+
+            const int colorId = (*tit).getMachine()->getId();
+            if(colorId < mydt->getProductionMachinesCount()) {
+                boxBrush=QBrush(cVect[colorId]);
+            } else {
+                boxBrush=QBrush(Qt::white);
+            }
             boxBrush.setStyle(Qt::Dense4Pattern);
 
             lastPItem->setBrush(boxBrush);
@@ -102,9 +107,9 @@ void BlockPlot::onDataChanged(Database* mydt)
            // connect(allSP.last(),SIGNAL(selectionChanged (bool )),allSP.last(),SLOT(blockinfo(bool)));
             connect(lastPItem,SIGNAL(selectionChanged (bool )),this,SLOT(onBlockSelected(bool)));
             addPlottable(lastPItem);
-            if(sbExamples[(*tit).getMachine()->getId()]==NULL) {
+            int currentMachineId = (*tit).getMachine()->getId();
+            if(currentMachineId <= mydt->getProductionMachinesCount() && sbExamples[currentMachineId]==NULL) {
                 ExtQCPStatisticalBox *legendBox = new ExtQCPStatisticalBox(yAxis, xAxis);
-                legendBox->setBrush(boxBrush);
                 legendBox->setName(QString::fromStdString((*tit).getMachine()->getLabel()));
                 legendBox->setBrush(boxBrush);
                 legendBox->setWhiskerWidth(0);
